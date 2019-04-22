@@ -491,38 +491,18 @@ To form a network, we need connect all these individual neurons like a structure
 
 \section{Deep Learning}
 
-The artificial intelligence usually solves problems intellectually challenge for the humans relatively easy, but the task the human performs easy or solve intuitively are very difficult for the computers. The problems like speech recognition or applications to find faces in images are challenge task. For these problems we must allow computers gather knowledge from the experience, avoiding specify all the knowledge that the system needs. It means build a complicated task using more simpler concepts \cite{Goodfellow2016}.
+The artificial intelligence usually solves problems intellectually challenge for the humans relatively easy, but the task the human performs easy or solve intuitively are very difficult for the computers. The problems like speech recognition or applications to find faces in images are challenge task. For these problems we must allow computers gather knowledge from the experience, avoiding specify all the knowledge that the system needs. It means build a complicated task using simpler concepts \cite{Goodfellow2016}.
 
-\ac{DL} has great advancement in many fields of \ac{AI}, like Natural Language Processing, Speech Recognition, Computer Vision, Biomedical Applications and so on \cite{Chandra2017}
+This approach is a \ac{ML} modern and advanced technique, the base in many advances of  \ac{AI} fields, like Natural Language Processing, Speech Recognition, Computer Vision, Biomedical Applications and so on; using the most sophisticated neural networks. These models form a complex and deeper graph than a normal neural network, including many layers and neurons, this is why we know this approach as Deep Learning \cite{Chandra2017} \cite{Goodfellow2016} \cite{Nevala2017}.
 
-These concepts form a deep graph, including many layers, the reason for that this approach is known how Deep Learning \cite{Goodfellow2016}.
+The most typical example of \ac{DL} approach is feed-forward deep network. It consists in an input layer, that contains the input data for the model, next we have the hidden layers, a variable number of neurons and layers, and finally an output layer as is showed in the Figure \ref{figure:feed-forward-network}. That depth (number of hidden layers) allows to learn a multi-step program.
 
-Feed-forward deep layer is the most typical example of deep learning approach. It consists in an input layer, that contains the input data for the model, next we have the hidden layers, a variable number of neurons and layers, and finally an output layer as is showed in the Figure \ref{figure:MLP}. That depth (hidden layers) allows to learn a multi-step program.
-
-\begin{figure}[H]	
-	\centering
-	\includegraphics[width=85mm]{images/2-AI.png}
-	\caption{Artificial Intelligence Landscape}
-	\label{figure:AI}
-\end{figure}
-
-Figure \ref{figure:AI} shows the \ac{AI} landscape, when \ac{DL} is a kind of \ac{ML}, which is used for many approaches of \ac{AI}.
-
-There are many algorithms of Deep Learning, like \ac{CNN} used commonly when is working with images and \ac{RNN} to process sequences of data essentially.
-
-\subsection{Convolutional Neural Networks}
-
-\ac{CNN} is applied to problems with a grid-like topology, a clear example of this type of data are the images, other are the regular time intervals. \ac{CNN} formally is composed with a mathematical operation called convolution in at least one layer, instead of a general matrix operation \cite{Goodfellow2016}. \ac{CNN} is very used in recognition, as a powerful visual model, to extract features in a hierarchy of concepts. \cite{Long2015}.
-
-Historically this type of network was some the firsts in solve important commercial problems \cite{Goodfellow2016} like the handwritten zip code recognition.
-
-\subsection{Recurrent Neural Networks}
-
-\ac{RNN} is a kind of networks to processing sequential data. They are very powerful because they store efficiently information about the past. They are specialized in process a sequence of values  \cite{Goodfellow2016}, mapping all the previous input to each output. This allows the memory of old inputs can persist and influence in the next network output \cite{Graves2017}.
-
-\ac{RNN} are used for resolving many types of problems, \cite{Chandra2017} proposes a method to improving the use of \ac{RNN} in classification of images. In other hand, \ac{RNN} is also used to detection and diagnosis of a chemical process that show results with excellent performance \cite{Xavier2018}.
+There are many algorithms of \ac{DL}, like \ac{CNN} used commonly when is working with images and \ac{RNN} to process sequences of data. The first one is applied to problems with a grid-like topology, a clear example of this type of data are the images, other are the regular time intervals. \ac{CNN} formally is composed with a mathematical operation called convolution in at least one layer, instead of a general matrix operation \cite{Goodfellow2016}. This kind of algorithm is very used in pattern recognition, as a powerful visual model, to extract features in a hierarchy of concepts. \cite{Long2015}. Historically this type of network was some the firsts in solve important commercial problems \cite{Goodfellow2016}, like the handwritten zip code recognition. In other hand \ac{RNN}, is a kind of networks to processing sequential data. They are very powerful because they store efficiently information about the past. They are specialized in process a sequence of values \cite{Goodfellow2016}, mapping all the previous input to each output. This allows the memory of old inputs can persist and influence in the next network output \cite{Graves2017}. \ac{RNN} are used for resolving many types of problems, \cite{Chandra2017} proposes a method to improving the use of this algorithm in classification of images. This method is also used to detection and diagnosis of a chemical process that show results with excellent performance \cite{Xavier2018}.
 
 \section{Natural Language Processing}
+
+\ac{NLP} is the process to understand the natural language in machines or algorithms, this comprehends the written text, voice commands or both. There is many information in web pages and almost all are in natural language, one reason why we want our algorithms can understand human language is to acquire information from written and speech language. An algorithm that wants acquire knowledge needs to comprehend at least partially the human language use (e.g. ambiguity and messy). This undertaking is not trivial because the presence of the colloquialism, figure of speech, abbreviations, emoticons to mention a few \cite{Nevala2017} \cite{Russell2010}. The difference with a formal language (e.g. python or java) is that a natural language cannot be characterize in a set of sentences, because they are very large, ambiguous and constantly changing; the our best model is just an approximation \cite{Russell2010}.
+
 \section{Text Similarity}
 \subsection{Lexical Similarity}
 \subsection{Semantic Similarity}
