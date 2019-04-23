@@ -169,6 +169,7 @@
 
 \pgfplotsset{compat=1.15}
 \setlength{\headheight}{15pt}
+\setcounter{secnumdepth}{3}
 \begin{document}
 \newtheorem{definition}{Example}
 
@@ -493,15 +494,26 @@ To form a network, we need connect all these individual neurons like a structure
 \end{figure}
 
 
-\section{Deep Learning}
+\section{Deep Learning with Neural Networks}
 
 The artificial intelligence usually solves problems intellectually challenge for the humans relatively easy, but the task the human performs easy or solve intuitively are very difficult for the computers. The problems like speech recognition or applications to find faces in images are challenge task. For these problems we must allow computers gather knowledge from the experience, avoiding specify all the knowledge that the system needs. It means build a complicated task using simpler concepts \cite{Goodfellow2016}.
 
 This approach is a \ac{ML} modern and advanced technique, the base in many advances of  \ac{AI} fields, like Natural Language Processing, Speech Recognition, Computer Vision, Biomedical Applications and so on; using the most sophisticated neural networks. These models form a complex and deeper graph than a normal neural network, including many layers and neurons, this is why we know this approach as Deep Learning \cite{Chandra2017} \cite{Goodfellow2016} \cite{Nevala2017}.
 
-The most typical example of \ac{DL} approach is feed-forward deep network. It consists in an input layer, that contains the input data for the model, next we have the hidden layers, a variable number of neurons and layers, and finally an output layer as is showed in the Figure \ref{figure:feed-forward-network}. That depth (number of hidden layers) allows to learn a multi-step program.
+The most typical example of \ac{DL} approach is feed-forward deep network. It consists in an input layer, that contains the input data for the model, next we have the hidden layers, a variable number of neurons and layers, and finally an output layer as is showed in the Figure \ref{figure:feed-forward-network}. That depth (number of hidden layers) allows to learn a multi-step program. There are many algorithms of \ac{DL}, like \ac{CNN} used commonly when is working with images and \ac{RNN} to process sequences of data. 
 
-There are many algorithms of \ac{DL}, like \ac{CNN} used commonly when is working with images and \ac{RNN} to process sequences of data. The first one is applied to problems with a grid-like topology, a clear example of this type of data are the images, other are the regular time intervals. \ac{CNN} formally is composed with a mathematical operation called convolution in at least one layer, instead of a general matrix operation \cite{Goodfellow2016}. This kind of algorithm is very used in pattern recognition, as a powerful visual model, to extract features in a hierarchy of concepts. \cite{Long2015}. Historically this type of network was some the firsts in solve important commercial problems \cite{Goodfellow2016}, like the handwritten zip code recognition. In other hand \ac{RNN}, is a kind of networks to processing sequential data. They are very powerful because they store efficiently information about the past. They are specialized in process a sequence of values \cite{Goodfellow2016}, mapping all the previous input to each output. This allows the memory of old inputs can persist and influence in the next network output \cite{Graves2017}. \ac{RNN} are used for resolving many types of problems, \cite{Chandra2017} proposes a method to improving the use of this algorithm in classification of images. This method is also used to detection and diagnosis of a chemical process that show results with excellent performance \cite{Xavier2018}.
+\subsection{Fully Connected Networks}
+``add text here''
+\subsection{Convolutional Neural Networks}
+This kind of networks is applied to problems with a grid-like topology, a clear example of this type of data are the images, other are the regular time intervals. \ac{CNN} formally is composed with a mathematical operation called convolution in at least one layer, instead of a general matrix operation \cite{Goodfellow2016}. This kind of algorithm is very used in pattern recognition, as a powerful visual model, to extract features in a hierarchy of concepts. \cite{Long2015}. Historically this type of network was some the firsts in solve important commercial problems \cite{Goodfellow2016}, like the handwritten zip code recognition.
+
+\subsection{Recurrent Neural Networks}
+In other hand \ac{RNN}, is a kind of networks to processing sequential data. They are very powerful because they store efficiently information about the past. They are specialized in process a sequence of values \cite{Goodfellow2016}, mapping all the previous input to each output. This allows the memory of old inputs can persist and influence in the next network output \cite{Graves2017}. \ac{RNN} are used for resolving many types of problems, \cite{Chandra2017} proposes a method to improving the use of this algorithm in classification of images. This method is also used to detection and diagnosis of a chemical process that show results with excellent performance \cite{Xavier2018}.
+
+\subsubsection{Long Short-Term Memory}
+``add text here''
+\subsubsection{Gated Recurrent Unit}
+``add text here''
 
 \section{Natural Language Processing}
 
@@ -554,22 +566,29 @@ Text similarity refers to how close is a text whit another one in terms of meani
 	\item \textbf{Hybrid similarity measures:}
 \end{itemize}
 
-\chapter{Methodology} \label{chapter 3}
-\section{Problem statement}
+\chapter{Problem Formulation} \label{chapter 3}
+\section{Description}
 \section{Formalization}
+\section{Data Processing Architecture}
 
-\chapter{Similarity Analysis} \label{chapter 4}
-\section{Deep Learning Framework}
-\section{Model Description}
-\section{Model Architecture}
+\chapter{System Architecture and Organization} \label{chapter 4}
+\section{THS System Overview}
+\section{How to Define Similarity}
+\section{Model Learning Architecture}
+\subsection{Neural Networks used for Learning Similarity}
+\subsection{Neural Networks Variations}
 
-\chapter{Experiments} \label{chapter 5}
+\chapter{Performance Evaluation} \label{chapter 5}
 \section{Hardware} 
 \section{Software}
-\section{Experimental Results}
+\section{Experiment Setup}
+\section{Data Collection}
+\section{Data Labeling}
+\section{Data Pre-processing}
+\section{Experimental Results and Discussion}
 
 \chapter{Conclusion and Future Work} \label{chapter 6}
-In summary, more text here
+In summary, text here
 
 %\chapter*{References} 
 %\addcontentsline{toc}{chapter}{Bibliography}
