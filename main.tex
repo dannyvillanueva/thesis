@@ -501,9 +501,9 @@ There are many algorithms of \ac{DL}, like \ac{CNN} used commonly when is workin
 
 \section{Natural Language Processing}
 
-\ac{NLP} is the process to understand and analysis and use of human language by machines or algorithms, this comprehends the written text, voice commands or both, to draw insight, advertisement, and so on. There is many information in web pages and almost all of them are in natural language, one reason why we want our algorithms can understand human language is to acquire information from written and spoken language. An algorithm that wants acquire knowledge needs to comprehend at least partially the human language use (e.g. ambiguity and messy). This undertaking is not trivial because the presence of the colloquialism, figure of speech, abbreviations, emoticons to mention a few \cite{Nevala2017} \cite{Russell2010}. The difference with a formal language (e.g. python or java) is that a natural language cannot be characterize in a set of sentences, because they are very large, ambiguous and constantly changing; the our best model is just an approximation \cite{Russell2010}.
+\ac{NLP} is the process to understand, analyze and use of human language by machines or algorithms, this comprehends the written text, voice commands or both, to draw insight, advertisement, and so on. There is many information in web pages and almost all of them are in natural language, one reason why we want our algorithms can understand human language is to acquire information from written and spoken language. An algorithm that wants acquire knowledge needs to comprehend at least partially the human language use (e.g. ambiguity and messy). This undertaking is not trivial because the presence of the colloquialism, figure of speech, abbreviations, emoticons to mention a few \cite{Nevala2017} \cite{Russell2010}. The difference with a formal language (e.g. python or java) is that a natural language cannot be characterize in a set of sentences, because they are very large, ambiguous and constantly changing; the our best model is just an approximation \cite{Russell2010}.
 
-The process of language analysis is closely related to linguistic, traditionally, this process is decomposed in three stages: syntax, semantic and pragmatics; we first analyze the syntaxis of a text providing an order and a structure and then to analyze in terms of meaning (semantic), and last stage is an pragmatic analysis, who relates the sentence with a context. Such separations constitute the basis for architectural models from a software point of view, making the analysis more manageable and serving like a starting point. Recently the decomposition of this process and needs to work with real language data has change the schema, like is showed in Figure \ref{figure:NLP_Stages}.
+The process of language analysis is closely related to linguistic, traditionally, this process is decomposed in three stages: syntax, semantic and pragmatics; we first analyze the syntaxis of a text providing an order and a structure and then to analyze in terms of meaning (semantic), and last stage is an pragmatic analysis, who relates the sentence with a context. Such separations constitute the basis for architectural models from a software point of view, making the analysis more manageable and serving like a starting point. Recently the decomposition of this process and needs to work with real language data has change the schema \cite{Indurkhya2010}, like is showed in Figure \ref{figure:NLP_Stages}.
 
 \begin{figure}[H]	
 	\centering
@@ -511,6 +511,8 @@ The process of language analysis is closely related to linguistic, traditionally
 	\caption{Natural Language Process Stages}	
 	\label{figure:NLP_Stages}
 \end{figure}
+
+Figure \ref{figure:NLP_Stages} represent the stages in a \ac{NLP}, 1) tokenization is about divide a continuous text data in words or sentences, in English is usually separated by whitespaces but other unsegmented languages is more complicated to do, because there is not a visible separation between words (e.g. Chinese, Japanese) that need more than a simple lexical analysis. 2) lexical analysis refers to morphological processing, mapping strings to lemma and assigning structure to words and registering their structural properties. 3) syntactic analysis is analyzing a sentence and determine its structural composition following rules of a formal grammar (grammar formalism to describe language syntax) to finally assign a meaning to the sentence. The syntax tree is the standard to represent a syntactic structure which contains the steps in the derivation from the main node. 4)semantic analysis is related with the context of languages (words, phrases, scenarios, etc.), this not only refers to meaning of a sentence, but also to its relationship with others words or sentences, that means to simulate the inferencing process and achieve a better interaction between a human and a machine.  5)pragmatic analysis also called natural language generation is the process when a machine has to say something, the thought has to render in a language with the intention to communicate something with a correct context (it depends of the program goals) \cite{ Indurkhya2010}.
 
 Applications of \ac{NLP} are based on probability distributions over sequential data in a natural language, we can use generic neural networks for basic tasks, however in complex applications we need specialized techniques to process data, sometimes we regard like a sequence of words, characters or even bytes. The earliest successful language model, a probability distribution over sequential data, was n-gram models (sequences of tokens). It has many possible types: unigrams, bigram, trigram, n-gram; to improve statistical efficiency was introduced the notion of word categories or class-based n-grams models, however they are not able to share statistical strength of similar words and their contexts. Here appears the neural languages model that could recognize the similarity not only between words but also in their contexts for each one. This distributed representation sometimes is called word representation or word embedding, that means the language symbols are represented as points in a space dimension. In an embedding space, words with similar meaning are close each other \cite{Russell2010} \cite{Goodfellow2016}. The most known word representation are Word2Vec Model, an improve of skip-gram model in terms of quality of vectors and speed training \cite{Mikolov2013} and GloVe model that combines the advantages of global matrix factorization and local context window \cite{Pennington2014}. More recent studies show other sentences encoder like Skip-Thought Vectors, an approach for unsupervised learning that tries to reconstruct passages of text that share semantic properties \cite{Kiros2015}, Supervised Learning of Universal Sentence Representations from Natural Language Inference Data, an encoder using pre-trained sentence level embedding with supervised data of Stanford Natural Language Inference datasets demonstrating strong transfer task than skip-thought vectors \cite{ Conneau2017}. Universal Sentence Encoder, other encoder that use supervised data to train a sentence embedding model instead a word level embedding, showing a good performance \cite{ Cer2018}. There several applications of \ac{DL} techniques in \ac{NLP} task including:
 
@@ -532,13 +534,25 @@ Applications of \ac{NLP} are based on probability distributions over sequential 
 \end{itemize}
 
 \section{Text Similarity}
+Text similarity refers to how close is a text whit another one in terms of meaning and surface closeness, the first means semantic similarity and the last is called lexical similarity. All works in lexical similarity often are developed to achieve to semantic similarity.
+
 \subsection{Lexical Similarity}
+\begin{itemize}[nolistsep]
+	\item \textbf{Character based similarity:}
+	\item \textbf{Statement based similarity:}
+\end{itemize}
+
 \subsection{Semantic Similarity}
+\begin{itemize}[nolistsep]
+	\item \textbf{String based similarity:}
+	\item \textbf{Corpus based similarity:}
+	\item \textbf{Knowledge based similarity:}
+	\item \textbf{Hybrid similarity measures:}
+\end{itemize}
 
 \chapter{Methodology} \label{chapter 3}
 \section{Problem statement}
 \section{Formalization}
-\section{Data Processing Pipeline}
 
 \chapter{Similarity Analysis} \label{chapter 4}
 \section{Deep Learning Framework}
