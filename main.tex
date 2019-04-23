@@ -339,7 +339,7 @@ This research is supported by the \ac{US} National Library of Medicine of the \a
 \begin{itemize}[nolistsep]
 	\item \textbf{Use social networks to get valuable information about health topics:} All data present on internet through social networks, entertainment apps and others, can be used in health-related research. In our case twitter is a source of amount of data of different topics that can be transform in important information relevant for medical issues. Here is showed how we can use data of medical conditions to build models able to compute the similarity in tweets therefore these could be used in future to support on medical applications. 
 	\item \textbf{Present \ac{DL} models for text similarity analysis:} \ac{DL} models are very powerful for analysis of data like images, sound, and text. In this project, we try to use these excellent tools of \ac{ML} to figure out a better text similarity model.
-	\item \textbf{Employ Supervised Learning in text similarity tasks:} Many studies about sentence representation (“encoding models”) is based in Unsupervised Learning because there is not enough labeled data about a specific topic to train a model like in our case, with data diseases related. We show the trained models with labeled data in sentence similarity has enough performance to be widely adopted in others \ac{NLP} tasks.
+	\item \textbf{Employ Supervised Learning in text similarity tasks:} Many studies about sentence representation (``encoding models'') is based in unsupervised learning because there is not enough labeled data about a specific topic to train a model like in our case, with data diseases related. We show the trained models with labeled data in sentence similarity has enough performance to be widely adopted in others \ac{NLP} tasks.
 	\item \textbf{Use different measure of similarity:} In this project we used three methods to calculate similarity text. Most known is cosine similarity, also Frobenius Distance and our own distance measure called Triangular UL Distance based in part of linear algebra, in a special kind of square matrix called triangular matrix.
 	\item \textbf{Describe the evaluation of similarity models: } We built models with \ac{CNN}, \ac{RNN} and merged approaches to get better results. They were tested with different setting to find the best model possible, we used the next metrics F1-Score, Precision and Recall.
 \end{itemize}
@@ -501,14 +501,42 @@ There are many algorithms of \ac{DL}, like \ac{CNN} used commonly when is workin
 
 \section{Natural Language Processing}
 
-\ac{NLP} is the process to understand the natural language in machines or algorithms, this comprehends the written text, voice commands or both. There is many information in web pages and almost all are in natural language, one reason why we want our algorithms can understand human language is to acquire information from written and speech language. An algorithm that wants acquire knowledge needs to comprehend at least partially the human language use (e.g. ambiguity and messy). This undertaking is not trivial because the presence of the colloquialism, figure of speech, abbreviations, emoticons to mention a few \cite{Nevala2017} \cite{Russell2010}. The difference with a formal language (e.g. python or java) is that a natural language cannot be characterize in a set of sentences, because they are very large, ambiguous and constantly changing; the our best model is just an approximation \cite{Russell2010}.
+\ac{NLP} is the process to understand and analysis and use of human language by machines or algorithms, this comprehends the written text, voice commands or both, to draw insight, advertisement, and so on. There is many information in web pages and almost all of them are in natural language, one reason why we want our algorithms can understand human language is to acquire information from written and spoken language. An algorithm that wants acquire knowledge needs to comprehend at least partially the human language use (e.g. ambiguity and messy). This undertaking is not trivial because the presence of the colloquialism, figure of speech, abbreviations, emoticons to mention a few \cite{Nevala2017} \cite{Russell2010}. The difference with a formal language (e.g. python or java) is that a natural language cannot be characterize in a set of sentences, because they are very large, ambiguous and constantly changing; the our best model is just an approximation \cite{Russell2010}.
+
+The process of language analysis is closely related to linguistic, traditionally, this process is decomposed in three stages: syntax, semantic and pragmatics; we first analyze the syntaxis of a text providing an order and a structure and then to analyze in terms of meaning (semantic), and last stage is an pragmatic analysis, who relates the sentence with a context. Such separations constitute the basis for architectural models from a software point of view, making the analysis more manageable and serving like a starting point. Recently the decomposition of this process and needs to work with real language data has change the schema, like is showed in Figure \ref{figure:NLP_Stages}.
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=150mm, scale = 1]{images/4_nlp.png}	
+	\caption{Natural Language Process Stages}	
+	\label{figure:NLP_Stages}
+\end{figure}
+
+Applications of \ac{NLP} are based on probability distributions over sequential data in a natural language, we can use generic neural networks for basic tasks, however in complex applications we need specialized techniques to process data, sometimes we regard like a sequence of words, characters or even bytes. The earliest successful language model, a probability distribution over sequential data, was n-gram models (sequences of tokens). It has many possible types: unigrams, bigram, trigram, n-gram; to improve statistical efficiency was introduced the notion of word categories or class-based n-grams models, however they are not able to share statistical strength of similar words and their contexts. Here appears the neural languages model that could recognize the similarity not only between words but also in their contexts for each one. This distributed representation sometimes is called word representation or word embedding, that means the language symbols are represented as points in a space dimension. In an embedding space, words with similar meaning are close each other \cite{Russell2010} \cite{Goodfellow2016}. The most known word representation are Word2Vec Model, an improve of skip-gram model in terms of quality of vectors and speed training \cite{Mikolov2013} and GloVe model that combines the advantages of global matrix factorization and local context window \cite{Pennington2014}. More recent studies show other sentences encoder like Skip-Thought Vectors, an approach for unsupervised learning that tries to reconstruct passages of text that share semantic properties \cite{Kiros2015}, Supervised Learning of Universal Sentence Representations from Natural Language Inference Data, an encoder using pre-trained sentence level embedding with supervised data of Stanford Natural Language Inference datasets demonstrating strong transfer task than skip-thought vectors \cite{ Conneau2017}. Universal Sentence Encoder, other encoder that use supervised data to train a sentence embedding model instead a word level embedding, showing a good performance \cite{ Cer2018}. There several applications of \ac{DL} techniques in \ac{NLP} task including:
+
+\begin{itemize}[nolistsep]
+	\item \textbf{Spelling and Grammar Checking:} The suggestions that appear when we type a text in a smartphone or when we redact a document in an advance text editor. 
+	
+	\item \textbf{Text Classification:} It is the categorization of a text in a defined set of classes, language identification and spam detection are examples of text classification \cite{Russell2010}.
+	
+	\item \textbf{Information Retrieval:} When the algorithm results a set of documents responding to a query like the search engines does \cite{Russell2010}.
+	
+	\item \textbf{Summarization:} To obtain the essential information from a long document in a shorter piece of text.
+	
+	\item \textbf{Syntactic Analysis:} It consists in analyze a string of words to isolate subjects, verbs, adverbs, adjectives and others complements (phrase structure) \cite{Russell2010}.
+	
+	\item \textbf{Machine Translation:} It is the task to automatic translation an equivalent sentence in meaning in another natural language \cite{Goodfellow2016}.
+	
+	\item \textbf{Speech Recognition:} This task identifies the words given by a speaker. That is difficult because the ambiguity and noisy are a hard challenge \cite{Russell2010}.
+	
+\end{itemize}
 
 \section{Text Similarity}
 \subsection{Lexical Similarity}
 \subsection{Semantic Similarity}
 
 \chapter{Methodology} \label{chapter 3}
-\section{Description of Problem}
+\section{Problem statement}
 \section{Formalization}
 \section{Data Processing Pipeline}
 
