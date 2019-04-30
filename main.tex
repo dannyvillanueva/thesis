@@ -581,7 +581,7 @@ When we talk about of lexical similarity, it refers to found same words or chara
 	\item \textbf{Statement/Term based similarity:} A method widely knows in text similarity is cosine similarity, where the distance is given by the cosine of the angle between two vectors in an inner product space, these vectors represent the sentences. Euclidean distance also called L2 distance use vectors in a Euclidean space where the distance is the square root of the sum of squared difference between two vectors (sentences). Jaccard similarity coefficient or Jaccard index is used to calculate similarity and diversity in sets, it takes the shared term in the intersection and it is divided by number of all terms of the union. There are other known methods like block distance (Manhattan distance, L1 distance, etc.), Dice's Coefficient, Matching coefficient, overlap coefficient, soft-cosine similarity, centroid based similarity and others\cite{Majumder2016} \cite{Pradhan2015} \cite{Gomaa2013} .
 \end{itemize}
 
-\subsection{Semantic Similarity}
+\subsection{Semantic Similarity} \label{sem_sim}
 One field mostly studied in similarity, is about measures of similarity that they have in mind the meaning and context of sentences that even could be syntactically very similar. Semantic analysis entails a deeper level of analysis, for example syntactic parsing to get dependency structure in the phrases. Commonly semantic similarity use background information about concepts like WordNet, Wikipedia and so on or an simplify corpora of a texts collection \cite{Ganesan2015} \cite{ Zhang2015}.
 Semantic similarity is frequently used for text summarization, topic analysis, recommendation system, collaborative tagging system and others. This approach could be classified in three big categories based in the use of information: corpus based,  knowledge based and hybrid methods \cite{Gomaa2013} \cite{Zhang2015}. These categories are described below.
 
@@ -597,11 +597,54 @@ Semantic similarity is frequently used for text summarization, topic analysis, r
 
 \chapter{Problem Formulation} \label{chapter 3}
 \section{Description}
+The main problem tackled in this project is to achieve to use the \ac{THS} data to train an algorithm able to identify the similarity between two sentences (tweets). This will allow us setup a process to watch the Twitter stream and collect similar tweets to these one and present these tweets to the user sorted by relevance of their similarity. As we describe in section \ref{sem_sim}, the similarity is very difficult to calculate due to is hard to find the meaning and context macth of the two pieces of text. To manage those issues, we use relevant information to find context similarity and syntactical similarity, like the type of disease mentioned on each sentence or if they are related to a disease or not, and a metric that describe the level of similarity between tweet texts, that are tagged in a range of one to four, where one is less similar and four is more semantically similar.
+
+Following we describe some samples of tweet sentences with a previous pre-processing to show the complexity of work with data related to semantic measures and contextual similarity.
+
+\begin{definition} Tweets no related – Different diseases.
+	\begin{itemize}[nolistsep]
+		\item Measles starts with cold like symptoms that develop about of days after becoming infected this is followed a few days later by the measles rash poster shows us the symptoms to look out for think measles prevention is best a dose of vaccine needed vaccines work.
+		\item The Ebola outbreak was a worst nightmare for countries affected interestingly Ebola was not a new disease in fact on managing the disease there is a forty year old knowledge so how did Ebola become such an epidemic.
+	\end{itemize}
+\end{definition}
+In this example, the two tweets speak about diseases, one of them describe the symptoms of measles and recommend the prevention using vaccines. The other one does a question about the reason why Ebola were expanded if this disease is not new and there is enough knowledge about it.  The content of these two sentences are related with a health condition but they are describing different diseases, that is enough to consider it no similar.
+
+\begin{definition} Tweets no related – Same disease.
+	\begin{itemize}[nolistsep]
+		\item Theory man flu exists as a phenomenon because it is the only time toxic masculinity tells men it is okay to feel vulnerable weak and look to their partners for support.
+		\item yeah, I missed like a day of school on and off flu I could not even eat, and I could not walk without feeling like vomiting or collapsing.
+	\end{itemize}
+\end{definition}
+The first tweet refers to flu, but it is not about a condition health, in change is an assumption about the flu exists to show the vulnerability weak of men over their partners. I other hand the second one speaks about someone that missed a school day because flu and speak about his/her symptoms.
+
+
+\begin{definition} Tweets related – Same diseases.
+	\begin{itemize}[nolistsep]
+		\item I wish I knew if the twins were going to get the flu like what is the usual window, he is had it symptom wise since Sunday night and it is Tuesday so when would they likely show symptoms ahh.
+		\item So I was at the hospital and obviously could not type while I was there since, a I could not type and b I was scared of being caught with lewd rps after I healed bad luck struck again and I was bedridden with the flu all I did was sleep and I was coughing so much my eyes went red.
+	\end{itemize}
+\end{definition}
+In this case the first tweet tells about twins getting flu and describe the intervals of days with possible symptoms. The second is about a person that who was in the hospital and explain that was the reason because she/he could not type, and when he or she was recuperated then got flu again and just goes to sleep. The two sentences are showing a health condition (flu) where the writers are explaining symptoms and what they were doing when they got flu. Therefore, these sentences are related.
+
 \section{Formalization}
 \section{Data Processing Architecture}
 
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=150mm, scale = 1]{images/5_data_processing.png}	
+	\caption{Data Processing Architecture}	
+	\label{figure:data_processing}
+\end{figure}
+
+The architecture of tweet processing is showed in Figure \ref{figure:data_processing}. Tweets were collected in \ac{THS} system in a distributed system database over \ac{HDFS}. Tweets selected was cleaned, removing links, hashtags and mentions. In a next stage the text passes through a pre-processing expanding contractions and correcting misspelling.
+
+Next stage tweets are filtered to associate to a disease. After detecting if the text is related to a disease, tweets are labeled to know if each tweet is speaking about a disease or if it is a lexical or semantical ambiguity. Other process to prepare the data to training is take an average measure of three labelers about the level of similarity between tweets as part of pre-processing stage.
+
+The previous stages are the input of the main process to train algorithms and calculate tweets relevance and after to present these tweets to the user sorted by relevance of their similarity as the output of the model.
+
 \chapter{System Architecture and Organization} \label{chapter 4}
 \section{THS System Overview}
+Text here
 \section{How to Define Similarity}
 \section{Model Learning Architecture}
 \subsection{Neural Networks used for Learning Similarity}
