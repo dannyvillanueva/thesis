@@ -116,6 +116,11 @@
   long  = Hadoop Distributed File System,
   class = abbrev
 }
+\DeclareAcronym{YARN}{
+	short = YARN,
+	long  = Yet Another Resource Negotiator,
+	class = abbrev
+}
 \DeclareAcronym{NIH}{
   short = NIH,
   long  = National Institutes of Health,
@@ -176,6 +181,12 @@
 \DeclareAcronym{GRU}{
 	short = GRU,
 	long  = Gated Recurrent Unit,
+	class = abbrev
+}
+
+\DeclareAcronym{NLTK}{
+	short = NLTK,
+	long  = Natural Language Toolkit,
 	class = abbrev
 }
 
@@ -390,7 +401,7 @@ Supervised Learning is based in an set of input-output pairs, these models learn
 
 More abstractly, Supervised Learning describe a scenery where the training examples is a set of data that contains the necessary information to identify and associate it to the output value. This information is not available in the test data to which the learned model is being applied. The aim is that the acquired expertise will can predict the expected output \cite{Shai2014}.
 
-It is called “supervised” because the environment provides an extra information, commonly known as labels, the model is trained with input data and target data \cite{Shai2014}. The target value (``label'') is provided by a supervisor who teach to the system what to do \cite{Goodfellow2016} , providing the correct output (``desired output'') as a feedback for reduce error.
+It is called ``supervised'' because the environment provides an extra information, commonly known as labels, the model is trained with input data and target data \cite{Shai2014}. The target value (``label'') is provided by a supervisor who teach to the system what to do \cite{Goodfellow2016} , providing the correct output (``desired output'') as a feedback for reduce error.
 
 Supervised learning identify correlation and a logical pattern in data from the from state A to state B, after these pattern are learnt, we can transfer learning to solve similar problems \cite{Nevala2017} \cite{Cer2018}. Common techniques used in this kind of \ac{ML} are decision trees, forecasting, neural networks, support vector machines to name a few; and their applications are risk assessment; personalizing interaction; image, speech and text recognition; fraud detection; customer segmentation like the most knowns \cite{Nevala2017}.
 
@@ -643,17 +654,140 @@ Next stage tweets are filtered to associate to a disease. After detecting if the
 The previous stages are the input of the main process to train algorithms and calculate tweets relevance and after to present these tweets to the user sorted by relevance of their similarity as the output of the model.
 
 \chapter{System Architecture and Organization} \label{chapter 4}
-\section{THS System Overview}
-Text here
+\section{THS System Overview} \label{ths_system}
+
+\ac{THS} is a collection of Big Data tools running in a cluster system at \ac{UPRM} to collect, filter and storage the data to future uses. We use \ac{ML} tools to process data, like Keras \cite{Keras2019}, TensorFlow \cite{Tensor2019}, Scikit-learn and others. \ac{THS} system consists of 12 nodes in a big data environment, where are distributed as follow: 1 master-node, 1 client-node and 10 data-nodes. The big data tools installed are \ac{HDFS} \cite{Hadoop2019}, \ac{YARN} \cite{Hadoop2019},  Apache Kafka \cite{Kafka2019}, Apache Spark \cite{Spark2019} and Apache Hive \cite{Hive2019}.
+
+The process is showed in the Figure \ref{figure:ths_system} and detailed step by step as follows:
+
+\begin{steps}
+\item We subscribe a stream to Twitter \ac{API} to save raw twitter data, building a real time streaming using Kafka, a distributed streaming platform \cite{Kafka2019}. The script (``producer.py'') run in the edge-node (client-node) of our cluster identified as node05.ece.uprm.edu. In this step we filtered data by language (e.g. English) and by keywords disease related (e.g. Flu, Measles).
+
+\item All raw data got from twitter \ac{API} is stored in Kafka pipeline to future processes. Each stored record consists in a key, the data and a timestamp. Kafka is settled to keep data for 3 hours and after that time the system clean automatically to save disk space. 
+
+\item In another script called ``consumer.py'' we connect to a stream record (``topic'') in Kafka to get tweets which is given by arrival order. This process is connected to Apache Spark streaming system.
+
+\item While spark streaming is collecting data from Kafka, at the same time we clean data, filtering and keeping only real tweets and discarding re-tweets or replies. Making use of spark tools we create ``data frame'' to process, manage and save data in a Hive database.
+
+\item Data is saved in Hive tables by time intervals in different tables with specific information that include users, keywords, hashtags, geolocation and the original raw tweet. This data is used to future processes and researches.
+
+\item Data stored in hive database is used to generate data visualizations and, in this project, to get data samples to train a new neural network model to measure the similarity between tweets.
+
+\end{steps}
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=150mm, scale = 1]{images/6_ths_system.png}	
+	\caption{\ac{THS} Processing Architecture}	
+	\label{figure:ths_system}
+\end{figure}
+
 \section{How to Define Similarity}
+
+To define the rules to consider if two tweets are similar or not, we describe three cases, where a label indicate if a tweet is related to a disease and, if a tweet belongs to the collection of diseases defined by $D = \{Flu, Measles, Zika, Diarrhea, Ebola\}$. Similarity level is represented in the following function.
+
+\begin{equation}
+s(t_i, t_j) = 
+\begin{cases} 
+0 		& 
+			\begin{cases} 
+				\text{if } t_j \notin D_k \\
+				\text{if } t_i, t_j \in D_k \text{ where, } l_i = 1,  l_j = {0,2} \\		
+			\end{cases} \\
+1 		& \text{if } t_i, t_j \in D_k \text{ where, } l_i = 1, l_j = 1
+\end{cases}
+\end{equation}
+
+\noindent In practice we make a previous step to calculate the global similarity between two tweets, that process is called relevance measure, it given a triplet constituted by three tweets represent the measure of similarity between them. Let $t(t_0, t_1,t_2)$ refers to measure of relevance in range of 1 to 4, where $t_0, t_1, t_2$ represent a tweet each one. If $s(t_0, t_1) > s(t_0, t_2)$, then $t_1$ is more similar to $t_0$ than $t_2$ to $t_0$. 
+
+\noindent $s(t_i, t_j)$ is the similarity measure between $t_i$ and $t_j$. There is two possible values for similarity, it is 0 when $t_j$ does not belongs to same class to $t_i$, and also is 0 when $t_i$ and $t_j$ belongs to the same type of disease and the label of $t_i$ is 1 and label of $t_j$ could be 0 or 2 that represent for a tweet not related or it is ambiguous to classify.
+If similarity is equal to 1, then $t_i$ and $t_j$ have to belong to the same group of disease a both labels have to be 1.
+
+
 \section{Model Learning Architecture}
 \subsection{Neural Networks used for Learning Similarity}
 \subsection{Neural Networks Variations}
 
 \chapter{Performance Evaluation} \label{chapter 5}
 \section{Hardware} 
+
+In this research we use two different environments to run our experiments. The cluster distribution presented in figure \ref{figure:ths_cluster} shows the components of the \ac{THS} system, it was configured like we described it in section \ref{ths_system}. The master-node and edge-node was set with Ubuntu 16.04 LTS and data-nodes with Ubuntu 14.04 LTS.  All nodes are installed on bare metal.
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=150mm, scale = 1]{images/7_ths_cluster.png}	
+	\caption{\ac{THS} cluster}	
+	\label{figure:ths_cluster}
+\end{figure}
+
+The hardware specification by each node is showed following in table \ref{node_cluster}. The total cluster storage is 2.9 TB and 80 GB of memory to processing data, without include specification of master-node and edge-node.
+
+\begin{table}[htb]
+	\centering
+	\begin{tabular}{||M{3.0cm}|M{6.5cm}||}
+		\hline
+		\textbf{Hardware} 	& \textbf{Description} \\ \hline
+		Hard disk           & 297 GB            \\ \hline
+		RAM          		& 8 GB              \\ \hline
+		Processor           & Intel(R) Xeon(R) E3120 @ 3.16GHz  \\ \hline
+		GPU                 & None              \\ \hline	
+	\end{tabular}
+	\caption{\ac{THS} cluster node}\label{node_cluster}
+\end{table}
+
+The other environment with important resources to run our experiments was Chameleon Cloud, an online large-scale platform to research, with a variety of resources in Hardware and Software. To this project we use nodes with \ac{GPU} resources, these node ran in Ubuntu 16.04 LTS on bare metal. The image used for the project is a custom image created by \ac{THS} project. The hardware specification is described next in table \ref{node_chameleon}.
+
+\begin{table}[htb]
+	\centering
+	\begin{tabular}{||M{3.0cm}|M{6.5cm}||}
+		\hline
+		\textbf{Hardware} 	& \textbf{Description} \\ \hline
+		Hard disk           & 207 GB            \\ \hline
+		RAM         		& 128 GB              \\ \hline
+		Processor           & Intel(R) Xeon(R) CPU E5-2670 v3 @ 2.30 GHz x 2 \\ \hline
+		GPU                 & Tesla P100 - 32GB              \\ \hline	
+	\end{tabular}
+	\caption{Chameleon Cloud custom node}\label{node_chameleon}
+\end{table}
+
 \section{Software}
+
+Tools used are Open Source and include Hadoop, Yarn, Spark, Kafka for \ac{THS} cluster only and Keras, TensorFlow, Tensor Board, Scikit-learn, \ac{NLTK}, SciPy and torch for both {THS} edge-node and Chameleon Cloud custom node. Big data tools implemented in \ac{THS} project is showed in table \ref{software_cluster}. 
+
+\begin{table}[htb]
+	\centering
+	\begin{tabular}{||M{3.0cm}|M{4.0cm}||}
+		\hline
+		\textbf{Software} 	& \textbf{Version} \\ \hline
+		Hadoop \& Yarn   	& 2.7              \\ \hline
+		Hive            	& 2.2              \\ \hline
+		Spark             	& 2.1              \\ \hline
+		Kafka            	& 0.10.1           \\ \hline
+	\end{tabular}
+	\caption{Big Data tools in \ac{THS} system} \label{software_cluster}
+\end{table}
+
+Versions of software packages installed in both environments are presented in table \ref{software_packages}.
+
+\begin{table}[htb]
+	\centering
+	\begin{tabular}{||M{3.0cm}|M{4.0cm}||}
+		\hline
+		\textbf{Software} 	& \textbf{Version} \\ \hline
+		TensorFlow       	& 1.12.0             \\ \hline
+		TensorBoard     	& 1.12.2             \\ \hline
+		Keras            	& 2.2.2            \\ \hline
+		Scikit-learn     	& 0.19.1           \\ \hline
+		\ac{NLTK}           & 3.4           \\ \hline
+		SciPy         		& 1.1.0           \\ \hline
+		Torch           	& 1.0.1          \\ \hline
+	\end{tabular}
+	\caption{Version of software in nodes} \label{software_packages}
+\end{table}
+
 \section{Experiment Setup}
+I am Here
+
 \section{Data Collection}
 \section{Data Labeling}
 \section{Data Pre-processing}
