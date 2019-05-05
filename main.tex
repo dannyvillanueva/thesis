@@ -171,25 +171,41 @@
 	long  = University of Puerto Rico Mayag\"uez Campus,
 	class = abbrev
 }
-
 \DeclareAcronym{LSTM}{
 	short = LSTM,
 	long  = Long Short-Term Memory,
 	class = abbrev
 }
-
 \DeclareAcronym{GRU}{
 	short = GRU,
 	long  = Gated Recurrent Unit,
 	class = abbrev
 }
-
 \DeclareAcronym{NLTK}{
 	short = NLTK,
 	long  = Natural Language Toolkit,
 	class = abbrev
 }
-
+\DeclareAcronym{CUDA}{
+	short = CUDA,
+	long  = Compute Unified Device Architecture,
+	class = abbrev
+}
+\DeclareAcronym{SQL}{
+	short = SQL,
+	long  = Structured Query Language,
+	class = abbrev
+}
+\DeclareAcronym{CPU}{
+	short = CPU,
+	long  = Central Processing Unit,
+	class = abbrev
+}
+\DeclareAcronym{OS}{
+	short = OS,
+	long  = Operating System,
+	class = abbrev
+}
 
 \pgfplotsset{compat=1.15}
 \setlength{\headheight}{15pt}
@@ -600,7 +616,7 @@ Semantic similarity is frequently used for text summarization, topic analysis, r
 	\item \textbf{Corpus based similarity:} 
 	Also called statistical similarity, this approach refers in use information gathered from a large corpus from written o spoken data. Latent semantic analysis represents the text in a matrix where rows are the unique words and columns represent each sentence. This method is constructed based in a corpus of text and a mathematical technique called singular value decomposition to reduce dimensionality maintaining similarity relation between word and text. To calculate the similarity often is used cosine similarity.  Other technique is hyperspace analogue to language, it is a variation of latent semantic analysis, taken a set of words called a ``window'' and is compare with the corpus to calculate co-occurrences in words, forming a matrix representing the strength between related words. Its similarity also can measure with cosine similarity method. Explicit semantic analysis uses the Wikipedia corpus to convert sentences in a tf-idf (term-frequency-inverse document frequency) weighted vector between each word and the documents of corpus. The measure to calculate the distance between vector is cosine similarity. Normalize Google distance is a semantic metric that use Google search to get the number of hits returned for each term of the text and build a metric to calculate the words with similar meaning between two sentences. Other methods are point wise mutual information, normalize information distance, normalize compression distance and so on \cite{Ganesan2015} \cite{ Zhang2015} \cite{Gomaa2013} \cite{Majumder2016}.
 	
-	\item \textbf{Knowledge based similarity:} It is called topological similarity and it is based in semantic networks, these networks are a lexical database grouped in set of semantic synonyms with conceptual and lexical relation that include verbs, nouns, adverbs and adjectives. The most popular semantic networks are Word Net and Natural Language Toolkit \cite{gomaa2013} \cite{Pradhan2015} \cite{Majumder2016}. There are distinct types of categorization for this kind of similarity measure focused in similarity or relatedness. Some authors divide it in the following types: \textit{Node-based} (also called information content based) similarity that calculate the similarity between two sentences by the amount of information that share each other, one method very used in this approach is Resnik similarity method, it uses only Word Net nouns to get the information content of sentences, other measures are Lin method, Jiang and Conrath method \cite{Majumder2016} \cite{Zhang2015} \cite{Pradhan2015}. \textit{Edge based} approach counts the edges of graphs (semantic network) between the compared concept nodes where nodes with shorter path are more similar. All edges are weighted considering network density, node depth, type of link and link strength \cite{Majumder2016}  \cite{Zhang2015}. Other approach is \textit{feature based}, it uses the concepts of Word Net as a list of features to calculate the semantic similarity between sentences \cite{Zhang2015}, and finally \textit{gloss based} approach uses glosses of words from a given corpus. One method in this group is, Vector Measure, it forms a co-occurrence matrix with the average of each co-occurrences vector of a gloss/concept to measure the semantic similarity \cite{Pradhan2015}  \cite{Zhang2015}.
+	\item \textbf{Knowledge based similarity:} It is called topological similarity and it is based in semantic networks, these networks are a lexical database grouped in set of semantic synonyms with conceptual and lexical relation that include verbs, nouns, adverbs and adjectives. The most popular semantic networks are Word Net and Natural Language Toolkit \cite{Gomaa2013} \cite{Pradhan2015} \cite{Majumder2016}. There are distinct types of categorization for this kind of similarity measure focused in similarity or relatedness. Some authors divide it in the following types: \textit{Node-based} (also called information content based) similarity that calculate the similarity between two sentences by the amount of information that share each other, one method very used in this approach is Resnik similarity method, it uses only Word Net nouns to get the information content of sentences, other measures are Lin method, Jiang and Conrath method \cite{Majumder2016} \cite{Zhang2015} \cite{Pradhan2015}. \textit{Edge based} approach counts the edges of graphs (semantic network) between the compared concept nodes where nodes with shorter path are more similar. All edges are weighted considering network density, node depth, type of link and link strength \cite{Majumder2016}  \cite{Zhang2015}. Other approach is \textit{feature based}, it uses the concepts of Word Net as a list of features to calculate the semantic similarity between sentences \cite{Zhang2015}, and finally \textit{gloss based} approach uses glosses of words from a given corpus. One method in this group is, Vector Measure, it forms a co-occurrence matrix with the average of each co-occurrences vector of a gloss/concept to measure the semantic similarity \cite{Pradhan2015}  \cite{Zhang2015}.
 	
 	\item \textbf{Hybrid similarity measures:} This approach refers to use the best of above two categories and others, like lexical structure and corpus information, combining several metrics into one. For example, semantic text similarity method is combination of syntactic and semantic information \cite{Zhang2015} \cite{Gomaa2013}. Other methods combine more approaches, \cite{Zhu2014} built a supervised random forest regression model that use machine learning methods to combine string features, corpus-based methods, knowledge-based method, syntactic features, multi-level text features and so on.
 	
@@ -711,7 +727,7 @@ If similarity is equal to 1, then $t_i$ and $t_j$ have to belong to the same gro
 \chapter{Performance Evaluation} \label{chapter 5}
 \section{Hardware} 
 
-In this research we use two different environments to run our experiments. The cluster distribution presented in figure \ref{figure:ths_cluster} shows the components of the \ac{THS} system, it was configured like we described it in section \ref{ths_system}. The master-node and edge-node was set with Ubuntu 16.04 LTS and data-nodes with Ubuntu 14.04 LTS.  All nodes are installed on bare metal.
+In this research we use two different environments to run our experiments. The cluster distribution presented in figure \ref{figure:ths_cluster} shows the components of the \ac{THS} project that was configured like we described it in section \ref{ths_system}. The master-node and edge-node were set with Ubuntu 16.04 LTS \ac{OS} and data-nodes with Ubuntu 14.04 LTS \ac{OS}, these nodes are installed on bare metal. All operations are executed in the edge-node that connect the users with Big Data environment.
 
 \begin{figure}[H]	
 	\centering
@@ -720,11 +736,11 @@ In this research we use two different environments to run our experiments. The c
 	\label{figure:ths_cluster}
 \end{figure}
 
-The hardware specification by each node is showed following in table \ref{node_cluster}. The total cluster storage is 2.9 TB and 80 GB of memory to processing data, without include specification of master-node and edge-node.
+The hardware specification by each node is showed following in table \ref{node_cluster}. The total cluster storage is 2.9 TB and 80 GB of memory to processing data, it does not include master-node and edge-node.
 
 \begin{table}[htb]
 	\centering
-	\begin{tabular}{||M{3.0cm}|M{6.5cm}||}
+	\begin{tabular}{||M{3.0cm}|M{4.5cm}||}
 		\hline
 		\textbf{Hardware} 	& \textbf{Description} \\ \hline
 		Hard disk           & 297 GB            \\ \hline
@@ -739,7 +755,7 @@ The other environment with important resources to run our experiments was Chamel
 
 \begin{table}[htb]
 	\centering
-	\begin{tabular}{||M{3.0cm}|M{6.5cm}||}
+	\begin{tabular}{||M{3.0cm}|M{4.5cm}||}
 		\hline
 		\textbf{Hardware} 	& \textbf{Description} \\ \hline
 		Hard disk           & 207 GB            \\ \hline
@@ -751,8 +767,31 @@ The other environment with important resources to run our experiments was Chamel
 \end{table}
 
 \section{Software}
+The resources used for this research are the following: 
+\begin{itemize}[nolistsep]
+	\item \textbf{Python:} A programming language very used in research fields, for its easily and powerful. It is compatible with tools used in this research like Tensor Flow and Keras. All code in this project is written in Python language.
+	
+	\item \textbf{Twitter \ac{API}:} A tool that allow us get Twitter streaming data in real time for our research. 
+	
+	\item \textbf{\ac{HDFS}:} A software that allows  distribute processing a  massive amount of data, running in commodity hardware \cite{Hadoop2019}.
+	
+	\item \textbf{HIVE:} A data warehouse software for large datasets in a distributed storage. For querying use \ac{SQL} syntax \cite{Hive2019}.
+	
+	\item \textbf{KAFKA:} It is a streaming platform to storage stream of records and allows to process it as they occur. It can be implemented in standalone mode or cluster mode. Each stream store is called ``topics'' \cite{Kafka2019}.
+	
+	\item \textbf{SPARK:} Apache Spark is a fast, a general purpose and a unified analytic engine for large-scale data processing. It is compatible with JAVA, Scala, Python and R. Spark support structured data processing, \ac{ML}, graph processing and stream processing of live data \cite{Spark2019}.
+	
+	\item \textbf{Tensorflow:} Open source \ac{ML} library for building and training complex neural network models \cite{Tensor2019}.
+	
+	\item \textbf{Keras:} An neural network \ac{API}, that allows easy and fast experimentation, support \ac{CNN} and \ac{RNN}. This tool work with python and can be used on \ac{CPU} and \ac{GPU} \cite{Keras2019}.
+	
+	\item \textbf{\ac{CUDA}:} A programming model developed by NVIDIA, it is a parallel computing programming on \ac{GPU}, the sequential computes on thousands of cores in parallel mode, optimizing the performance of tasks \cite{Cuda2019}.
+	
+	\item \textbf{Torch: } A framework to support \ac{ML} algorithms using \ac{GPU} in a efficient way. This tool seeks to facilitate and speed up the implementation of neural network libraries and optimization packages \cite{Torch2019}.\\
+\end{itemize}
 
-Tools used are Open Source and include Hadoop, Yarn, Spark, Kafka for \ac{THS} cluster only and Keras, TensorFlow, Tensor Board, Scikit-learn, \ac{NLTK}, SciPy and torch for both {THS} edge-node and Chameleon Cloud custom node. Big data tools implemented in \ac{THS} project is showed in table \ref{software_cluster}. 
+
+Tools used are Open Source. Hadoop, Yarn, Spark, Kafka for \ac{THS} cluster only and Keras, TensorFlow, Tensor Board, Scikit-learn, \ac{NLTK}, SciPy and torch for both {THS} edge-node and Chameleon Cloud custom node. Versions of Big Data tools implemented in \ac{THS} project are showed in table \ref{software_cluster}. 
 
 \begin{table}[htb]
 	\centering
@@ -764,7 +803,7 @@ Tools used are Open Source and include Hadoop, Yarn, Spark, Kafka for \ac{THS} c
 		Spark             	& 2.1              \\ \hline
 		Kafka            	& 0.10.1           \\ \hline
 	\end{tabular}
-	\caption{Big Data tools in \ac{THS} system} \label{software_cluster}
+	\caption{Big Data tools in \ac{THS} system \label{software_cluster}} 
 \end{table}
 
 Versions of software packages installed in both environments are presented in table \ref{software_packages}.
@@ -773,20 +812,22 @@ Versions of software packages installed in both environments are presented in ta
 	\centering
 	\begin{tabular}{||M{3.0cm}|M{4.0cm}||}
 		\hline
-		\textbf{Software} 	& \textbf{Version} \\ \hline
-		TensorFlow       	& 1.12.0             \\ \hline
-		TensorBoard     	& 1.12.2             \\ \hline
-		Keras            	& 2.2.2            \\ \hline
-		Scikit-learn     	& 0.19.1           \\ \hline
-		\ac{NLTK}           & 3.4           \\ \hline
-		SciPy         		& 1.1.0           \\ \hline
-		Torch           	& 1.0.1          \\ \hline
+		\textbf{Software} 	& \textbf{Version} 	\\ 	\hline
+		TensorFlow       	& 1.12.0            \\ 	\hline
+		TensorBoard     	& 1.12.2            \\ 	\hline
+		Keras            	& 2.2.2            	\\ 	\hline
+		Scikit-learn     	& 0.19.1           	\\ 	\hline
+		\ac{NLTK}           & 3.4           	\\ 	\hline
+		SciPy         		& 1.1.0           	\\ 	\hline
+		Torch           	& 1.0.1          	\\ 	\hline
+		\ac{CUDA}			& 9.0				\\	\hline
 	\end{tabular}
-	\caption{Version of software in nodes} \label{software_packages}
+	\caption{Version of software in nodes \label{software_packages}} 
 \end{table}
 
+
 \section{Experiment Setup}
-I am Here
+I am here
 
 \section{Data Collection}
 \section{Data Labeling}
@@ -794,7 +835,7 @@ I am Here
 \section{Experimental Results and Discussion}
 
 \chapter{Conclusion and Future Work} \label{chapter 6}
-In summary, text here
+Summary, text here
 
 %\chapter*{References} 
 %\addcontentsline{toc}{chapter}{Bibliography}
