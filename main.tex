@@ -206,6 +206,12 @@
 	long  = Operating System,
 	class = abbrev
 }
+\DeclareAcronym{JSON}{
+	short = JSON,
+	long  = JavaScript Object Notation,
+	class = abbrev
+}
+
 
 \pgfplotsset{compat=1.15}
 \setlength{\headheight}{15pt}
@@ -788,6 +794,7 @@ The resources used for this research are the following:
 	\item \textbf{\ac{CUDA}:} A programming model developed by NVIDIA, it is a parallel computing programming on \ac{GPU}, the sequential computes on thousands of cores in parallel mode, optimizing the performance of tasks \cite{Cuda2019}.
 	
 	\item \textbf{Torch: } A framework to support \ac{ML} algorithms using \ac{GPU} in a efficient way. This tool seeks to facilitate and speed up the implementation of neural network libraries and optimization packages \cite{Torch2019}.\\
+	
 \end{itemize}
 
 
@@ -827,11 +834,76 @@ Versions of software packages installed in both environments are presented in ta
 
 
 \section{Experiment Setup}
-I am here
+"text"
 
 \section{Data Collection}
-\section{Data Labeling}
-\section{Data Pre-processing}
+
+The process to collect data and prepare it until it been transformed in the input of our model is shown in Figure \ref{figure:data_collection} and it is described following.
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=150mm, scale = 1]{images/8_data_collection.png}	
+	\caption{Data Collection Process}	
+	\label{figure:data_collection}
+\end{figure}
+
+\begin{steps}
+	
+	\item To get data from twitter we use a Twitter Streaming \ac{API} and we collect data and it is process through \ac{THS} system where raw tweets are stored in a Hive Database.
+	
+	\item Running a python script we get data from ``raw$\_$tweet'' table of \ac{THS} system. Here we filter data by specific diseases and by date of stored using Spark tools to be following save it in a \ac{JSON} file because originally tweets have a \ac{JSON} format. It facilitates the next step of processing.
+	
+	\item Using the created \ac{JSON} file in previous step, we filter data and only take the tweet text (sentence itself) because our project only needs to work with the text written by the user. Also, we throw away repeated tweets. This filtered data is saved in a \ac{CSV} file to next processing step.
+	
+	\item In this step the data pass for the pre-processing step to clean and filter data before deliver data to labelling step. This process is described in section \ref{data_preprocessing} 
+	
+	\item Data collected is ready to be used like input of our model.
+	
+\end{steps}
+
+\section{Data Pre-processing} \label{data_preprocessing}
+
+Data collected from social networks contains misspelling, slang or no textual information, that makes it less structured and informal. This is a reason to clean data like a previous step to build our model. This stage is composed by three demarked steps: Pre-processing before labeling, labeling task and final pre-processing. These steps are showing in Figure \ref{figure:data_preprocessing}. 
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=150mm, scale = 0.8]{images/9_data_preprocessing.png}	
+	\caption{Data Pre-processing}	
+	\label{figure:data_preprocessing}
+\end{figure}
+
+In this section we will describe the first and last step of processing. The labeling step will be described in section \ref{data_labeling}. Before use tweets directly to labeling, it is necessary to filter and clean data \cite{Dai2017} \cite{Ahuja2017} \cite{Halibas2018}. The operations to prepare data is described following.
+
+\begin{itemize}[nolistsep]
+	\item \textbf{Remove line breaks:} It is necessary clean it because it can be generating more than one row from same tweet and we can lose context and meaning.
+	
+	\item \textbf{Remove links, hashtags and mentions:} Social media are informal and contains no textual information that is why we clean no-relevant data like links, hashtags and mentions \cite{Dai2017}.
+	
+	\item \textbf{Character unespace:} We replace source code based on hexadecimal code with the character that it represents to be understandable and compatible with human language.
+	
+	\item \textbf{Reduce lengthening:} Many typo errors are presented in text like repetition of an char many times to express emphasis or simply because exist a typographic mistake. For example, the word ``fluuu'' represent the next word ``flu''. In cases like this one is needed fix it and replace it to the right word.
+	
+	\item \textbf{Expand contractions:} To ensure a correct representation of each word we expanded all contraction to their original form.
+	
+	\item \textbf{Keep text and Number:} After of previous operation we remove all characters which are noisy to \ac{ML} algorithm. We just conserve text and numbers.
+	
+	\item \textbf{Spelling corrections:} It is necessary a spelling corrector to fix some unknown words and help to avoid misunderstanding of meaning in labeling step or in the process of vectorization avoid being processed as an unknown word.\\
+	
+\end{itemize}
+
+Cleaned data got from previous process is ready to deliver to labeling users, where main and auxiliary label inputs are built. This step is described in section \ref{data_labeling}.
+
+The final \ac{NLP} step is showed following.
+
+\begin{itemize}[nolistsep]
+	\item \textbf{Lemmatization:} It is a process to find a lemma for each word in a tweet. That refers to convert all inflected forms in its base form, for example the words: “taking”, “took” refers to base form “to take”. Lemmatization considers the context and meaning to convert a word in its base form, for example in the next word “caring” a simple stemming process will cutoff termination “ing” and return “car”. In other hand with lemmatization it returns “care”. The more known approaches are \ac{NLTK}, textBlob, spaCy, pattern, Stanford CoreNLP and others. 
+
+	\item \textbf{Remove stop-words:} The final operation of processing step is removing the stop-words and just keep words with high meaning.
+\end{itemize}
+
+\section{Data Labeling} \label{data_labeling}
+
+
 \section{Experimental Results and Discussion}
 
 \chapter{Conclusion and Future Work} \label{chapter 6}
