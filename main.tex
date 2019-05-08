@@ -706,27 +706,25 @@ The process is showed in the Figure \ref{figure:ths_system} and detailed step by
 
 \section{How to Define Similarity}
 
-To define the rules to consider if two tweets are similar or not, we describe three cases, where a label indicate if a tweet is related to a disease and, if a tweet belongs to the collection of diseases defined by $D = \{Flu, Measles, Zika, Diarrhea, Ebola\}$. Similarity level is represented in the following function.
+The measure of similarity is represented by one (1) or zero (0). Its value depends of the relevance measures of triplets (group of three tweets). The measure of similarity is defined in the following function.
 
 \begin{equation}
-s(t_i, t_j) = 
-\begin{cases} 
-0 		& 
-			\begin{cases} 
-				\text{if } t_j \notin D_k \\
-				\text{if } t_i, t_j \in D_k \text{ where, } l_i = 1,  l_j = {0,2} \\		
-			\end{cases} \\
-1 		& \text{if } t_i, t_j \in D_k \text{ where, } l_i = 1, l_j = 1
-\end{cases}
+s(t_0, t_1, t_2) = 
+	\begin{cases} 
+		1 		& \text{if } r(t_0, t_1) \geq r(t_0, t_2) \\	
+		0 		& \text{if } r(t_0, t_1) < r(t_0, t_2)
+	\end{cases}
 \end{equation}
 
-\noindent In practice we make a previous step to calculate the global similarity between two tweets, that process is called relevance measure, it given a triplet constituted by three tweets represent the measure of similarity between them. Let $t(t_0, t_1,t_2)$ refers to measure of relevance in range of 1 to 4, where $t_0, t_1, t_2$ represent a tweet each one. If $s(t_0, t_1) > s(t_0, t_2)$, then $t_1$ is more similar to $t_0$ than $t_2$ to $t_0$. 
+\noindent Let $s(t_0, t_1, t_2)$ represent the similarity between  tweets in a triplet, when it is true that $r(t_0, t_1) geq r(t_0,t_2)$ the value is 1, and when $r(t_0, t_1) < r(t_0,t_2)$ the value is 0; this means 1 if  $t_0$ is more similar to $t_1$ than it to $t_2$ and  0  if $t_0$ is more similar to $t_2$ than it to $t_1$.
 
-\noindent $s(t_i, t_j)$ is the similarity measure between $t_i$ and $t_j$. There is two possible values for similarity, it is 0 when $t_j$ does not belongs to same class to $t_i$, and also is 0 when $t_i$ and $t_j$ belongs to the same type of disease and the label of $t_i$ is 1 and label of $t_j$ could be 0 or 2 that represent for a tweet not related or it is ambiguous to classify.
-If similarity is equal to 1, then $t_i$ and $t_j$ have to belong to the same group of disease a both labels have to be 1.
+\begin{equation}
+r(t_i, t_j) = \sum^n_{k=1} \frac{m_k(t_i, t_j)}{n}, \text{where } m_k(t_i,t_j) \in \mathbb{N}, 1 \leq m(t_i,t_2) \leq 4
+\end{equation}
 
+\noindent The function of relevance $r(t_i, t_j)$ is calculated by two ways. The first way is estimated automatically because tweets have a marked difference in meaning, considering the disease class and their label value. In other hand when the value labels are calculated manually, the relevance is the average of sum each relevance measure of the pair of tweets, where the measure of relevance can take a value in a range of 1 to 4, depending of level of relevance of similarity. To higher value means more similarity between them. The process to labeling the relevance level and similarity of triplets are described in section \ref{data_relevance_labeling}
 
-\section{Model Learning Architecture}
+\section{Model Learning Architecture}\label{models}
 \subsection{Neural Networks used for Learning Similarity}
 \subsection{Neural Networks Variations}
 
@@ -832,10 +830,6 @@ Versions of software packages installed in both environments are presented in ta
 	\caption{Version of software in nodes \label{software_packages}} 
 \end{table}
 
-
-\section{Experiment Setup}
-"text"
-
 \section{Data Collection}
 
 The process to collect data and prepare it until it been transformed in the input of our model is shown in Figure \ref{figure:data_collection} and it is described following.
@@ -863,7 +857,7 @@ The process to collect data and prepare it until it been transformed in the inpu
 
 \section{Data Pre-processing} \label{data_preprocessing}
 
-Data collected from social networks contains misspelling, slang or no textual information, that makes it less structured and informal. This is a reason to clean data like a previous step to build our model. This stage is composed by three demarked steps: Pre-processing before labeling, labeling task and final pre-processing. These steps are showing in Figure \ref{figure:data_preprocessing}. 
+Data collected from social networks contains misspelling, slang or no textual information, that makes it less structured and informal. This is a reason to clean data like a previous step to build our model. This stage is composed by three demarcated steps: Pre-processing before labeling, labeling task and final pre-processing. These steps are showing in Figure \ref{figure:data_preprocessing}. 
 
 \begin{figure}[H]	
 	\centering
@@ -903,6 +897,77 @@ The final \ac{NLP} step is showed following.
 
 \section{Data Labeling} \label{data_labeling}
 
+Due our model follows a supervised approach; it is necessary use labeled data. In this project we have two different kinds of labeling. First one is focused in classify tweets if they are related or no to a disease. The other type refers to set a measure of similarity between tweets. How they were built are described following.
+
+\subsection{Disease-related labeling}
+
+This training set is composed of 11,932 tweets and it was labeled by five members of \ac{THS} team. Labels depends of the classification in term of similar meaning and their relatedness with specific topics about health diseases. There are three possible label values by each tweet. 
+
+\begin{itemize} [nolistsep]
+	\item \textbf{0:} This label represents a tweet that is not related with a disease. 
+	\item \textbf{1:} It is a tweet which the meaning has related with a disease.
+	\item \textbf{2:} Tweets have an ambiguous meaning, difficult to classify.
+\end{itemize}
+
+\subsection{Labeling for level of relevance} \label{data_relevance_labeling}
+
+To label relevance of similarity on tweets we built triplets that are a collection of three sets. The set that was manually labeled is composes by three tweets with a common meaning, it belongs to the same disease class and their label value is 1 (``the tweet meaning is related to a disease''). The second group is form by two similar tweets and one tweet out of class, that means that last tweet is in a different class that others two; consequently, the first and second are similar, in other hand the first and the third are not similar. Finally, the last group of triplets is composed by tweets with the same class of disease, but the third tweet has a label value of 0 or 2, indicating that the tweet does not has a semantic or context relationship with the others tweets in the triplet.
+
+All triplets were built using the training set of 11,932 samples after labeling if it is related with a disease or no. The triplets that were labeled manually are which belongs to the first group, only tweets in the same class with label with value of 1, to know the level of relevance between similar tweets. The total of triplets labeled were 4,000; it was 1,000 triplets by each disease mentioned next ``Flu'', ``Measles'', ``Ebola'' and ``Diarrhea''. ``Zika'' was not taken in because, we do not have enough samples to build triplets. Each tweet was labeled by 3 different subjects doing a total of 12,000 samples. Triplets were equality divided between 53 collaborators.  The measure of relevance is in a range of 1 to 4, where the level of final relevance is given by the average of those three measures. While the measure is higher, it represents more similarity between the pair of tweets analyzed. 
+
+A metric of similarity is obtained from relevance measures. Given three tweets $t_0$, $t_1$ and $t_2$, the measure of similarity takes a value of 1 or 0; where this is 1 when $t_0$ is more similar to $t_1$ than $t_2$, and it is 0 when $t_0$ is more similar to $t_2$ than $t_1$.
+
+The rules that was considered to manual labeling of relevance between tweets are the following:
+
+
+
+\begin{enumerate}
+	\item \text{When tweets talk about the same disease:}
+	\begin{itemize}
+		\item \textbf{Tweet 1:} \textit{There is a measles outbreak in japan.}
+		\item \textbf{Tweet 2:} \textit{Japanese fear measles outbreak in progress.}
+	\end{itemize}
+
+	\item \text{Tweets talk about the same disease, but the events are not related:}
+	\begin{itemize}
+		\item \textbf{Tweet 1:} \textit{Government intensifies educational campaign against Ebola.}
+		\item \textbf{Tweet 2:} \textit{Many countries launch initiatives to raise awareness about Ebola.}
+	\end{itemize}
+
+	\item \text{Tweets talk about of the same disease at the same location:}
+	\begin{itemize}
+		\item \textbf{Tweet 1:} \textit{Outbreak report of Zika at Ponce.}
+		\item \textbf{Tweet 2:} \textit{Government of Ponce warns about outbreak of Zika.}
+	\end{itemize}
+
+
+	\item \text{Describe different symptoms of a same disease:}
+	\begin{itemize}
+		\item \textbf{Tweet 1:} \textit{Big headache and fever due do you the flu.}
+		\item \textbf{Tweet 2:} \textit{I have been two days in bed feeling ill, due the flu.}
+	\end{itemize}
+
+
+	\item \text{Do a similar action in topics related to diseases:}
+	\begin{itemize}
+		\item \textbf{Tweet 1:} \textit{Government recommends getting the flu vaccine.}
+		\item \textbf{Tweet 2:} \textit{Today I went to the pharmacy to get the flu vaccine.}
+	\end{itemize}
+\end{enumerate}
+
+\section{Experiment Setup}
+Experiments was set in two environments with different resources. Chameleon Cloud and \ac{THS} cluster. All code was developed in Python, the script permits us to collect the data from twitter using \ac{THS} system and it was pre-processing using \ac{NLP} techniques before and after labeling of data. The process of labeling has two steps, the first step is grouping the tweets by disease and label it by their semantic relation with a disease or no. The second type of labeling is related with the compute of a measure of similarity, using triplets to compare de similarity between them and get a metric of relevance that tell us what of two tweets is more like the first one.
+
+These two-input feed our created model. The pair of tweets referred like premise and hypothesis pass by a series of transformation to extract relations between them and finally get a measure of relevance. Along the process we use \ac{DL} approaches using \ac{LSTM} and \ac{CNN} with different variations explained in section \ref{models}, to finally build a model able to determine given two tweets how similar they are between themselves.
+
+A perspective overview of the setup structure of whole project is showed in Figure \ref{figure:model_setup}
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[height=190mm,  scale = 0.8]{images/10_architecture_setup.png}	
+	\caption{Model Setup Overview}	
+	\label{figure:model_setup}
+\end{figure}
 
 \section{Experimental Results and Discussion}
 
