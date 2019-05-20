@@ -725,9 +725,41 @@ r(t_i, t_j) = \sum^n_{k=1} \frac{m_k(t_i, t_j)}{n}, \text{where } m_k(t_i,t_j) \
 \noindent The function of relevance $r(t_i, t_j)$ is calculated by two ways. The first way is estimated automatically because tweets have a marked difference in meaning, considering the disease class and their label value. In other hand when the value labels are calculated manually, the relevance is the average of sum each relevance measure of the pair of tweets, where the measure of relevance can take a value in a range of 1 to 4, depending of level of relevance of similarity. To higher value means more similarity between them. The process to labeling the relevance level and similarity of triplets are described in section \ref{data_relevance_labeling}
 
 \section{Model Learning Architecture}\label{models}
-\subsection{Neural Networks used for Learning Similarity}
 
-\subsection{Neural Networks Variations}
+The \ac{ML} model is a triplet-based network architecture \cite {Wang2014} to classify if tweets are similar or not. It is based in the level of similarity relevance between tweets and their relatedness with a disease  The inputs for to train the model is given in \ac{CSV} files that contains tweets and the label values tagged manually like we describe in section \ref{data_labeling}. Input data pass through a process to finally get the measures of similarity between a pair of tweets. The entire process is showed in figure 4.x
+
+\subsection{Input Setup}
+The data got after labeling step will be prepared to be compatible with neural network input. Inputs to neural network are the tweet itself, the disease type and the disease-related labeling. There is a value by each triplet member, that is the premise tweet and the hypotheses. Additionally, we used the labels of relevance between premise and the two hypotheses. Finally, the label of similarity classification for each triplet.
+
+The disease type and the disease-related labels are binarized to change it to a categorical kind, our data have four (4) types of diseases and the labels to represent its relatedness with a disease condition are three (3). In the next tweet we illustrate how is created the representation of the auxiliary input.
+
+\begin{definition}
+``It is march with streets are fully covered in snow I am drinking hot milk with cocoa butter and recovering from a flu I just turned my Christmas tree lights on yes, it is still here''
+\end{definition}
+
+In the example above, the tweet mentions ``flu'' and its meaning it is related to the same disease. Categorical representation is shown in figure \ref{figure:categorical}
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=130mm, scale = 1]{images/10_categorical.png}	
+	\caption{Auxiliary Input Representation}	
+	\label{figure:categorical}
+\end{figure}
+
+\noindent Where the array with four elements is the type of disease and the array with three elements is the disease-related label. The values are binaries, it means they just can be zero (0) or one (1) These two representations are combined and form the auxiliary input for the model presented.
+
+In other hand the tweets sentences pass by a process of embedding, ...
+
+
+\subsection{Combiner Layer}
+
+\subsection{Matching Methods}
+
+\subsection{Similarity Relevance}
+
+\subsection{Similarity Model and Transfer Learning Model}
+
+\subsection{Metrics}
 
 \chapter{Performance Evaluation} \label{chapter 5}
 \section{Hardware} 
