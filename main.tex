@@ -752,6 +752,23 @@ The first tweet refers to flu, but it is not about a condition health, in change
 In this case the first tweet tells about twins getting flu and describe the intervals of days with possible symptoms. The second is about a person that who was in the hospital and explain that was the reason because she/he could not type, and when he or she was recuperated then got flu again and just goes to sleep. The two sentences are showing a health condition (flu) where the writers are explaining symptoms and what they were doing when they got flu. Therefore, these sentences are related.
 
 \section{Formalization}
+
+The goal in this project is classify if a tweet is similar to another from a stream of tweets $S = {s_!, s_2, … , s_n}$. Our model is a supervised approach, where the target keywords are associated with a disease group $G = {g_1, g_2, …, g_n}$. G is conforming by five diseases \textit{flu, measles, zika, diarrhea and Ebola}.
+
+The belong to a medical condition is given by a manual classification of tweets into the next three classes:
+
+\begin{itemize}[nolistsep]
+	\item \textbf{0}: Tweet does not belong to a medical condition.
+	\item  \textbf{1}: Tweet belong to a medical condition.
+	\item \textbf{2}: Tweet has an ambiguous meaning, it is difficult to classify 
+\end{itemize}
+
+The last target is a measure of similarity between a pair of tweets in range of one and four. The complete description of how is taken this measure is given in section \ref{define_similarity}
+
+We apply pre-processing and \ac{NLP} tools over tweets to filter and select whatsoever related to a medical condition, and built triplets taking only tweets with labels 1 or 0. Let us call the result of this process S'. Now we apply a classifier $\hat{y}$ in a triplet $s' \in S'$ to classify the pair of tweets in the triplet that are more similar. After training $\hat{y}$ classifier, it can be used as long data come from the same source. If we change G elements, we must be retraining the algorithm with the new keywords present in G.
+
+The distribution of samples respect to belonging to a medical condition or no, are not uniform, with class 1 being majority. In this case we are dealing with a class imbalance problem \cite{Batista2004} \cite{He2009}. To tackle this problem, we use a penalty technique during training task, a higher penalty is given when occur a wrong classify of a sample that belongs to the minority class.
+
 \section{Data Processing Architecture}
 
 \begin{figure}[H]	
@@ -796,7 +813,7 @@ The process is showed in the Figure \ref{figure:ths_system} and detailed step by
 	\label{figure:ths_system}
 \end{figure}
 
-\section{How to Define Similarity}
+\section{How to Define Similarity}\label{define_similarity}
 
 The measure of similarity is represented by one (1) or zero (0). Its value depends of the relevance measures of triplets (group of three tweets). The measure of similarity is defined in the following function.
 
