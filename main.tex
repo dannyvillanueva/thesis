@@ -871,7 +871,7 @@ In the example above, the tweet mentions ``flu'' and its meaning is related to t
 
 The main input is composed by the tweet which pass through a process of embedding. Our embedding layer use GloVe embedding \cite{pennington2014}, an unsupervised algorithm to get a vector representation for each word in tweets. We used a pretrained vector that was trained with 2 billion of tweets. It is formed by a vocabulary of 1.2 million of terms with vectors of 25, 50, 100 and 200 dimensions. In the model were used 50 and 200 dimensions.
 
-The main input was given in two ways. The first data with all text after labeling step. Second group of data go through a additional preprocessing step to remove stop words and lemmatized each word to the root lemma.
+The main input was given in two ways. The first data with all text after labeling step. Second group of data go through an additional preprocessing step to remove stop words and lemmatized each word to the root lemma.
 
 \subsection{Combiner Layer}
 
@@ -893,7 +893,7 @@ The hyperparameters variation was in epochs, learning rate, batch size and optim
 \end{table}
 
 \subsubsection{\ac{RNN} Combiner}
-Using recurrent networks, we have two different combinations. The first implementation was a combination of two LSTM network, they are networks with loops in them, allowing information to persist. The first LSTM network is conforming by 128 units and return all sequences by each module. The next LSTM network joined also has 128 units but only return the final sequence (accumulated output). The structure of this network is showed in Figure \ref{figure:lstm_only}
+Using recurrent networks, we have two different combinations. The first implementation was a combination of two LSTM networks, they are networks with loops in them, allowing information to persist. The first LSTM network is conforming by 128 units and return all sequences by each module. The next LSTM network joined also has 128 units but only return the final sequence (accumulated output). The structure of this network is showed in Figure \ref{figure:lstm_only}
 
 \begin{figure}[H]	
 	\centering
@@ -902,9 +902,12 @@ Using recurrent networks, we have two different combinations. The first implemen
 	\label{figure:lstm_only}
 \end{figure}
 
-Figure \ref{figure:lstm_only} shows a double \ac{LSTM} network, where embedded tweets are the inputs and the output is a tensor with the accumulate sequence. This process is the same for each embedded vector.
+Figure \ref{figure:lstm_only} shows a double \ac{LSTM} network, where embedded tweets are the inputs and the output is a tensor with the accumulate sequence. This process is the same for each embedding vector.
 
-In other hand, the second network implementation is a variant of \ac{LSTM} networks, we use twice sequential bidirectional LSTM networks, that consist in put two independent \ac{LSTM} networks, one in a normal time order, and the second in reverse time order. The outputs are concatenated at each time step. They’re used to make predictions with both past and future context. The inputs are the same like first implementation of \ac{LSTM} network. The process is the same by each input. The architecture is showed in Figure \ref{figure:bilstm}
+In other hand, the second network implementation is a variant of \ac{LSTM} networks. In this implementation we use twice sequential bidirectional LSTM networks, that consist in put two independent \ac{LSTM} networks, one in a normal time order, and the second in reverse time order. They are used to make predictions with both past and future context. The inputs for this layer in both networks are the embedded vectors, there are 3 vectors, one by each tweet in the triplet. The output of both two architectures are three tensors (a tensor is a data structure used how a representation of multidimensional vectors \cite{Tensor2019}), one by each tweet.
+
+In the bidirectional network, inputs are the same that first implementation of \ac{LSTM} network. The outputs are concatenated at each time step. concatenated output of first network is delivered to next bidirectional network. The final output only returns a tensor with the accumulated sequences. The process is repeated by each embedding. The architecture is showed in Figure \ref{figure:bilstm}
+
 
 \begin{figure}[H]	
 	\centering
@@ -912,14 +915,18 @@ In other hand, the second network implementation is a variant of \ac{LSTM} netwo
 	\caption{BiLSTM network}	
 	\label{figure:bilstm}
 \end{figure}
+
   
 \subsubsection{\ac{CNN} Combiner}
 
-Here cnn inception basic
+In this method we use the concept of inception networks. The figure of our inception network is showed next.
+
+Figure xx
+
 
 \subsection{Relevance Layer}
 
-The input for this layer is the three outputs of combiner layer. Here the network tries to learn the relevance between tweets, the representation of first tweet with the second and with third respectively. To extract relationship between tweets, the matching methods are applied to these two combinations \cite{Conneau2017}, the method is a concatenation of premise representation, the hypothesis representation, the element-wise product and absolute element-wise difference of premise and hypothesis. The resulting vector is merged with the auxiliary inputs of premise and hypothesis. Finally the output vector after concatenation is joined to a dense layer of 128 units with a {ReLU} activation and then it into a dense layer of one unit where the result represent the relevance between both tweets premise and hypothesis. Full structure of relevance component is showed in Figure \ref{figure:relevance}
+The input for this layer is the three outputs of combiner layer. Here the network tries to learn the relevance between tweets, the representation of first tweet with the second and with third respectively. To extract relationship between tweets, matching methods are applied to these two combinations, the method is a concatenation of premise representation, the hypothesis representation, the element-wise product and absolute element-wise difference of premise and hypothesis \cite{Conneau2017}. The resulting vector is merged with the auxiliary inputs of premise and hypothesis. Finally the output vector after concatenation is joined to a dense layer of 128 units with {ReLU} activation and end into a dense layer of one unit where the result represent the relevance between both tweets premise and hypothesis. Full structure of relevance component is showed in Figure \ref{figure:relevance}
 
 \begin{figure}[H]	
 	\centering
@@ -930,7 +937,7 @@ The input for this layer is the three outputs of combiner layer. Here the networ
 
 \subsection{Classification Layer}
 
-Classification layer take as input the relevance layer outputs and concatenate them. Next it is following by a sequence of three dense layers of 16, 8 and 1 units respectively. The final output can take two values, 1 means the first hypothesis value is more similar to the premise and 0 when second hypothesis is more similar to premise. Figure \ref{figure:classification} show the architecture of this component.
+Classification layer take as input the relevance layer outputs and concatenate them. Next it is following by a sequence of three dense layers of 16, 8 and 1 units respectively. Dense layer with 16 and 8 units have a \ac{ReLU} activation to convert results into positive data. In final dense layer we use a sigmoid activation to obtain a binary output. The final output can take two values, 1 means the first hypothesis is more similar to the premise and 0 when second hypothesis is more similar to premise. Figure \ref{figure:classification} show the architecture of this component.
 
 \begin{figure}[H]	
 	\centering
