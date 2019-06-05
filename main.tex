@@ -211,7 +211,11 @@
 	long  = JavaScript Object Notation,
 	class = abbrev
 }
-
+\DeclareAcronym{ReLU}{
+	short = ReLU,
+	long = Rectified Linear Unit,
+	class = abbrev
+}
 
 \pgfplotsset{compat=1.15}
 \setlength{\headheight}{15pt}
@@ -358,29 +362,29 @@ This research is supported by the \ac{US} National Library of Medicine of the \a
 \doublespacing
 
 \section{Motivation}
-	Social networks have become a very important means to share ideas, discuss news, and opinions on many topics.  They also provide real-time information on sales, marketing, politics, natural disasters, and crisis situations, among others. These networks include Facebook, Twitter, WhatsApp, and Instagram, to name a few. 
-	
-	In this work, we shall focus our efforts on the Twitter social network. This network provides a mechanism for people to express their views using short messages (i.e., 280 characters)
-	called {\em tweets}. 
-	Users of this network can find each other messages without the need of becoming ``friends'', as it happens in other networks. The analysis of these tweets can enable us to understand the current situation regarding certain topics, for example, discussions related to medical topics (e.g., ``flu'').
-	Using the tweets, users can monitor and find patterns that give information about some type of disease being discussed in the social network. In addition, it is possible to detect the position,
-	``mood'', or sentiment of the people around some topic.
-	
-	For the analysis of all this available information it is necessary to group or categorize the text along similarities in structure and/or meaning. However, this is a challenging task, due to the complexity/ambiguity introduced by  spelling errors or the use of informal language (``slang'').  In the case of tweets, the small size of the message often makes it difficult to analyze without the context provided by previous messages or user interactions. Making use of the data stored in the  \ac{THS} System from the \ac{UPRM} , as one of our sources, it is possible to process all the information more easily and quickly, and use it to analyze and process the data using  \ac{ML} algorithms, a popular branch of \ac{AI} systems.
-	
-	The view of the world has changed with the recent progress and ubiquity   of \ac{AI} systems in our lives. We can say that we now live in a new world surrounded by \ac{ML} (e.g. Amazon Alexa, writing correctors). Companies like Google, Amazon, Netflix and others are using \ac{AI} algorithms to obtain value and insight of large amount of data that  otherwise would be  impossible to analyze. In particular, search and mining of text data from social media, blogs, and and other sources provided valuable insight to companies about the opinions of customers. 
+Social networks have become a very important means to share ideas, discuss news, and opinions on many topics.  They also provide real-time information on sales, marketing, politics, natural disasters, and crisis situations, among others. These networks include Facebook, Twitter, WhatsApp, and Instagram, to name a few. 
+
+In this work, we shall focus our efforts on the Twitter social network. This network provides a mechanism for people to express their views using short messages (i.e., 280 characters)
+called {\em tweets}. 
+Users of this network can find each other messages without the need of becoming ``friends'', as it happens in other networks. The analysis of these tweets can enable us to understand the current situation regarding certain topics, for example, discussions related to medical topics (e.g., ``flu'').
+Using the tweets, users can monitor and find patterns that give information about some type of disease being discussed in the social network. In addition, it is possible to detect the position,
+``mood'', or sentiment of the people around some topic.
+
+For the analysis of all this available information it is necessary to group or categorize the text along similarities in structure and/or meaning. However, this is a challenging task, due to the complexity/ambiguity introduced by  spelling errors or the use of informal language (``slang'').  In the case of tweets, the small size of the message often makes it difficult to analyze without the context provided by previous messages or user interactions. Making use of the data stored in the  \ac{THS} System from the \ac{UPRM} , as one of our sources, it is possible to process all the information more easily and quickly, and use it to analyze and process the data using  \ac{ML} algorithms, a popular branch of \ac{AI} systems.
+
+The view of the world has changed with the recent progress and ubiquity   of \ac{AI} systems in our lives. We can say that we now live in a new world surrounded by \ac{ML} (e.g. Amazon Alexa, writing correctors). Companies like Google, Amazon, Netflix and others are using \ac{AI} algorithms to obtain value and insight of large amount of data that  otherwise would be  impossible to analyze. In particular, search and mining of text data from social media, blogs, and and other sources provided valuable insight to companies about the opinions of customers. 
 %	 The value of the information has been ever the key for the growth of companies; therefore, text analysis is a rough task aim to extract value %information to use in business decisions, however this is challenging job due to complexity of \ac{NLP} a field of \ac{ML}  focuses on analyzing the %human language.
 
 In the health care domain, searching text in social medias, blogs, newspapers can provide clues about the diseases that are being talked about 
 by citizens of a region. For example, 
-	
-	The detection of similarity in texts in their meaning of semantics content is a topic present in many researches because the need to obtain valuable and reliable information from the amount of available data over internet like, communication services (e.g. “Twitter”), feedback user, system log files, customer reviews to mention a few; and the data present in the same company about employees, clients and others. 
-	
-	In this project, we investigate and implement text similarity algorithms in such a way that we can: 1) know if they are related or not with a disease, 2) group similar tweets to those that we have already captured, analyzed or stored and, 3) find similarity index between tweets using different learning algorithms. We based our work on, semantic similarity approaches and text similarity measures using \ac{DL} algorithms to deliver reliable information to the end user about health-related topics.
-	
-	
+
+The detection of similarity in texts in their meaning of semantics content is a topic present in many researches because the need to obtain valuable and reliable information from the amount of available data over internet like, communication services (e.g. “Twitter”), feedback user, system log files, customer reviews to mention a few; and the data present in the same company about employees, clients and others. 
+
+In this project, we investigate and implement text similarity algorithms in such a way that we can: 1) know if they are related or not with a disease, 2) group similar tweets to those that we have already captured, analyzed or stored and, 3) find similarity index between tweets using different learning algorithms. We based our work on, semantic similarity approaches and text similarity measures using \ac{DL} algorithms to deliver reliable information to the end user about health-related topics.
+
+
 \section{Objectives}
-REVISE in light of new work.
+REVISE in light of new work
 \begin{itemize}[nolistsep]
 	\item \textbf{Collect and filter the data file: } We select necessary tweets and filter all them which are related to health disease thereby, we use a clean data as input to train the algorithms to be implemented. Tweets were collected using \ac{THS} System at \ac{UPRM}. In this way, it is convenient to describe the steps through the process of data selection until deliver of final cleaned up inputs. Part of inputs is labeled data by hand; thus, it is necessary a group of people to classify a measure of similarity between tweets that will be used in training sample.
 	\item \textbf{Investigate and implements \ac{DL} algorithms for text similarity measures} It is necessary investigate the state-of-the-art methods and techniques related to text analysis, and then build a robust architecture using \ac{DL} algorithms like, \ac{CNN} and \ac{RNN} on \ac{NLP} approaches,  focusing in text similarity measures. The output of our trained models will be one of two of next options a) there is an acceptable similarity measure between the pair of tweets and, b) no exist enough similarity between the pair of tweets.
@@ -403,30 +407,42 @@ The outline of this thesis is as follows. Chapter 2 contains the literature revi
 
 \chapter{Literature Review} \label{chapter 2}
 \section{Introduction}
-Advance of technology has been many changes in the world and our life is now surrounding for \ac{ML} algorithms hence, companies of all sizes are following the large business' success using \ac{AI} to draw insight that can be used to take better decisions.
+%Advance of technology has been many changes in the world and our life is now surrounding for \ac{ML} algorithms hence, companies of all sizes are %following the large business' success using \ac{AI} to draw insight that can be used to take better decisions.
 
-The field of \ac{AI} seeks to understand how humans think (``intelligence'') and how build intelligent entities. Then what we use \ac{AI} today for? Because the wide field, there is no a simple answer, but we can mention a few applications next, robotic vehicles, speech recognition, autonomous planning and scheduling, game playing, spam fighting, logistics planning, robotics, machine translation, to mention a few applications that exist today, combining efforts of science, engineering and mathematics \cite{Russell2010}.This applications need process a lot of data, hence it is necessary automate the process of analysis, here \ac{ML} appears like a subfield of \ac{AI} that automate the process of learning extracting patterns from the raw data to get insight \cite{Kelleher2015}.
+The field of \ac{AI} seeks to understand how humans think (``intelligence''), and how use that knowledge to build programs that show intelligence. 
+Today \ac{AI} is a very wide field, making it difficult to give a simple answer to what its an AI application. But we can mention a few applications that exist today:  autonomous robotic vehicles, speech recognition, autonomous planning and scheduling, game playing, spam fighting, logistics planning, robotics in 
+automation, and machine translation. These applications combine efforts in computer science, engineering, mathematics, and cognitive sciences \cite{Russell2010}.This applications need process a lot of data, hence it is necessary automate the process of data acquisition and analysis. 
+Big data analytics is used to for the purpose of data management in this context.  Machine Learning (\ac{ML})  (a subfield of \ac{AI}) provide the tools  that automate the process of learning  how to extract patterns from the raw data to get insights \cite{Kelleher2015}.
 
-Artificial Neural Networks are simply a collection of connected units that represent abstractly the human brain (“neurons”) to aim achieve learning a specific task \cite{Russell2010}. In this project we are working on similarity tasks. Today exist many applications of similarity like handwritten digits recognition, similarity images detection from text or an image in the web searchers (e.g. Google, Bing). Generic Neural Network techniques can be successfully applied for these problems, but to achieve better result and scale to large applications we need used techniques specialized on certain domains, for example in case of \ac{NLP} (``text analysis'') we need methods to process sequential data, like {RNN}, that is a{DL} technique part of {ML} field. \cite{Goodfellow2016}
+Artificial Neural Networks and Deep Learning are very popular methods in \ac{ML}. Neural Networks are simply a collection of connected computational 
+units that represent abstractly the human brain (“neurons”) and  aim to achieve learning on a specific task \cite{Russell2010}. These neurons are organized and interconnected into layers. Deep learning is the development of complex neural networks that contain many layers of neurons. These networks are computational expensive to train and require relatively high amounts of training data. But, they can rival human expertise at various taks, such as image classification or language translation.  
+
+In this project we are working on similarity tasks related with text messages from Twitter. This problem bear similarity with t many applications of similarity for handwritten digits recognition, image similarity detection from text, and image content search  in  web searchers (e.g. Google, Bing).  Neural Network techniques can be successfully applied for these problems, but to achieve better results and scale to large applications we need used techniques specialized on certain domains, for example in case of \ac{NLP} (``text analysis'') we need methods to process sequential data, like {RNN}, that is a{DL} technique part of {ML} field \cite{Goodfellow2016}.  In the rest of this chapter, we go over background information related with machine learning that is necessary to understand the context and contributions of our work.
 
 \section{Machine Learning}
 
-\ac{ML} also knows as automated learning is associated with the concept of “to learn”, this learning is composed of an input data that represent experience, using a learning algorithm is achieved an output with some expertise \cite{Shai2014}. This learning is focus in gain knowledge, understanding, experience and skills \cite{Nilsson1998} in such a manner its performance improves significantly.
+Machine learning, \ac{ML}, also known as automated learning, is associated with the concept of making computers learn some tasks without actually 
+programming the computer to do so. Typically, \ac{ML} involves a training phase, where an algorithm is implemented in software and then presented
+with many examples of the task to be learned. The training phase produces a {\em model} which is the trained, ``intelligent" software module that automates some tasks. This model is then
+validated in the second phase, called {\em validation phase}, where unseen examples are given to the model and we evaluate its performance. 
+Typically models are evaluated based on either accuracy of prediction (i.e., classification tasks)  or on the mean square error incurred when approximating some quantity (i.e., regression tasks). If multiple, competing  models are trained and validated, then the final selection is done in a third phase called the 
+{\em test phase}, where additional examples are given to the competing models to pick the best one amongst them. 
+Notice that this learning is composed of  input data that represent previous experience, and the model will learn to produce an output based on such input.  \cite{Shai2014}. 
+This learning process is focused on gaining knowledge, understanding, experience and skills \cite{Nilsson1998} in such a manner its performance improves significantly over time.
 
-Today we look that \ac{ML} is in many practical applications that we use in frequently in our daily life like: movie recommendation, text translation, speech recognition \cite{Goodfellow2016}, robotic vehicles, autonomous planning and scheduling, diagnosing diseases \cite{Russell2010}. In essence, we are speaking about \ac{ML} when an artificial intelligence system has the ability or capability to get knowledge or find patterns from raw data \cite{Goodfellow2016}. \ac{ML} study data to detect patterns to be able to categorize, predict, identify unknown pattern and detect anomalies or unknown patterns, because Big Data we now have the advantage to process an amount of data, and using {ML} algorithms we can identify new opportunities to solve complex problems like self-driving cars, fraud detection, virtual assistants, resource optimization and more applications \cite{Nevala2017}.
+%Today we look that \ac{ML} is in many practical applications that we use in frequently in our daily life like: movie recommendation, text translation, speech recognition \cite{Goodfellow2016}, robotic vehicles, autonomous planning and scheduling, diagnosing diseases \cite{Russell2010}. In essence, we are speaking about \ac{ML} when an artificial intelligence system has the ability or capability to get knowledge or find patterns from raw data \cite{Goodfellow2016}. \ac{ML} study data to detect patterns to be able to categorize, predict, identify unknown pattern and detect anomalies or unknown patterns, because Big Data we now have the advantage to process an amount of data, and using {ML} algorithms we can identify new opportunities to solve complex problems like self-driving cars, fraud detection, virtual assistants, resource optimization and more applications \cite{Nevala2017}.
 
-\ac{ML} is a very wide field, for this reason it has branched into several sub-fields related to distinct tasks \cite{Shai2014} and approaches to solve problems. For the study and application of these algorithm exist many ways to classify the learning paradigms, the best known is supervised learning and unsupervised learning, this distinction is by what kind of experience they are allowed to have during the learning process \cite{Goodfellow2016}, others kinds of {ML} are semi-supervised learning and reinforcement learning.
+\ac{ML} is a very wide field, for this reason it has branched into several sub-fields related to distinct tasks \cite{Shai2014} and approaches to solve problems. For the study and application of these algorithms,  there are many ways to organize the learning paradigms. The best known are supervised learning and unsupervised learning. This distinction is by what kind of experience they are allowed to have during the training process \cite{Goodfellow2016}. Others kinds of {ML} are semi-supervised learning and reinforcement learning.
 
 
 \subsection{Supervised Learning}
+In Supervised Learning, a model is presented  with pairs of input and output items. Often, the input data items in the pairs are called {\em features}.
+Likewise, the output data items in the pairs are often called  {\em labels}. 
+%Supervised Learning is based in an set of input-output pairs, 
+During training, the model automatically learns   the relationship between the input features and the labels. In 
+essence, the model is learning a  function that maps from the input data to the output data \cite{Russell2010} \cite{ Kelleher2015}. This kind of learning is only possible if we know the output data \cite{Nilsson1998}, and if we have the enough examples to train the {ML} algorithm. A good rule of thumb 
+by Professor Andrew Ng, from Stanford University, is to have at least 10,000 examples to train your models.
 
-Supervised Learning is based in an set of input-output pairs, these models learn automatically of the relationship between input features and target features, through a function that maps from the input data to output feature \cite{Russell2010} \cite{ Kelleher2015}. This kind of learning is only possible if we know the target of the output data \cite{Nilsson1998}, and if we have the enough input labeled data to train the {ML} algorithm.
-
-More abstractly, Supervised Learning describe a scenery where the training examples is a set of data that contains the necessary information to identify and associate it to the output value. This information is not available in the test data to which the learned model is being applied. The aim is that the acquired expertise will can predict the expected output \cite{Shai2014}.
-
-It is called ``supervised'' because the environment provides an extra information, commonly known as labels, the model is trained with input data and target data \cite{Shai2014}. The target value (``label'') is provided by a supervisor who teach to the system what to do \cite{Goodfellow2016} , providing the correct output (``desired output'') as a feedback for reduce error.
-
-Supervised learning identify correlation and a logical pattern in data from the from state A to state B, after these pattern are learnt, we can transfer learning to solve similar problems \cite{Nevala2017} \cite{Cer2018}. Common techniques used in this kind of \ac{ML} are decision trees, forecasting, neural networks, support vector machines to name a few; and their applications are risk assessment; personalizing interaction; image, speech and text recognition; fraud detection; customer segmentation like the most knowns \cite{Nevala2017}.
 
 \begin{figure}[H]	
 	\centering	
@@ -435,15 +451,36 @@ Supervised learning identify correlation and a logical pattern in data from the 
 	\label{figure:Supervised_Learning}
 \end{figure}
 
-Figure \ref{figure:Supervised_Learning} shows the process of a supervised learning model. The input of the model is data that contains each element with its respective label, next the model extracts the most relevant features of the data, to find the relation between input and output, and construct a logical pattern. Finally, the model after the training step can predict new outputs given a new data without labels.
+Figure \ref{figure:Supervised_Learning} shows the process of a supervised learning model. The input of the model is data that contains each element with its respective label, next the model extracts the most relevant features of the data, to find the relation between input and output, and construct a logical pattern. Finally, once the model is trained,  it  can predict new outputs from  new, unseen, unlabeled data items.
+
+The nature of the labels is dependent upon the type of learning problem being tackled.
+If the supervised tasks involves classification, then the label represents 
+the class or grouping to which the input in the pair belongs. An example classification task will be determining if an image represents a cat or a dog based on the pixels in the image. If the tasks involves regression, then the label represents a quantity associated with the input features. For example, we 
+could predict expected battery life of a lithium battery  as a function of daily depth of discharge.  
+
+%More abstractly, Supervised Learning describe a scenery where the training examples is a set of data that contains the necessary information to identify and associate it to the output value. This information is not available in the test data to which the learned model is being applied. The aim is that the acquired expertise will can predict the expected output \cite{Shai2014}.
+
+%It is called ``supervised'' because the environment provides an extra information, commonly known as labels, the model is trained with input data and target data \cite{Shai2014}. The target value (``label'') is provided by a supervisor who teach to the system what to do \cite{Goodfellow2016} , providing the correct output (``desired output'') as a feedback for reduce error.
+
+%Supervised learning identify correlation and a logical pattern in data from the from state A to state B, after these pattern are learnt, we can transfer learning to solve similar problems \cite{Nevala2017} \cite{Cer2018}. 
+
+Common techniques used for supervised learning are logistic regression, decision trees, neural networks, and support vector machines.
+Supervised learning is used in applications such as risk assessment, digital assitants, speech recognition, language translation, 
+image processing, fraud detection, and  customer segmentation \cite{Nevala2017}.
 
 \subsection{Unsupervised Learning}
+In unsupervised learning, there are no labels in the data. Instead, the model tries to uncover the underlying structure in the data by 
+finding correlations and identifying patterns parsing the available data \cite{Nevala2017}. Unsupervised learning is often used as 
+an initial phase during data analysis to figure out the structure of the data. 
+%
+%%Today Big Data is a great tool that makes possible analyze a great amount of information, faster and easier.  Raw data in many cases is difficult to analyze and many cases we do not have an answer key for our trainable data. In this cases we can use unsupervised learning like an alternative, therefore we can determine 
+%
+%This kind of algorithms learns patterns without an explicit feedback (``label'') \cite{Russell2010}, we only have a training data without target values for them \cite{Nilsson1998}. 
+There is no separation of training data and test data \cite{Shai2014}; all the data is the input for the algorithm. This method is similar to human behavior: when we observe the world, usually we do inferences and group things based on our interaction with the environment.
+This type of learning is refined by exposing the model to  a lot of observations \cite{Nevala2017}.
 
-Today Big Data is a great tool that makes possible analyze a great amount of information, faster and easier.  Raw data in many cases is difficult to analyze and many cases we do not have an answer key for our trainable data. In this cases we can use unsupervised learning like an alternative, therefore we can determine correlations and identify pattern parsing the available data \cite{Nevala2017}.
-
-This kind of algorithms learns patterns without an explicit feedback (``label'') \cite{Russell2010}, we only have a training data without target values for them \cite{Nilsson1998}. There is no separation of training data and test data \cite{Shai2014}; all the data is the input for the algorithm. Here we have a similitude with the human behavior, when they observe the world, usually they do inferences and group things based on their interaction with the environment, and they are guided by their observations and intuition, this learning is refined exposing to experience and a lot of observations \cite{Nevala2017}.
-
-A the most common technique for this learning is called clustering, \cite{Russell2010} which classify data in meaningful categories, dividing the data into groups with similar characteristics called clusters \cite{Nilsson1998} \cite{Goodfellow2016}. Other techniques are nearest neighbor mapping, singular value decomposition to name a few. Their applications are related to market basket analysis, anomaly/intrusion detection, text classification, identifying like things, sentiment analysis, and so on \cite{Nevala2017} \cite{Halibas2018}.
+The most common technique for this learning modality is called {\em clustering}, \cite{Russell2010}, which separates the data into meaningful categories called {\em clusters}. Each cluster is made up of data items that have similar characteristics called clusters \cite{Nilsson1998} \cite{Goodfellow2016}. This similarity is measured by using a function that computes a similarity metric, often a variation of a distance function. In practice the items are represented as vectors 
+$v_1,  v_2, ..., v_k$ and the metrics measures how close are each other in their vector space. Other unsupervised techniques are nearest neighbor mapping, singular value decomposition,  self-organizing maps, Hidden Markov Models, and anomaly detection, to name a few. Their applications are related to market basket analysis, anomaly/intrusion detection, text classification, identifying similarities amongst data elements, sentiment analysis, and so on \cite{Nevala2017} \cite{Halibas2018}.
 
 \begin{figure}[H]	
 	\centering
@@ -452,27 +489,77 @@ A the most common technique for this learning is called clustering, \cite{Russel
 	\label{figure:Unsupervised_Learning}
 \end{figure}
 
-In Figure \ref{figure:Unsupervised_Learning} the features or patterns are extracted of the input data (text, documents, images, etc) data, represented in dimensionality vector, with this data the algorithm is trained. The model created is able use new data to predict outputs like group likelihood or cluster ID.
+In Figure \ref{figure:Unsupervised_Learning} we show a workflow for unsupervised learning. In this case, we show clustering of documents based on content. First, the text and other features in documents are converted into a vector representation (i.e., one-hot vectors), then a clustering algorithm (e.g., k-means clustering) is used to assign each vector to a cluster. The number of cluster is pre-defined at the start of the learning process.
+Once trained, the model is able to take new data items and cluster them.
 
 \section{Neural Networks}
-An artificial neural network is a very simplified abstract model of a biological brain, an interconnection of processing units with capability to learn patterns to generalize and associate data. A significant aspect adopted from biological brain is the ``learning capability’’ from the experience and transfer knowledge to find reasonable solutions to similar tasks \cite{ Gurney2004} \cite{ Kriesel2005}.
+An artificial neural network is a very simplified abstract model of a biological brain, an interconnection of processing units with capability to learn patterns to generalize and associate data. A significant aspect adopted from biological brain is the ``learning capability" from the experience and transfer knowledge to find reasonable solutions to similar tasks \cite{ Gurney2004} \cite{ Kriesel2005}.
 
-When we speak about network, it can be referred from a simple single node to a collection of nodes \cite{ Kriesel2005}. The structures of neural networks are basically the next 1) a set of nodes linked associated with a numeric weight that represent the strength of connection between them, 2) an input function for each node that computes the weighted sum of all inputs and 3) an activation function to control the neuron behavior and get the desired output \cite{ Kriesel2005} \cite{Russell2010}. 
+When we speak about a neural network, it can be something as simple as a network with a single node to more complicated a collection of nodes stacked in layers\cite{ Kriesel2005}. The structure of  the neural network basically consists of:  1) a set of linked nodes  associated with a numeric weight that represent the strength of connection between them, 2) an input function for each node that computes the weighted sum of all inputs, and 3) an {\em activation function} to control the neuron ``trigger" behavior and get the desired output \cite{ Kriesel2005} \cite{Russell2010}. 
 
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=160mm, scale = 1]{images/3_neuron.png}	
-	\caption{A Simple Mathematical Neuron Representation \cite{Russell2010}.}	
+	\caption{A Simple Mathematical Neuron Representation as depicted in \cite{Russell2010}.}	
 	\label{figure:Mathematical_Neuron}
 \end{figure}
 
-Figure \ref{figure:Mathematical_Neuron} show the basic structure of a simple mathematical neuron, where output is result of apply an activation function (e.g. binary threshold, logistic function, Rectified linear unit function, etc.) to the weighted sum of inputs. The weights are important to minimize the cost of activation function and they are updated when the model is trained. The following equation represent the output after applying an activation function in a neuron showed in Figure \ref{figure:Mathematical_Neuron}.
+Figure \ref{figure:Mathematical_Neuron} show the basic structure of a simple mathematical neuron, where output is result of applying an activation function to the weighted sum of inputs. The input is a collection values of $a_1, a_2, ..., a_i$.The output is a value $a_j$. Each of the inputs are multiplied by a weight $w_{i,j}$ which is a real number. The weights are important to minimize the cost of activation function and they are updated when the model is trained, through an optimization process. Often an additional term $a_0=1$ and weight $w_{0,j}=1$ are added as the bias term in the equation. The following equation represent the output after applying an activation function in a neuron showed in Figure \ref{figure:Mathematical_Neuron}.
 
 \begin{equation}
 a_j=g\Biggl(\sum_{i=0}^{n} w_{ij}\; a_i\Biggr),
 \end{equation}
+The activation function $g$ provides a way to add a non-linear relationship between the inputs and output. Some the functions used as activation function are the sigmoid function, the hyperbolic tangent function, and the rectified linear unit function (RELU). \cite{Goodfellow2016}. 
 
-To form a network, we need connect all these individual neurons like a structure. There are many ways to build the network, feed-forward network and recurrent network are two network topologies very used. The first one showed in Figure \ref{figure:feed-forward-network}, is a network with component clearly separated: an input layer, an output layer and one or more hidden layers also called processing layers. All connections are directed to the following layer and the internal states are just the weights themselves. The second network design the neurons have extra connections adding to a classic feed-forward network, they can be a direct recurrence when the neurons are connected to themselves,  indirect recurrence is a connection to previous layers and a lateral recurrence exist when neurons have connections with another ones at the same layer. These connections influence the neurons itself and their influence depends of the kind of recurrent design. This mean that the network is a dynamic system, the fact that this network feeds its outputs back in its own inputs permit a short-term memory, a model more seem to a brain and by the way, more difficult to understand and build \cite{Kriesel2005} \cite{Russell2010}. 
+An alternative formulation, based on linear algebra, represents the examples as a collection of vectors $X_1, X_2, ..., X_k$. These vectors 
+are stacked horizontally on to form a matrix $X$. Next we have the labels $Y_1, Y_2, ..., Y_k$ which are also stacked in a matrix $Y$. 
+Then the equation for the neural network becomes: 
+\[
+Z = WX + b
+\]
+\[
+Y = g(Z)
+\]
+In this formulation, $WX$ is the matrix multiplication between the examples and the weights, and $b$ is the bias vector. $Z$ represents the 
+result of theses operations and become the input to the activation function $g$ which finally yields $Y$.
+
+\subsection{Sigmoid function}
+The {\em sigmoid function} is used to compute binary activation values in the range [0, 1]. The function is given by the following equation:
+\[
+\sigma(Z) = \frac{1}{1 + e^{-Z}}
+\] 
+The sigmoid function is interpreted as computing a probability, and is used in binary classification. Typically, an input on which the sigmoid  gives a values greater or equal to 0.5 is classified to the 1 class, whereas a values less than 0.5 is sent to the 0 class. The sigmoid function is typically used 
+in the final node of a neural network. 
+
+\subsection{Hyperbolic tangent function}
+The {\em hyperbolic tangent function} is used to compute an activation in the range [-1, 1]. and is used for activation in intermediate nodes 
+in a network. The function is given by the following equation:
+\[
+tanh(Z) = \frac{e^Z - e^{-Z}}{e^Z + e^{-Z}}
+\]
+Typically, $tanh$  is used for activation in intermediate nodes in a network.
+
+\subsection{Rectified linear unit function}
+The {\em rectified linear unit  function} (Relu) is used to compute an activation in the range $[0, z]$, where $z$ is a real number. 
+The function is given by the following equation:
+\[
+g(Z) = max(0, Z)
+\]
+Typically, $Relu$  is used for activation in intermediate nodes in a network. This function provides better convergence in deep neural networks. 
+
+\subsection{Softmax function}
+The {\em softmax function} is used to map a vector K with n dimension into n probability values. The formula is:
+\[
+s(K_i) = \frac{e^{K_i}}{\sum_{j=1}^{n}e^{K_j}}
+\]
+Softmax is always used in the final node of a neural network used for multi-class classification. The value $s(K_i)$ represents the probability that 
+the input example belongs to class $i$. Typically, the max value of all $K_i$ is used to select the class $i$ with highest probability. 
+
+\subsection {Connecting Layers}
+To form a network, we  need to connect individual neurons as nodes in a network graph. There are many ways to build the network, but feed-forward networks are the most common ones.  Figure \ref{figure:feed-forward-network}  shows the topology of a feed-forward network. In this organization, the components are clearly separated: an input layer, an output layer and one or more hidden layers (also called processing layers). The input data is fed at
+the input layer, and the output label is  generated by the output layer. For a given neuron at layer $l$, its output is fed as input to neurons in the next layer $l + 1$. 
+
+%All connections are directed to the following layer and the internal states are just the weights themselves. The second network design the neurons have extra connections adding to a classic feed-forward network, they can be a direct recurrence when the neurons are connected to themselves,  indirect recurrence is a connection to previous layers and a lateral recurrence exist when neurons have connections with another ones at the same layer. These connections influence the neurons itself and their influence depends of the kind of recurrent design. This mean that the network is a dynamic system, the fact that this network feeds its outputs back in its own inputs permit a short-term memory, a model more seem to a brain and by the way, more difficult to understand and build \cite{Kriesel2005} \cite{Russell2010}. 
 
 \def\layersep{5cm}
 \begin {figure}[H]
@@ -543,9 +630,13 @@ To form a network, we need connect all these individual neurons like a structure
 
 \section{Deep Learning with Neural Networks}
 
-The artificial intelligence usually solves problems intellectually challenge for the humans relatively easy, but the task the human performs easy or solve intuitively are very difficult for the computers. The problems like speech recognition or applications to find faces in images are challenge task. For these problems we must allow computers gather knowledge from the experience, avoiding specify all the knowledge that the system needs. It means build a complicated task using simpler concepts \cite{Goodfellow2016}.
+%The artificial intelligence usually solves problems intellectually challenge for the humans relatively easy, but the task the human performs easy or solve intuitively are very difficult for the computers. The problems like speech recognition or applications to find faces in images are challenge task. For these problems we must allow computers gather knowledge from the experience, avoiding specify all the knowledge that the system needs. It means build a complicated task using simpler concepts \cite{Goodfellow2016}.
+%
+%This approach is a \ac{ML} modern and advanced technique, the base in many advances of  \ac{AI} fields, like Natural Language Processing, Speech Recognition, Computer Vision, Biomedical Applications and so on; using the most sophisticated neural networks. 
 
-This approach is a \ac{ML} modern and advanced technique, the base in many advances of  \ac{AI} fields, like Natural Language Processing, Speech Recognition, Computer Vision, Biomedical Applications and so on; using the most sophisticated neural networks. These models form a complex and deeper graph than a normal neural network, including many layers and neurons, this is why we know this approach as Deep Learning \cite{Chandra2017} \cite{Goodfellow2016} \cite{Nevala2017}.
+Traditional neutral networks only contain a few layers, for example: input layer, two or three hidden layers, and a final output layer. Modern approaches,
+however, add dozens of hidden layers with tens or even hundreds of neurons in each layer. These approaches result in models that
+form a complex and deep networks graphs, much more powerful  than a normal neural network. For that reason,  we know this approach as Deep Learning (DL) \cite{Chandra2017} \cite{Goodfellow2016} \cite{Nevala2017}. Improvements in hardware, particularly Graphical Processing Units (GPU) units for massive parallel computing of neural networks have enable this ``deep approach".
 
 The most typical example of \ac{DL} approach is feed-forward deep network. It consists in an input layer, that contains the input data for the model, next we have the hidden layers, a variable number of neurons and layers, and finally an output layer as is showed in the Figure \ref{figure:feed-forward-network}. That depth (number of hidden layers) allows to learn a multi-step program. There are many algorithms of \ac{DL}, like \ac{CNN} used commonly when is working with images and \ac{RNN} to process sequences of data. 
 
@@ -717,7 +808,7 @@ s(t_0, t_1, t_2) =
 	\end{cases}
 \end{equation}
 
-\noindent Let $s(t_0, t_1, t_2)$ represent the similarity between  tweets in a triplet, when it is true that $r(t_0, t_1) geq r(t_0,t_2)$ the value is 1, and when $r(t_0, t_1) < r(t_0,t_2)$ the value is 0; this means 1 if  $t_0$ is more similar to $t_1$ than it to $t_2$ and  0  if $t_0$ is more similar to $t_2$ than it to $t_1$.
+\noindent Let $s(t_0, t_1, t_2)$ represent the similarity between  tweets in a triplet, when  $r(t_0, t_1) \geq r(t_0,t_2)$ is true then the value is 1, and when $r(t_0, t_1) < r(t_0,t_2)$ the value is 0; this means 1 if  $t_0$ is more similar to $t_1$ than it to $t_2$ and  0  if $t_0$ is more similar to $t_2$ than it to $t_1$.
 
 \begin{equation}
 r(t_i, t_j) = \sum^n_{k=1} \frac{m_k(t_i, t_j)}{n}, \text{where } m_k(t_i,t_j) \in \mathbb{N}, 1 \leq m(t_i,t_2) \leq 4
@@ -725,20 +816,32 @@ r(t_i, t_j) = \sum^n_{k=1} \frac{m_k(t_i, t_j)}{n}, \text{where } m_k(t_i,t_j) \
 
 \noindent The function of relevance $r(t_i, t_j)$ is calculated by two ways. The first way is estimated automatically because tweets have a marked difference in meaning, considering the disease class and their label value. In other hand when the value labels are calculated manually, the relevance is the average of sum each relevance measure of the pair of tweets, where the measure of relevance can take a value in a range of 1 to 4, depending of level of relevance of similarity. To higher value means more similarity between them. The process to labeling the relevance level and similarity of triplets are described in section \ref{data_relevance_labeling}
 
-\section{Model Learning Architecture}\label{models}
+\section{Architecture of Learning Model}\label{models}
 
-The \ac{ML} model is a triplet-based network architecture \cite {Wang2014} to classify if tweets are similar or not. It is based in the level of similarity relevance between tweets and their relatedness with a disease  The inputs for to train the model is given in \ac{CSV} files that contains tweets and the label values tagged manually like we describe in section \ref{data_labeling}. Input data pass through a process to finally get the measures of similarity between a pair of tweets. The entire process is showed in figure 4.x
+The \ac{ML} model is a triplet-based network architecture \cite {Wang2014} to classify if tweets are similar or not. It is based in the level of similarity relevance between tweets and their relatedness with a disease  The inputs to train the algorithm is given in \ac{CSV} file that contains tweets and the label values tagged manually like we describe in section \ref{data_labeling}. Input data pass through a process to finally get the measures of similarity between a pair of tweets. The entire process is showed in Figure \ref{figure:all_model}
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=140mm, scale = 1]{images/11_all_model.png}	
+	\caption{Model Architecture}	
+	\label{figure:all_model}
+\end{figure}
+
+The proposed algorithm starts with an embedding layer, triplets of tweets pass by an embedding process to convert sentences in multidimensional vectors, which ones represent the words. Next in combiner layer we use different approaches like \ac{RNN} and \ac{CNN} setting with several combinations of hyperparameters until get better results.
+In the relevance layer we add a second input called auxiliary input that contains the labels if a tweet has a related disease and, labels of disease group to belong. Using auxiliary input and the output of before layers is calculated the relevance between the premise tweet and hypothesis tweet. Until this step the network will been trained for future use in a production environment.
+The final network component is the classification layer that are composed by a sequence of dense layers to finally get an output with values of 1 or 0, where 1 means that first hypothesis is more similar to premise and 0 means second hypothesis is more similar to premise.
+
 
 \subsection{Input Setup}
-The data got after labeling step will be prepared to be compatible with neural network input. Inputs to neural network are the tweet itself, the disease type and the disease-related labeling. There is a value by each triplet member, that is the premise tweet and the hypotheses. Additionally, we used the labels of relevance between premise and the two hypotheses. Finally, the label of similarity classification for each triplet.
+The data got after labeling step, it will be preparing to be compatible with neural network input. Inputs to neural network are the tweet, the disease type and disease-related labeling; by each member of triplet. Additionally, the labels for training model are the relevance between premise and the two hypotheses and the final classification of similarity to define with hypothesis tweet is more related to premise tweet.
 
-The disease type and the disease-related labels are binarized to change it to a categorical kind, our data have four (4) types of diseases and the labels to represent its relatedness with a disease condition are three (3). In the next tweet we illustrate how is created the representation of the auxiliary input.
+Both disease group label and the disease-related labels form the auxiliary input. They were binarized to change it to a categorical kind, our data have four types of diseases and the labels to represent its relatedness with a disease condition, are three. In the next tweet we illustrate how is created the representation of the auxiliary input.
 
 \begin{definition}
 ``It is march with streets are fully covered in snow I am drinking hot milk with cocoa butter and recovering from a flu I just turned my Christmas tree lights on yes, it is still here''
 \end{definition}
 
-In the example above, the tweet mentions ``flu'' and its meaning it is related to the same disease. Categorical representation is shown in figure \ref{figure:categorical}
+In the example above, the tweet mentions ``flu'' and its meaning is related to the flu condition. Categorical representation is shown in figure \ref{figure:categorical}
 
 \begin{figure}[H]	
 	\centering
@@ -747,18 +850,77 @@ In the example above, the tweet mentions ``flu'' and its meaning it is related t
 	\label{figure:categorical}
 \end{figure}
 
-\noindent Where the array with four elements is the type of disease and the array with three elements is the disease-related label. The values are binaries, it means they just can be zero (0) or one (1) These two representations are combined and form the auxiliary input for the model presented.
+\noindent Where the array with four elements is the type of disease and the array with three elements is the disease-related label. The values are binaries, it means they just can be zero or one. These two representations are combined and form the auxiliary input.
 
-In other hand the tweets sentences pass by a process of embedding, ...
+The main input is composed by the tweet which pass through a process of embedding. Our embedding layer use GloVe embedding \cite{pennington2014}, an unsupervised algorithm to get a vector representation for each word in tweets. We used a pretrained vector that was trained with 2 billion of tweets. It is formed by a vocabulary of 1.2 million of terms with vectors of 25, 50, 100 and 200 dimensions. In the model were used 50 and 200 dimensions.
 
+The main input was given in two ways. The first data with all text after labeling step. Second group of data go through a additional preprocessing step to remove stop words and lemmatized each word to the root lemma.
 
 \subsection{Combiner Layer}
 
-\subsection{Matching Methods}
+In this layer we implement three different combination of algorithms that include RNN and CNN approaches.  Each method was implemented with variation in the hyperparameters depending of each algorithm.
+Find the best parameters combinations is not a trivial task, in first place we based our experiments in result of related researchers and then we create our own combination that is showed in Table \ref{Hyperparameters}
 
-\subsection{Similarity Relevance}
+The hyperparameters variation was in epochs, learning rate, batch size and optimizer in training step. The parameters mentioned above are not learned by the network, those ones have predefined values set before training process.
 
-\subsection{Similarity Model and Transfer Learning Model}
+\begin{table}[htb]
+	\centering
+	\begin{tabular}{||M{4.5cm}|M{4cm}||}
+		\hline
+		\textbf{Hyperparameters} 	& \textbf{Values} 	\\ \hline
+		Learning rate           	& 0.001, 0.001      \\ \hline
+		Epochs         				& 10, 20            \\ \hline
+		Batch size           		& 32, 128 			\\ \hline		Optimizer                 	& RMSprop, Adam     \\ \hline	
+	\end{tabular}
+	\caption{Hyperparameters}\label{Hyperparameters}
+\end{table}
+
+\subsubsection{\ac{RNN} Combiner}
+Using recurrent networks, we have two different combinations. The first implementation was a combination of two LSTM network, they are networks with loops in them, allowing information to persist. The first LSTM network is conforming by 128 units and return all sequences by each module. The next LSTM network joined also has 128 units but only return the final sequence (accumulated output). The structure of this network is showed in Figure \ref{figure:lstm_only}
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=150mm, scale = 1]{images/12_lstm_only.png}	
+	\caption{LSTM network only}	
+	\label{figure:lstm_only}
+\end{figure}
+
+Figure \ref{figure:lstm_only} shows a double \ac{LSTM} network, where embedded tweets are the inputs and the output is a tensor with the accumulate sequence. This process is the same for each embedded vector.
+
+In other hand, the second network implementation is a variant of \ac{LSTM} networks, we use twice sequential bidirectional LSTM networks, that consist in put two independent \ac{LSTM} networks, one in a normal time order, and the second in reverse time order. The outputs are concatenated at each time step. They’re used to make predictions with both past and future context. The inputs are the same like first implementation of \ac{LSTM} network. The process is the same by each input. The architecture is showed in Figure \ref{figure:bilstm}
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=150mm, scale = 1]{images/13_bilstm.png}	
+	\caption{BiLSTM network}	
+	\label{figure:bilstm}
+\end{figure}
+  
+\subsubsection{\ac{CNN} Combiner}
+
+Here cnn inception basic
+
+\subsection{Relevance Layer}
+
+The input for this layer is the three outputs of combiner layer. Here the network tries to learn the relevance between tweets, the representation of first tweet with the second and with third respectively. To extract relationship between tweets, the matching methods are applied to these two combinations \cite{Conneau2017}, the method is a concatenation of premise representation, the hypothesis representation, the element-wise product and absolute element-wise difference of premise and hypothesis. The resulting vector is merged with the auxiliary inputs of premise and hypothesis. Finally the output vector after concatenation is joined to a dense layer of 128 units with a {ReLU} activation and then it into a dense layer of one unit where the result represent the relevance between both tweets premise and hypothesis. Full structure of relevance component is showed in Figure \ref{figure:relevance}
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=150mm, scale = 1]{images/14_relevance.png}	
+	\caption{Relevance layer}	
+	\label{figure:relevance}
+\end{figure}
+
+\subsection{Classification Layer}
+
+Classification layer take as input the relevance layer outputs and concatenate them. Next it is following by a sequence of three dense layers of 16, 8 and 1 units respectively. The final output can take two values, 1 means the first hypothesis value is more similar to the premise and 0 when second hypothesis is more similar to premise. Figure \ref{figure:classification} show the architecture of this component.
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=80mm, scale = 1]{images/15_classification.png}	
+	\caption{Relevance layer}	
+	\label{figure:classification}
+\end{figure}
 
 \subsection{Metrics}
 
@@ -924,7 +1086,7 @@ Cleaned data got from previous process is ready to deliver to labeling users, wh
 The final \ac{NLP} step is showed following.
 
 \begin{itemize}[nolistsep]
-	\item \textbf{Lemmatization:} It is a process to find a lemma for each word in a tweet. That refers to convert all inflected forms in its base form, for example the words: “taking”, “took” refers to base form “to take”. Lemmatization considers the context and meaning to convert a word in its base form, for example in the next word “caring” a simple stemming process will cutoff termination “ing” and return “car”. In other hand with lemmatization it returns “care”. The more known approaches are \ac{NLTK}, textBlob, spaCy, pattern, Stanford CoreNLP and others. 
+	\item \textbf{Lemmatization:} It is a process to find a lemma for each word in a tweet. That refers to convert all inflected forms in its base form, for example the words: “taking”, “took” refers to base form “to take”. Lemmatization considers the context and meaning to convert a word in its base form, for example in the next word “caring” a simple stemming process will cutoff termination “ing” and return “car”. In other hand with lemmatization it returns “care”. The more known tools are \ac{NLTK}, textBlob, spaCy, pattern, Stanford CoreNLP and others. 
 
 	\item \textbf{Remove stop-words:} The final operation of processing step is removing the stop-words and just keep words with high meaning.
 \end{itemize}
