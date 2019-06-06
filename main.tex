@@ -805,7 +805,7 @@ hypothesis tweets. Users are asked to compare the premise with each of the two h
 premise. This is done by providing a numeric value on their similarity. The value is in the range [0,4], with 0 being unrelated tweets and 4 being identical in term of meaning.
 
 With this labelled data set, we then aim to train a model than can learn to do this ranking and learn how to give a similarity score between 
-the example tweet $T'$ and another tweet $T_i$ that we want to consider. (PONER AQUI REFERENCIA AL PAPER DE LAS PREMISE E HIPOTHESIS)
+the example tweet $T'$ and another tweet $T_i$ that we want to consider. \cite{Wang2014}
 
 By using a \ac{DL} model trained to rank tweets based on similarity, users could: 
 \begin{itemize}
@@ -947,7 +947,7 @@ The final network component is the classification layer that are composed by a s
 
 
 \subsection{Input Setup}
-The data got after labeling step, it will be preparing to be compatible with neural network input. Inputs to neural network are the tweet, the disease type and disease-related labeling; by each member of triplet. Additionally, the labels for training model are the relevance between premise and the two hypotheses and the final classification of similarity to define with hypothesis tweet is more related to premise tweet.
+The data got after labeling step, it will be preparing to be compatible with neural network input. Inputs to neural network are the tweet, the disease type and disease-related labeling; by each member of triplet. Additionally, the labels for training model are the relevance between premise and the two hypotheses and the final classification of similarity to define with hypothesis tweet is more related to premise tweet. The total of triplets used like main input was 11425 triplets
 
 Both disease group label and the disease-related labels form the auxiliary input. They were binarized to change it to a categorical kind, our data have four types of diseases and the labels to represent its relatedness with a disease condition, are three. In the next tweet we illustrate how is created the representation of the auxiliary input.
 
@@ -1043,12 +1043,12 @@ Classification layer take as input the relevance layer outputs and concatenate t
 	\label{figure:classification}
 \end{figure}
 
-\subsection{Metrics}
-\subsubsection{Accuracy}
+\section{Metrics}
+\subsection{Accuracy}
 Here text
-\subsubsection{Mean Square Error}
+\subsection{Mean Square Error}
 Here text
-\subsubsection{Loss}
+\subsection{Loss}
 here Text
 
 \chapter{Performance Evaluation} \label{chapter 5}
@@ -1224,7 +1224,7 @@ Due our model follows a supervised approach; it is necessary use labeled data. I
 
 \subsection{Disease-related labeling}
 
-This training set is composed of 11,932 tweets and it was labeled by five members of \ac{THS} team. Labels depends of the classification in term of similar meaning and their relatedness with specific topics about health diseases. There are three possible label values by each tweet. 
+This training set is composed of 11,937 tweets and it was labeled by five members of \ac{THS} team. Labels depends of the classification in term of similar meaning and their relatedness with specific topics about health diseases. There are three possible label values by each tweet. 
 
 \begin{itemize} [nolistsep]
 	\item \textbf{0:} This label represents a tweet that is not related with a disease. 
@@ -1236,7 +1236,7 @@ This training set is composed of 11,932 tweets and it was labeled by five member
 
 To label relevance of similarity on tweets we built triplets that are a collection of three sets. The set that was manually labeled is composes by three tweets with a common meaning, it belongs to the same disease class and their label value is 1 (``the tweet meaning is related to a disease''). The second group is form by two similar tweets and one tweet out of class, that means that last tweet is in a different class that others two; consequently, the first and second are similar, in other hand the first and the third are not similar. Finally, the last group of triplets is composed by tweets with the same class of disease, but the third tweet has a label value of 0 or 2, indicating that the tweet does not has a semantic or context relationship with the others tweets in the triplet.
 
-All triplets were built using the training set of 11,932 samples after labeling if it is related with a disease or no. The triplets that were labeled manually are which belongs to the first group, only tweets in the same class with label with value of 1, to know the level of relevance between similar tweets. The total of triplets labeled were 4,000; it was 1,000 triplets by each disease mentioned next ``Flu'', ``Measles'', ``Ebola'' and ``Diarrhea''. ``Zika'' was not taken in because, we do not have enough samples to build triplets. Each tweet was labeled by 3 different subjects doing a total of 12,000 samples. Triplets were equality divided between 53 collaborators.  The measure of relevance is in a range of 1 to 4, where the level of final relevance is given by the average of those three measures. While the measure is higher, it represents more similarity between the pair of tweets analyzed. 
+All triplets were built using the training set of 11,937 samples after labeling if it is related with a disease or no. The triplets that were labeled manually are which belongs to the first group, only tweets in the same class with label with value of 1, to know the level of relevance between similar tweets. The total of triplets labeled were 4,225; it was 1,075 triplets by each disease mentioned next ``Flu'', ``Measles'', ``Ebola'' and ``Diarrhea''. ``Zika'' was not taken in because, we do not have enough samples to build triplets. Each tweet was labeled by 3 different subjects doing a total of 12,675 samples. Triplets were equality divided between 54 collaborators.  The measure of relevance is in a range of 1 to 4, where the level of final relevance is given by the average of those three measures. While the measure is higher, it represents more similarity between the pair of tweets analyzed. 
 
 A metric of similarity is obtained from relevance measures. Given three tweets $t_0$, $t_1$ and $t_2$, the measure of similarity takes a value of 1 or 0; where this is 1 when $t_0$ is more similar to $t_1$ than $t_2$, and it is 0 when $t_0$ is more similar to $t_2$ than $t_1$.
 
