@@ -217,11 +217,13 @@
 	class = abbrev
 }
 
-\pgfplotsset{compat=1.15}
+\pgfplotsset{compat=1.14}
 \setlength{\headheight}{15pt}
 \setcounter{secnumdepth}{3}
 \begin{document}
 \newtheorem{definition}{Example}
+
+\newtheorem{property}{Property}
 
 \pagenumbering{roman}%
 
@@ -795,25 +797,27 @@ Semantic similarity is frequently used for text summarization, topic analysis, r
 Our work is rooted in our \ac{THS} project at UPRM, whose goal is to monitor tweets related with medical conditions, and detect instances where
 a diseases is actively being discussed in a given region.
 The main problem that we want to tackle in this project is the development of  \ac{DL} models that can evaluate the similarity between
-tweets. Specifically, given an example tweet $T'$ and  collection of tweets $T_1, T_2, ..., T_n$, we want to rank the collection 
-from the more similar to the least one to $T'$. In order to do, we need to develop a method to measure the similarity between pairs of 
-tweets. Our goal is to use \ac{DL} to achieve this. 
+tweets. Specifically, given an example tweet $T_p$ and  collection of tweets $T_1, T_2, ..., T_n$, we want to rank the collection of tweets
+from the most similar to the least one to $T_p$. In order to do, {\bf we need to develop a method to measure the similarity between pairs of 
+tweets}. Our goal is to use \ac{DL} to achieve this. 
 
 First, we need to create a collection of labeled tweets to help us determine how humans 
-view similarity. In this collection, we have rows with triplets, each element being a tweet. For each row, the first tweet is the ``example" tweet called the ``premise". Next to it, we have two additional tweets, called the
+view similarity. In this collection, we have rows with triplets $(T_p, T_{h_1}, T_{h_2})$, each element being a tweet. For each row, the first tweet, $T_p$ is the ``example" tweet called the ``premise". Next to it, we have two additional tweets, $T_{h_1}, T_{h_2}$, called the
 hypothesis tweets. Users are asked to compare the premise with each of the two hypothesis tweets, and rank which one is more similar to the 
-premise. This is done by providing a numeric value on their similarity. The value is in the range [0,4], with 0 being unrelated tweets and 4 being identical in term of meaning.
+premise. This is done by providing a numeric value on their similarity. The value is in the range [0,4], with 0 being unrelated tweets and 4 being identical in term of meaning. Thus, for example, if the rank between $T_p$ and  $T_{h_1}$ is 1, and the rank between $T_p$ and  $T_{h_2}$ is 3, then 
+tweet $T_{h_2}$ is the more similar to $T_p$.
 
-With this labelled data set, we then aim to train a model than can learn to do this ranking and learn how to give a similarity score between 
-the example tweet $T'$ and another tweet $T_i$ that we want to consider. \cite{Wang2014}
+With this labeled data set, we then aim to train a model than can learn to do this ranking and learn how to give a similarity score between 
+the example tweet $T_p$ and another tweet $T_i$ that we want to consider. Our approach borrows idead from the work in \cite{Wang2014} which used 
+a similar idea to find  similarity between images. 
 
 By using a \ac{DL} model trained to rank tweets based on similarity, users could: 
 \begin{itemize}
 	\item pick a tweet - the example tweet- that they consider useful for detecting conversations about a given disease 
-	\item setup a process to watch the Twitter stream and collect similar tweets to the example one and visualize these tweets  sorted by 
+	\item setup a process to watch the Twitter stream and collect tweets similar  to the example one and visualize these tweets  sorted by 
 	relevance of their similarity. The model can be used to compute a similarity score between the example tweets and each tweet read from the stream. Then, sorting can be used to provide a ranked list based on the similarity.
 \end{itemize} 
-As we described in section \ref{sem_sim}, the  text similarity is very difficult to calculate  because it is hard to find the meaning and context match of the two pieces of text. To manage those issues, we use relevant information to find context similarity and syntactical similarity, like the type of disease mentioned in each tweet,  or if the tweet is related to a disease or not. This contextual information can be used as pre-processing step before feeding 
+As we described in section \ref{sem_sim},   text similarity measures are very difficult to calculate  because it is hard to find the meaning and context match of the two pieces of text. To manage those issues, we use relevant information to find context similarity and syntactical similarity, like the type of disease mentioned in each tweet,  or if the tweet is related to a disease or not. This contextual information can be used as pre-processing step before feeding 
 the tweets to the \ac{DL} model.
 
 % and a metric that describe the level of similarity between tweet texts, that are tagged in a range of one to four, where one is less similar and four is more semantically similar.
@@ -849,22 +853,62 @@ The first tweet refers to the flu, but it is not about a health condition. It ta
 In this case the first tweet tells about twins getting flu and describe the intervals of days with possible symptoms. The second is about a person that who was in the hospital and explain that was the reason because she/he could not type, and when he or she was recuperated then got flu again and just goes to sleep. The two sentences are showing a health condition (flu) where the writers are explaining symptoms and what they were doing when they got flu. Therefore, these sentences are related.
 
 \section{Formalization}\label{formalization_problem}
+We are now in a position to better formalize the problem at hand. Consider a premise tweet $T_p$ and a collection of tweets 
+$T_1, T_2,..., T_n$. Let $sim(T_i, T_j)$ be a function that computes the similarity between  two tweets $T_i$ and $T_j$ as their distance 
+in some n-dimensional embedding (vector) space. The smaller the value for $sim()$ the more similar are $T_i$ and $T_j$.   Let $rank(T_i, T_j)$ be a function that assigns a comparison rank to $T_i$ and $T_j$ in the range [0,4]. The closer to the value 4 the more similar are $T_i$ and $T_j$.
+We define the following property for $rank(T_i, T_j)$:
+\begin{property}{\bf Rank Property}\\ 
+Given three tweets $T_p, T_{h_1}, T_{h_2}$, if $rank(T_p, T_{h_1}) > rank(T_p, T_{h_2})$ then $sim(T_p, T_{h_1}) < sim(T_p, T_{h_2})$.
+\end{property}
+With this property we establish the $rank()$ as an alternative method to measure similarity. The higher the rank  the more similar the tweets. 
+Our goal is then train in a model $M$ to compute the function $rank(T_i, T_j)$.
 
-The goal in this project is classify if a tweet is similar to another from a stream of tweets $S = {s_!, s_2, … , s_n}$. Our model is a supervised approach, where the target keywords are associated with a disease group $G = {g_1, g_2, …, g_n}$. G is conforming by five diseases \textit{flu, measles, zika, diarrhea and Ebola}.
+Notice that the $sim()$ function is an unbiased measure of similarity, but it is difficult to find a general similarity metric, as discussed in 
+Chapter \ref{chapter 2}. Instead, our $rank()$ function
+tries to approximate human ability to make the comparison and establish similarity. 
 
-The belong to a medical condition is given by a manual classification of tweets into the next three classes:
+%The goal in this project is classify if a tweet is similar to another from a stream of tweets $S = {s_!, s_2, … , s_n}$. Our model is a supervised approach, where the target keywords are associated with a disease group $G = {g_1, g_2, …, g_n}$. G is conforming by five diseases \textit{flu, measles, zika, diarrhea and Ebola}.
+
+\subsection{Scope of the Model}
+Machine learning models are bound to work on data coming from the same distribution as that used for training. In order to properly scope
+our model, we limit the data set to consist of tweets that contain the following medical keywords:
+\begin{itemize}[nolistsep]
+	\item Flu
+	\item Zika
+	\item Ebola
+	\item Measles
+	\item Diarrhea  
+\end{itemize}
+We collected tweets from the Twitter stream that contained any one of these keywords.
+
+Sometimes, the keywords mentioned above are used in colloquial conversations that are not related with medical 
+issues, which can mislead researchers into believing the occurrence of a keyword implies a disease outbreak. 
+For that reason, the tweets are then are organized and labelled in three classes:
+%The belong to a medical condition is given by a manual classification of tweets into the next three classes:
 
 \begin{itemize}[nolistsep]
 	\item \textbf{0}: Tweet does not belong to a medical condition.
 	\item  \textbf{1}: Tweet belong to a medical condition.
 	\item \textbf{2}: Tweet has an ambiguous meaning, it is difficult to classify 
 \end{itemize}
+Clearly, in a production setting, we are only interested in working with tweets that belong to class 1. 
 
-The last target is a measure of similarity between a pair of tweets in range of one and four. The complete description of how is taken this measure is given in section \ref{define_similarity}
+\subsection{Use in Production}
+Once the model the $M$ is trained we want to use it in production following these steps:
 
-We apply pre-processing and \ac{NLP} tools over tweets to filter and select whatsoever related to a medical condition, and built triplets taking only tweets with labels 1 or 0. Let us call the result of this process S'. Now we apply a classifier $\hat{y}$ in a triplet $s' \in S'$ to classify the pair of tweets in the triplet that are more similar. After training $\hat{y}$ classifier, it can be used as long data come from the same source. If we change G elements, we must be retraining the algorithm with the new keywords present in G.
+\begin{enumerate}
+	\item Listen to the Twitter data stream to build a collection ${\bf T} = \{T_1, T_2, ..., T_n\}$.
+	\item Chose a premise tweet $T_p$.
+	\item Compute the $rank(T_p, T_i) $ for each tweet $T_i \in {\bf T}$, and store the triplet $(T_p, T_i, rank(T_p, T_i))$.
+	\item Sort the triplets $(T_p, T_i, rank(T_p, T_i))$ in decreasing rank order.
+\end{enumerate}
+With this procedure, the tweets more similar to $T_p$ are sorted from most similar to least similar. 
 
-The distribution of samples respect to belonging to a medical condition or no, are not uniform, with class 1 being majority. In this case we are dealing with a class imbalance problem \cite{Batista2004} \cite{He2009}. To tackle this problem, we use a penalty technique during training task, a higher penalty is given when occur a wrong classify of a sample that belongs to the minority class.
+%The last target is a measure of similarity between a pair of tweets in range of one and four. The complete description of how is taken this measure is given in section \ref{define_similarity}
+%
+%We apply pre-processing and \ac{NLP} tools over tweets to filter and select whatsoever related to a medical condition, and built triplets taking only tweets with labels 1 or 0. Let us call the result of this process S'. Now we apply a classifier $\hat{y}$ in a triplet $s' \in S'$ to classify the pair of tweets in the triplet that are more similar. After training $\hat{y}$ classifier, it can be used as long data come from the same source. If we change G elements, we must be retraining the algorithm with the new keywords present in G.
+%
+%The distribution of samples respect to belonging to a medical condition or no, are not uniform, with class 1 being majority. In this case we are dealing with a class imbalance problem \cite{Batista2004} \cite{He2009}. To tackle this problem, we use a penalty technique during training task, a higher penalty is given when occur a wrong classify of a sample that belongs to the minority class.
 
 \section{Data Processing Architecture}
 
@@ -874,32 +918,40 @@ The distribution of samples respect to belonging to a medical condition or no, a
 	\caption{Data Processing Architecture}	
 	\label{figure:data_processing}
 \end{figure}
+ Figure \ref{figure:data_processing} depicts the architecture for 
+ tweet processing that we shall implement to train and use our models. The architecture is based in the THS system \cite{8029348, 8622504}.
+ Tweets are collected in  the \ac{THS} system and stored in a distributed database system  over \ac{HDFS}. Tweets are cleaned, removing links, hashtags and mentions.  
+ %In a next stage the text passes through a pre-processing expanding contractions and correcting misspelling.
+In the next stage, tweets are filtered to associate with a disease. After detecting if the text is related to a disease, tweets are labeled to know if each tweet is speaking about a disease or if it is a lexical or semantical ambiguity. This is done using the model trained in \cite{8622504}. 
+In order to train the similarity model, triplets of tweets are given to human labelers so they can provide a score of similarity between the 
+first tweet (premise) and the other two ones (the hypotheses). 
+%Other process to prepare the data to training is take an average measure of three labelers about the level of similarity between tweets as part of pre-processing stage.
+Once the similarity model is trained, it can be used in production for find the similarity of tweets. 
 
-The architecture of tweet processing is showed in Figure \ref{figure:data_processing}. Tweets were collected in \ac{THS} system in a distributed system database over \ac{HDFS}. Tweets selected was cleaned, removing links, hashtags and mentions. In a next stage the text passes through a pre-processing expanding contractions and correcting misspelling.
-
-Next stage tweets are filtered to associate to a disease. After detecting if the text is related to a disease, tweets are labeled to know if each tweet is speaking about a disease or if it is a lexical or semantical ambiguity. Other process to prepare the data to training is take an average measure of three labelers about the level of similarity between tweets as part of pre-processing stage.
-
-The previous stages are the input of the main process to train algorithms and calculate tweets relevance and after to present these tweets to the user sorted by relevance of their similarity as the output of the model.
+%The previous stages are the input of the main process to train algorithms and calculate tweets relevance and after to present these tweets to the user sorted by relevance of their similarity as the output of the model.
 
 \chapter{System Architecture and Organization} \label{chapter 4}
 \section{THS System Overview} \label{ths_system}
 
-\ac{THS} is a collection of Big Data tools running in a cluster system at \ac{UPRM} to collect, filter and storage the data to future uses. We use \ac{ML} tools to process data, like Keras \cite{Keras2019}, TensorFlow \cite{Tensor2019}, Scikit-learn and others. \ac{THS} system consists of 12 nodes in a big data environment, where are distributed as follow: 1 master-node, 1 client-node and 10 data-nodes. The big data tools installed are \ac{HDFS} \cite{Hadoop2019}, \ac{YARN} \cite{Hadoop2019},  Apache Kafka \cite{Kafka2019}, Apache Spark \cite{Spark2019} and Apache Hive \cite{Hive2019}.
+\ac{THS} is a collection of Big Data tools running on a cluster system at \ac{UPRM} to collect, filter and store the tweet data to future uses. We use \ac{ML} tools to process data:  Keras \cite{Keras2019}, TensorFlow \cite{Tensor2019}, Scikit-learn and others. Our current \ac{THS} system consists of 12 nodes in a big data environment, organized as follows: 1 master-node, 1 client-node and 10 data-nodes. The big data tools installed are \ac{HDFS} \cite{Hadoop2019}, \ac{YARN} \cite{Hadoop2019},  Apache Kafka \cite{Kafka2019}, Apache Spark \cite{Spark2019} and Apache Hive \cite{Hive2019}.
 
-The process is showed in the Figure \ref{figure:ths_system} and detailed step by step as follows:
+The data processing pipeline is shown in the Figure \ref{figure:ths_system} and detailed step by step as follows:
 
 \begin{steps}
-\item We subscribe a stream to Twitter \ac{API} to save raw twitter data, building a real time streaming using Kafka, a distributed streaming platform \cite{Kafka2019}. The script (``producer.py'') run in the edge-node (client-node) of our cluster identified as node05.ece.uprm.edu. In this step we filtered data by language (e.g. English) and by keywords disease related (e.g. Flu, Measles).
+\item We subscribe to the Twitter \ac{API} to save raw tweet data, building a real-time data stream using Kafka, a distributed streaming platform \cite{Kafka2019}. The script (``producer.py'') runs on the edge-node (client-node) of our cluster identified as node05.ece.uprm.edu. In this step we filter data by language (e.g. English) and by keywords of target medical disease (e.g. Flu, Measles). The purpose of this script is to keep with  the Twitter stream, collecting data, and 
+passing it down the pipeline for its eventual processing.
 
-\item All raw data got from twitter \ac{API} is stored in Kafka pipeline to future processes. Each stored record consists in a key, the data and a timestamp. Kafka is settled to keep data for 3 hours and after that time the system clean automatically to save disk space. 
+\item All raw data obtained from the Twitter \ac{API} is stored in the Kafka pipeline for later processing. Each stored record consists of a key, the data and a timestamp. Kafka is configured to keep data for 3 hours, and after that time the system discards raw data automatically to save disk space. 
 
-\item In another script called ``consumer.py'' we connect to a stream record (``topic'') in Kafka to get tweets which is given by arrival order. This process is connected to Apache Spark streaming system.
+\item In another script called ``consumer.py'' we connect to a stream ``topic'' in Kafka to get tweets  by arrival order. This script is in turn  connected to 
+the Apache Spark streaming system. The purpose of this script is to remove the data from the Kafka queue for processing. Thus, the producer and consumer
+scripts implement an asynchronous	data pulling pipeline. 
 
-\item While spark streaming is collecting data from Kafka, at the same time we clean data, filtering and keeping only real tweets and discarding re-tweets or replies. Making use of spark tools we create ``data frame'' to process, manage and save data in a Hive database.
+\item The Spark streaming system collects the data from the consumer, and begins to clean data, filtering and keeping only real tweets and discarding re-tweets or replies. %Making use of spark tools we create ``data frame'' to process, manage and save data in a Hive database.
 
-\item Data is saved in Hive tables by time intervals in different tables with specific information that include users, keywords, hashtags, geolocation and the original raw tweet. This data is used to future processes and researches.
+\item Data is saved in Hive tables at regular time intervals with specific information that include users, keywords, hashtags, geolocation and the original raw tweet. This data is used to future processes and searches.
 
-\item Data stored in hive database is used to generate data visualizations and, in this project, to get data samples to train a new neural network model to measure the similarity between tweets.
+\item Data stored in hive database is used to generate data visualizations and, in this project, to get data samples to train a  neural network models to measure the similarity between tweets.
 
 \end{steps}
 
@@ -910,29 +962,87 @@ The process is showed in the Figure \ref{figure:ths_system} and detailed step by
 	\label{figure:ths_system}
 \end{figure}
 
-\section{How to Define Similarity}\label{define_similarity}
+\section{Strategy to Obtain the Model for Similarity \label{strategy}}
+In order to obtain a model $M$ that can compute the similarity rank between two tweets, we follow the strategy in \cite{Wang2014}, and first train a bigger model $M'$
+that is capable of classifying relative similarity in triplets of tweets. This is a common strategy in \ac{DL}: {\em train a bigger model that does a task in which the model you really want is  
+a sub-task (sub-model)}. This is done because the bigger model might be easier to train on its intended task, or because there is data already available to train the bigger model.  Once the bigger model is trained, the sub-model is taken out and used in standalone fashion. In our specific case, the task that performs model $M$, computing the similarity between two tweets, becomes a sub-task in a bigger
+model $M'$. In this case, $M'$ receives a triplet $(T_p, T_{h_1}, T_{h_2})$ and emits aclassification value as follows: 
 
-The measure of similarity is represented by one (1) or zero (0). Its value depends of the relevance measures of triplets (group of three tweets). The measure of similarity is defined in the following function.
+\begin{itemize}
+	\item 0 - tweet $T_{h_1}$ is more similar to $T_p$ than is tweet $T_{h_2}$.
+	\item 1 - tweet $T_{h_2}$ is more similar to $T_p$ than is tweet $T_{h_1}$.
+\end{itemize}
+In order to train $M'$, {\em we need to first compute the similarity between pairs of tweets}, and this exactly what model $M$ will do. But it is much easier to ask humans to establish a rank between three tweets, as opposed as ranking many more tweets and trying to compare just two of them. The authors in \cite{Wang2014} used this same idea but for 
+the case of computing image similarity. Our approach is to make make $M$ part of $M'$, 
+train $M'$, and then extract the sub-components in the $M'$ that belong to $M$. 
 
-\begin{equation}
-s(t_0, t_1, t_2) = 
-	\begin{cases} 
-		1 		& \text{if } r(t_0, t_1) \geq r(t_0, t_2) \\	
-		0 		& \text{if } r(t_0, t_1) < r(t_0, t_2)
-	\end{cases}
-\end{equation}
+\section{Labeling}
+In order to work with the strategy presented in section \ref{strategy}, we created a data set for labeling. 
+The dataset consisted of  4,225 triplets $(T_p, T_{h_1}, T_{h_2})$. All the tweets in these triplets were known to 
+be related with a medical conditions, and had one of the five target keywords: Ebola, Zika, Flu, Measles, or Diarrhea.
+There were 54 labelers, which were students from UPRM
+that were enrolled in the course ``Introduction to Database Systems". Labelers were instructed to:
+\begin{itemize}[nolistsep]
+	\item compare $T_p$ with   $T_{h_1}$ and  $T_{h_2}$
+	\item rank the similarity between $T_p$  and   $T_{h_1}$ on a scale in the range [0,4].
+	\item rank the similarity between $T_p$  and   $T_{h_2}$ on a scale in the range [0,4].
+\end{itemize}
 
-\noindent Let $s(t_0, t_1, t_2)$ represent the similarity between  tweets in a triplet, when  $r(t_0, t_1) \geq r(t_0,t_2)$ is true then the value is 1, and when $r(t_0, t_1) < r(t_0,t_2)$ the value is 0; this means 1 if  $t_0$ is more similar to $t_1$ than it to $t_2$ and  0  if $t_0$ is more similar to $t_2$ than it to $t_1$.
+\section{Building the Dataset for Training}
+In all of our data sets, the first tweet in the triplet , $T_p$, is always related with a disease. 
+We took the data set from the previous section, and augmented it by adding two additional group of triplets.  In the first group, one of the 
+hypothesis tweet, $T_{h_i}$ has the same disease keyword as $T_p$ but is not related with a medical condition (class 0). In this case, the 
+ranking of this tweet with respect to $T_p$ is set to 0. In the second group, one of the 
+hypothesis tweet, $T_{h_i}$ has a different disease keyword as that $T_p$.  In this case, the 
+ranking of this tweet with respect to $T_p$ is also set to 0. In total, we grew the training data set to 11,425 tweets. 
 
-\begin{equation}
-r(t_i, t_j) = \sum^n_{k=1} \frac{m_k(t_i, t_j)}{n}, \text{where } m_k(t_i,t_j) \in \mathbb{N}, 1 \leq m(t_i,t_2) \leq 4
-\end{equation}
+The next step was to prepare the data and align it according to the model that we wanted to train. We took every triplet $(T_p, T_{h_1}, T_{h_2})$
+and converted into corresponding tuples of the following shape:
 
-\noindent The function of relevance $r(t_i, t_j)$ is calculated by two ways. The first way is estimated automatically because tweets have a marked difference in meaning, considering the disease class and their label value. In other hand when the value labels are calculated manually, the relevance is the average of sum each relevance measure of the pair of tweets, where the measure of relevance can take a value in a range of 1 to 4, depending of level of relevance of similarity. To higher value means more similarity between them. The process to labeling the relevance level and similarity of triplets are described in section \ref{data_relevance_labeling}
+\[
+(T_p, D_{T_p}, M_{T_p}, T_{h_1}, D_{T_{h_1}}, M_{T_{h_1}},T_{h_2}, D_{T_{h_2}}, M_{T_{h_2}}, rank(T_p, T_{h_1}), rank(T_p, T_{h_2}), L)
+\]
+The structure of these tuples is as follows:
+\begin{itemize}
+	\item $T_p$ - premise tweet
+	\item $D_{T_p}$ - index for the medical condition in $T_p$. Indices used: 0 - Flu , 1 - Ebola , 2 - Measles  , 3 - Diarrhea, 4 - Zika. 
+	\item  $M_{T_p}$ - classification of the tweet $T_p$: 0 - not related with a medical condition, 1 - related with a medical condition, 2 - ambiguous. 
+	\item $T_{h_1}$ - first hypothesis tweet
+	\item $D_{T_{h_1}}$ - index for the medical condition in $T_{h_1}$. Indices used: 0 - Flu , 1 - Ebola , 2 - Measles  , 3 - Diarrhea, 4 - Zika. 
+	\item  $M_{T_{h_1}}$ - classification of the tweet  $T_{h_1}$: 0 - not related with a medical condition, 1 - related with a medical condition, 2 - ambiguous. 
+	\item $T_{h_2}$ - second hypothesis tweet
+	\item $D_{T_{h_2}}$ - index for the medical condition in $T_{h_2}$. Indices used: 0 - Flu , 1 - Ebola , 2 - Measles  , 3 - Diarrhea, 4 - Zika. 
+	\item  $M_{T_{h_2}}$ - classification of the tweet $T_{h_2}$: 0 - not related with a medical condition, 1 - related with a medical condition, 2 - ambiguous. 
+	\item $rank(T_p, T_{h_1})$ - similarity ranking between $T_p$ and  $T_{h_1}$ as given by the labelers.
+	\item $rank(T_p, T_{h_2})$ - similarity ranking between $T_p$ and  $T_{h_2}$ as given by the labelers.
+	\item $L$ - relative comparison label : 1 - if $rank(T_p, T_{h_1}) >= rank(T_p, T_{h_2})$, 0 - if  $rank(T_p, T_{h_1}) < rank(T_p, T_{h_2})$
 
-\section{Architecture of Learning Model}\label{models}
+\end{itemize}
+%\section{How to Define Similarity}\label{define_similarity}
+%
+%The measure of similarity is represented by one (1) or zero (0). Its value depends of the relevance measures of triplets (group of three tweets). The measure of similarity is defined in the following function.
+%
+%\begin{equation}
+%s(t_0, t_1, t_2) = 
+%	\begin{cases} 
+%		1 		& \text{if } r(t_0, t_1) \geq r(t_0, t_2) \\	
+%		0 		& \text{if } r(t_0, t_1) < r(t_0, t_2)
+%	\end{cases}
+%\end{equation}
+%
+%\noindent Let $s(t_0, t_1, t_2)$ represent the similarity between  tweets in a triplet, when  $r(t_0, t_1) \geq r(t_0,t_2)$ is true then the value is 1, and when $r(t_0, t_1) < r(t_0,t_2)$ the value is 0; this means 1 if  $t_0$ is more similar to $t_1$ than it to $t_2$ and  0  if $t_0$ is more similar to $t_2$ than it to $t_1$.
+%
+%\begin{equation}
+%r(t_i, t_j) = \sum^n_{k=1} \frac{m_k(t_i, t_j)}{n}, \text{where } m_k(t_i,t_j) \in \mathbb{N}, 1 \leq m(t_i,t_2) \leq 4
+%\end{equation}
+%
+%\noindent The function of relevance $r(t_i, t_j)$ is calculated by two ways. The first way is estimated automatically because tweets have a marked difference in meaning, considering the disease class and their label value. In other hand when the value labels are calculated manually, the relevance is the average of sum each relevance measure of the pair of tweets, where the measure of relevance can take a value in a range of 1 to 4, depending of level of relevance of similarity. To higher value means more similarity between them. The process to labeling the relevance level and similarity of triplets are described in section \ref{data_relevance_labeling}
 
-The \ac{ML} model is a triplet-based network architecture \cite {Wang2014} to classify if tweets are similar or not. It is based in the level of similarity relevance between tweets and their relatedness with a disease  The inputs to train the algorithm is given in \ac{CSV} file that contains tweets and the label values tagged manually like we describe in section \ref{data_labeling}. Input data pass through a process to finally get the measures of similarity between a pair of tweets. The entire process is showed in Figure \ref{figure:all_model}
+\section{Architecture of the Learning Model}\label{models}
+The tuples described in the previous section are used in our method, and we train a model $M'$ on a classification task: determine which tweet is more similar to $T_p$ : 
+$T_{h_1}$ or $T_{h_2}$. In doing so, we will be training a sub-model $M$ that does a regression tasks: compute the $rank(T_p, T_{h_i})$ between the 
+premise and a hypothesis. $M$ will become the model that is actually used in production to rank tweets. 
+Our approach  is based on a triplet-based network architecture \cite {Wang2014} to classify if tweets are similar or not. It is based in the level of similarity relevance between tweets and their relatedness with a disease  The inputs to train the algorithm are given in \ac{CSV} file that contains tweets and the label values (see section \ref{data_labeling}). Input data passes through a process to finally get the measures of similarity between a pair of tweets. The entire process is shown in Figure \ref{figure:all_model}
 
 \begin{figure}[H]	
 	\centering
@@ -941,9 +1051,16 @@ The \ac{ML} model is a triplet-based network architecture \cite {Wang2014} to cl
 	\label{figure:all_model}
 \end{figure}
 
-The proposed algorithm starts with an embedding layer, triplets of tweets pass by an embedding process to convert sentences in multidimensional vectors, which ones represent the words. Next in combiner layer we use different approaches like \ac{RNN} and \ac{CNN} setting with several combinations of hyperparameters until get better results.
-In the relevance layer we add a second input called auxiliary input that contains the labels if a tweet has a related disease and, labels of disease group to belong. Using auxiliary input and the output of before layers is calculated the relevance between the premise tweet and hypothesis tweet. Until this step the network will been trained for future use in a production environment.
-The final network component is the classification layer that are composed by a sequence of dense layers to finally get an output with values of 1 or 0, where 1 means that first hypothesis is more similar to premise and 0 means second hypothesis is more similar to premise.
+The proposed model starts with an embedding layer. Each of the tweets in a tuple passes through an embedding process to convert sentences into a matrix of multidimensional vectors, each row representing words. Next, in a combiner layer we use different approaches such \ac{RNN} and \ac{CNN} to extract 
+features from the data.
+We use  several combinations of hyperparameters until get better results.
+In the relevance layer we add a second input, called auxiliary input, that contains the information about the medical keyword of the tweet and the label indicating if the tweet is actually related with the medical condition or not. 
+ Using auxiliary input and the output of combiner layers we calculate the relevance between the premise tweet and hypothesis tweet. This value become the 
+ rank of the premise and hypothesis. Up to this level, the neural network has trained $M$, the model that computes similarity ranking and the one we
+  actually want in production. But  the process
+ is not finished.
+The final network component is the classification layer that is composed of a sequence of dense layers to finally get an output with values of 1 or 0, where 1 means that the first hypothesis is more similar to the premise, and 0 means that the second hypothesis is more similar to the premise. This neural network is model $M'$. Notice how 
+training $M'$ indirectly trains model $M$.
 
 
 \subsection{Input Setup}
@@ -966,7 +1083,7 @@ In the example above, the tweet mentions ``flu'' and its meaning is related to t
 
 \noindent Where the array with four elements is the type of disease and the array with three elements is the disease-related label. The values are binaries, it means they just can be zero or one. These two representations are combined and form the auxiliary input.
 
-The main input is composed by the tweet which pass through a process of embedding. Our embedding layer use GloVe embedding \cite{pennington2014}, an unsupervised algorithm to get a vector representation for each word in tweets. We used a pretrained vector that was trained with 2 billion of tweets. It is formed by a vocabulary of 1.2 million of terms with vectors of 25, 50, 100 and 200 dimensions. In the model were used 50 and 200 dimensions.
+The main input is composed by the tweet which pass through a process of embedding. Our embedding layer use GloVe embedding \cite{Pennington2014}, an unsupervised algorithm to get a vector representation for each word in tweets. We used a pretrained vector that was trained with 2 billion of tweets. It is formed by a vocabulary of 1.2 million of terms with vectors of 25, 50, 100 and 200 dimensions. In the model were used 50 and 200 dimensions.
 
 The main input was given in two ways. The first data with all text after labeling step. Second group of data go through an additional preprocessing step to remove stop words and lemmatized each word to the root lemma.
 
