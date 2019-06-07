@@ -43,7 +43,7 @@
 \setlist[steps, 1]{label = Step \arabic*:}
 \newcommand\myicon[1]{{\color{#1}\rule{2ex}{2ex}}}
 \newcommand{\myfolder}[2]{\myicon{#1}\ {#2}}
-
+\restylefloat{table}
 %New colors defined below
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
@@ -1497,9 +1497,196 @@ A perspective overview of the setup structure of whole project is showed in Figu
 	\label{figure:model_setup}
 \end{figure}
 
-\section{Experimental Results and Discussion}
+\subsection{Experimental Methods} \label{experimental_methods}
+
+To train our algorithm, we mix the rows randomly to prevent order dependencies between runs and are assigned to next two sub-set:
+
+\begin{itemize}[nolistsep]
+	\item \textbf{Training set}: This group comprehend 80\% of initial data, that is 9,140 triplets. This data is used to train all combinations of algorithms presented.
+	\item \textbf{Validation set}:  The remaining data is the 20\% that comprehend 2,285 samples. This data is used to validate the model, fitting the weights of parameters to find the best performance.
+\end{itemize}
+
+Usually models of \ac{ML} assume that input data has a uniform distribution between classes and do not consider the presence of imbalance data. In our case we need to adjust our model to work with imbalanced data, because the model could be predicting in favor of the majority class. The approach taken to avoid this issue was to use a built-in functionality in sklearn. This tool returns us the weights penalties for misclassifying. This approach provides a natural and straightforward method to set weight penalization.
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{||M{4.0cm}|M{3.5cm}||}
+		\hline
+		\textbf{Class} 	& \textbf{Penalty}		\\ \hline
+		1        	& 1.181          		\\ \hline
+		0 & 0.867     \\ \hline	
+	\end{tabular}
+	\caption{Triplets distribution}\label{class_penalties}
+\end{table}
+
+Table \ref{class_penalties} show the penalties by each class. A higher value is given for the minority class and low value to the majority class.
+
+\subsection{RNN results}
+We divide \ac{RNN} results in two parts. First related with \ac{LSTM} approach and the second with bidirectional \ac{RNN} approach. 
+For RNN implementation we used an embedding vector of 50 and 200 dimensions. We use a larger embedding matrix as 200 dimensions to find out relation between tweets given to model more features. These embedding as we mention in section \ref{input_setup} are a pretrained vectors of GloVe embedding.
+
+\subsubsection{LSTM only}
+In Table \ref{acuracy_lstm} we show the accuracy results for \ac{LSTM} implementation. The data is presented in two ways, an embedding vector taken all text with a preliminary preprocessing and vectors built after remove stop words and lemmatization process.
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{||M{2.5cm}|M{2.5cm}|M{2.5cm}|M{2.5cm}|M{2.5cm}||}\hline
+		\textbf{Embedding } 	& \textbf{Data Type} & \textbf{Epochs} &\textbf{Accuracy Training} & \textbf{Accuracy Validation}	\\ \hline
+		50 dimensions 	& All Text   &   10 & 0.89 & 0.89		\\ \hline
+		50 dimensions 	& All Text   &   20 & 0.89 & 0.88		\\ \hline
+		50 dimensions 	& No Stop words and lemmatized   &   \textbf{10}	& \textbf{0.89} & \textbf{0.90}		\\ \hline
+		50 dimensions 	& No Stop words and lemmatized   &   20 			& 0.90 			& 0.88		\\ \hline
+		200 dimensions 	& All Text   &   10 & 0.89 & 0.89		\\ \hline
+		200 dimensions 	& All Text   &   20 & 0.93 & 0.85		\\ \hline
+		200 dimensions 	& No Stop words and lemmatized   &   10 & 0.90 & 0.88		\\ \hline
+		200 dimensions 	& No Stop words and lemmatized   &   \textbf{20} & \textbf{0.97} & \textbf{0.86}		\\ \hline
+	\end{tabular}
+	\caption{Accuracy LSTM}\label{acuracy_lstm}
+\end{table}
+
+\noindent The results for accuracy metric are similar. The accuracy in training step is in range of 89\% and 97\%. The accuracy in validation step is in range of 85\% and 90\%. The better two accuracy metrics have the next configuration:
+
+\begin{itemize}[nolistsep]
+	\item 50 dimension, 10 epochs and after lemmatization step, rmsprop optimizer with an accuracy of 89\% and 90\% in training and validation respectively.
+	\item 200 dimension, 20 epochs and after lemmatization process, rmsprop optimizer with 97\% and 86\% of accuracy for training and validation.
+\end{itemize}
+
+In table \ref{loss_lstm} we show measures for loss functions. We used Mean Squared Error (MSE) loss function in relevance parameters and cross-entropy loss function for final classification of triplets. 
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{||M{1.0cm}|M{2.5cm}|M{1.5cm}|M{2.0cm}|M{2.0cm} |M{2.0cm} |M{2.0cm}||}\hline
+		\textbf{Dims } 	& \textbf{Data Type} & \textbf{Epochs} & \textbf{MSE Training} & \textbf{cross-entropy Training} & \textbf{MSE Validation} & \textbf{cross-entropy Training} 	\\ \hline
+		50 	& All Text   &   10 & 0.37 & 0.23 & 0.34 & 0.23		\\ \hline
+		50 	& All Text   &   20 & 0.36 & 0.21 & 0.36 & 0.24		\\ \hline
+		50 	& No Stop words and lemmatized   &   \textbf{10}	& \textbf{0.37} & \textbf{0.23}	& \textbf{0.34} & \textbf{0.22}	\\ \hline
+		50	& No Stop words and lemmatized   &   20 			& 0.36 			& 0.21	& 0.35 & 0.24	\\ \hline
+		200 & All Text   &   10 & 0.38 & 0.22	& 0.36 & 0.24	\\ \hline
+		200 & All Text   &   20 & 0.38 & 0.15	& 0.38 & 0.35	\\ \hline
+		200 & No Stop words and lemmatized   &   10 & 0.38 & 0.20	& 0.36 & 0.25	\\ \hline
+		200 & No Stop words and lemmatized   &   \textbf{20} & \textbf{0.41} & \textbf{0.07} & \textbf{0.41} & \textbf{0.43}		\\ \hline
+	\end{tabular}
+	\caption{Loss metrics LSTM}\label{loss_lstm}
+\end{table}
+
+\subsubsection{Bidirectional \ac{RNN}}
+In table \ref{accuracy_birnn} is presented the accuracy outputs for Bidirectional {RNN} implementation. As we explain in section \ref{combiner_layer} our Bidirectional network is composed by two bidirectional {LSTM} networks.
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{||M{2.5cm}|M{2.5cm}|M{2.5cm}|M{2.5cm}|M{2.5cm}||}\hline
+		\textbf{Embedding } 	& \textbf{Data Type} & \textbf{Epochs} &\textbf{Accuracy Training} & \textbf{Accuracy Validation}	\\ \hline
+		50 dimensions 	& All Text   &   10 & 0.96 & 0.86		\\ \hline
+		50 dimensions 	& All Text   &   20 & 0.99 & 0.86		\\ \hline
+		50 dimensions 	& No Stop words and lemmatized   &  10	& 0.97 & 0.86 \\ \hline
+		50 dimensions 	& No Stop words and lemmatized   &   20 & 0.99 			& 0.85		\\ \hline
+		200 dimensions 	& All Text   &   10 & 0.99 & 0.86		\\ \hline
+		200 dimensions 	& All Text   &   20 & 0.99 & 0.86		\\ \hline
+		200 dimensions 	& No Stop words and lemmatized   &   10 & 0.99 & 0.86		\\ \hline
+		200 dimensions 	& No Stop words and lemmatized   &   \textbf{20} & \textbf{0.99} & \textbf{0.87}		\\ \hline
+	\end{tabular}
+	\caption{Accuracy Bidirectional Network}\label{accuracy_birnn}
+\end{table}
+
+\noindent The results for accuracy metric are similar. The accuracy in training step is in range of 96\% and 99\%. The accuracy in validation step is in range of 85\% and 87\%. The better accuracy metrics have the next configuration:
+
+\begin{itemize}[nolistsep]
+	\item 200 dimension, 20 epochs and after lemmatization step, rmsprop optimizer with an accuracy of 99\% and 87\% in training and validation respectively.
+\end{itemize}
+
+In table \ref{loss_birnn} we show measures for loss functions. We used Mean Squared Error (MSE) loss function in relevance parameters and cross-entropy loss function for final classification of triplets. 
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{||M{1.0cm}|M{2.5cm}|M{1.5cm}|M{2.0cm}|M{2.0cm} |M{2.0cm} |M{2.0cm}||}\hline
+		\textbf{Dims } 	& \textbf{Data Type} & \textbf{Epochs} & \textbf{MSE Training} & \textbf{cross-entropy Training} & \textbf{MSE Validation} & \textbf{cross-entropy Training} 	\\ \hline
+		50 	& All Text   &   10 & 0.39 & 0.10 & 0.40 & 0.41		\\ \hline
+		50 	& All Text   &   20 & 0.35 & 0.02 & 0.41 & 0.77		\\ \hline
+		50 	& No Stop words and lemmatized  &  \textbf{10}	& 0.39 & 0.08 & 0.40 & 0.44	\\ \hline
+		50	& No Stop words and lemmatized   &   20 			& 0.35 			& 0.02	& 0.39 & 0.80	\\ \hline
+		200 & All Text   &   10 & 0.38 & 0.03	& 0.43 & 0.61	\\ \hline
+		200 & All Text   &   20 & 0.31 & 0.01	& 0.36 & 0.76	\\ \hline
+		200 & No Stop words and lemmatized   &   10 & 0.36 & 0.02	& 0.39 & 0.66	\\ \hline
+		200 & No Stop words and lemmatized   &   \textbf{20} & \textbf{0.28} & \textbf{0.01} & \textbf{0.35} & \textbf{0.78}		\\ \hline
+	\end{tabular}
+	\caption{Loss Bidirectional network}\label{loss_birnn}
+\end{table}
+
+\subsection{CNN Results}
+
+For \ac{CNN} implementation we used an embedding vector of 50 and 200 dimensions too. We  used the Inception network approach, an complex and heavily engineered network. It used a lot of tricks to push performance, in terms of speed and accuracy. The network essentially would get wider rather than deeper, that is to tackle the issue of overfitting. The network structure is described in section \ref{combiner_layer}.
+
+In table \ref{accuracy_cnn} is presented the accuracy outputs for Inception CNN implementation.
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{||M{2.5cm}|M{2.5cm}|M{2.5cm}|M{2.5cm}|M{2.5cm}||}\hline
+		\textbf{Embedding } 	& \textbf{Data Type} & \textbf{Epochs} &\textbf{Accuracy Training} & \textbf{Accuracy Validation}	\\ \hline
+		50 dimensions 	& All Text   &   10 & 0.97 & 0.85		\\ \hline
+		50 dimensions 	& All Text   &   \textbf{20} & \textbf{0.99} & \textbf{0.86}		\\ \hline
+		50 dimensions 	& No Stop words and lemmatized   &  10	& 0.95 & 0.85 \\ \hline
+		50 dimensions 	& No Stop words and lemmatized   &   20 & 0.99 			& 0.84		\\ \hline
+		200 dimensions 	& All Text   &   10 & 0.98 & 0.84		\\ \hline
+		200 dimensions 	& All Text   &   \textbf{20} & \textbf{0.99} & \textbf{0.87}		\\ \hline
+		200 dimensions 	& No Stop words and lemmatized   &   10 & 0.97 & 0.86		\\ \hline
+		200 dimensions 	& No Stop words and lemmatized   &   20 & 0.99 & 0.86		\\ \hline
+	\end{tabular}
+	\caption{Accuracy CNN Model}\label{accuracy_cnn}
+\end{table}
+
+\noindent In general the metrics for accuracy are very close. The higher are there what the text was passed before lemmatization and without remove stop words. The accuracy in training step is in range of 95\% and 99\%. The accuracy in validation step is in range of 84\% and 87\%. The better accuracy metrics have the next configuration:
+
+\begin{itemize}[nolistsep]
+	\item 50 dimension, 20 epochs and before lemmatization step, rmsprop optimizer with an accuracy of 99\% and 86\% in training and validation respectively.
+	\item 200 dimension, 20 epochs and before lemmatization step, adam optimizer with an accuracy of 99\% and 87\% in training and validation respectively.
+\end{itemize}
+
+In table \ref{loss_cc} we show measures for loss functions. We used Mean Squared Error (MSE) loss function in relevance parameters and cross-entropy loss function for final classification of triplets. 
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{||M{1.0cm}|M{2.5cm}|M{1.5cm}|M{2.0cm}|M{2.0cm} |M{2.0cm} |M{2.0cm}||}\hline
+		\textbf{Dims } 	& \textbf{Data Type} & \textbf{Epochs} & \textbf{MSE Training} & \textbf{cross-entropy Training} & \textbf{MSE Validation} & \textbf{cross-entropy Training} 	\\ \hline
+		50 	& All Text   &   10 & 0.42 & 0.08 & 0.47 & 0.43		\\ \hline
+		50 	& All Text   &   \textbf{20} & \textbf{0.24} & \textbf{0.02} & \textbf{0.34} & \textbf{0.75}		\\ \hline
+		50 	& No Stop words and lemmatized  &  10	& 1.48 & 0.12 & 1.41 & 0.37	\\ \hline
+		50	& No Stop words and lemmatized   &   20 			& 1.34 			& 0.03	& 1.29 & 0.66	\\ \hline
+		200 & All Text   &   10 & 1.56 & 0.06	& 1.54 & 0.53	\\ \hline
+		200 & All Text   &   \textbf{20} & \textbf{1.33} & \textbf{0.02}	& \textbf{1.35} & \textbf{0.66}	\\ \hline
+		200 & No Stop words and lemmatized   &   10 & 1.51 & 0.08	& 1.48 & 0.45	\\ \hline
+		200 & No Stop words and lemmatized   &   \textbf{20} & 1.31 & 0.03 & 1.29 & 0.59		\\ \hline
+	\end{tabular}
+	\caption{Loss Inception CNN}\label{loss_cc}
+\end{table}
 
 
+\subsection{Inference Model}
+
+In our project we development two model simultaneasly, a trainig model and a production model, while we were training our model, also we were training a production model, with the goal to use for prediction a metric of relevance. Given a premise tweet the model can be look in stream of tweets and order them by similarity.
+As and example we show an experiment with following premise tweet:
+
+\begin{definition}
+	``Here tweet''
+\end{definition}
+
+The result for five closer tweets to premise are the showed following. They ordered in a descendant way
+
+ \begin{itemize}[nolistsep]
+ 	\item tweet 1
+ 	\item t2
+ 	\item t3
+ 	\item t4
+ 	\item t5
+ \end{itemize}
+
+\subsection{Discussion of Results}
+
+In the result of the \ac{RNN} models we concluded that best performing in accuracy precision is configured for an embedding model with 50 dimensions, with text processed after lemmatization, 10 epochs,batch size of 32 and rmsprop optimizer. the result show a training accuracy of 89\% in training and 90\% in validation step. The loss metrics were 0.37 and 0.34 for {MSE} in training and validation. The cross-entropy loss function in this configuration had 0.23 for training step and 0.22 in validation.
+
+In case of {CNN} approach the best model are close among them and not distant of \ac{RNN} results, both having a high accuracy for training. The configuration of hyperparameters for the best model was the next, 200 dimension, text before lemmatization and without remove stop words, batch size of 32 and adam optimizer. The measures of accuracy in training was 99\% and 87\% for validation. {MSE} in training had a value of 1.33 and 1.3. In the other hand Cross-entropy loss had 0.02 in training and 0.66 in validation. Notice that highest result of bidirectional \ac{RNN} approach have the same measures for accuracy that the higher metric with \ac{CNN}. The Intern hyperparamters (e.g. number of units, size of inception kernel) for {RNN} networks and CNN were described in section \ref{combiner_layer}.
+the running time of models depend of number of epoch and batch size. In general terms the order of execution time of the three models presented is the next, inception {CNN} like the fastest, after classic {LSTM} in second place and finally with worst time execution is Bidirectional {LSTM} networks.
+
+Comparing {RNN} and {CNN} results, we can see that {RNN} with two {LSTM} network joined sequentially have more consistency in training and validation accuracy, because the metric for accuracy are 89\% and 90\% in training and validation respectively. Nonetheless, the {CNN} model is better in training accuracy and execution time.
 \chapter{Conclusion and Future Work} \label{chapter 6}
 Summary, text here
 
