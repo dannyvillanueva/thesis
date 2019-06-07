@@ -988,7 +988,7 @@ that were enrolled in the course ``Introduction to Database Systems". Labelers w
 	\item rank the similarity between $T_p$  and   $T_{h_2}$ on a scale in the range [0,4].
 \end{itemize}
 
-\section{Building the Dataset for Training}
+\section{Building the Dataset for Training \label{buildtrain}}
 In all of our data sets, the first tweet in the triplet , $T_p$, is always related with a disease. 
 We took the data set from the previous section, and augmented it by adding two additional group of triplets.  In the first group, one of the 
 hypothesis tweet, $T_{h_i}$ has the same disease keyword as $T_p$ but is not related with a medical condition (class 0). In this case, the 
@@ -1006,16 +1006,16 @@ The structure of these tuples is as follows:
 \begin{itemize}
 	\item $T_p$ - premise tweet
 	\item $D_{T_p}$ - index for the medical condition in $T_p$. Indices used: 0 - Flu , 1 - Ebola , 2 - Measles  , 3 - Diarrhea, 4 - Zika. 
-	\item  $M_{T_p}$ - classification of the tweet $T_p$: 0 - not related with a medical condition, 1 - related with a medical condition, 2 - ambiguous. 
+	\item  $M_{T_p}$ - classification label of the tweet $T_p$: 0 - not related with a medical condition, 1 - related with a medical condition, 2 - ambiguous. 
 	\item $T_{h_1}$ - first hypothesis tweet
 	\item $D_{T_{h_1}}$ - index for the medical condition in $T_{h_1}$. Indices used: 0 - Flu , 1 - Ebola , 2 - Measles  , 3 - Diarrhea, 4 - Zika. 
-	\item  $M_{T_{h_1}}$ - classification of the tweet  $T_{h_1}$: 0 - not related with a medical condition, 1 - related with a medical condition, 2 - ambiguous. 
+	\item  $M_{T_{h_1}}$ - classification label of the tweet  $T_{h_1}$: 0 - not related with a medical condition, 1 - related with a medical condition, 2 - ambiguous. 
 	\item $T_{h_2}$ - second hypothesis tweet
 	\item $D_{T_{h_2}}$ - index for the medical condition in $T_{h_2}$. Indices used: 0 - Flu , 1 - Ebola , 2 - Measles  , 3 - Diarrhea, 4 - Zika. 
-	\item  $M_{T_{h_2}}$ - classification of the tweet $T_{h_2}$: 0 - not related with a medical condition, 1 - related with a medical condition, 2 - ambiguous. 
+	\item  $M_{T_{h_2}}$ - classification label of the tweet $T_{h_2}$: 0 - not related with a medical condition, 1 - related with a medical condition, 2 - ambiguous. 
 	\item $rank(T_p, T_{h_1})$ - similarity ranking between $T_p$ and  $T_{h_1}$ as given by the labelers.
 	\item $rank(T_p, T_{h_2})$ - similarity ranking between $T_p$ and  $T_{h_2}$ as given by the labelers.
-	\item $L$ - relative comparison label : 1 - if $rank(T_p, T_{h_1}) >= rank(T_p, T_{h_2})$, 0 - if  $rank(T_p, T_{h_1}) < rank(T_p, T_{h_2})$
+	\item $L$ -  classification label for relative comparison between tweets: 1 - if $rank(T_p, T_{h_1}) >= rank(T_p, T_{h_2})$, 0 - if  $rank(T_p, T_{h_1}) < rank(T_p, T_{h_2})$
 
 \end{itemize}
 %\section{How to Define Similarity}\label{define_similarity}
@@ -1039,32 +1039,41 @@ The structure of these tuples is as follows:
 %\noindent The function of relevance $r(t_i, t_j)$ is calculated by two ways. The first way is estimated automatically because tweets have a marked difference in meaning, considering the disease class and their label value. In other hand when the value labels are calculated manually, the relevance is the average of sum each relevance measure of the pair of tweets, where the measure of relevance can take a value in a range of 1 to 4, depending of level of relevance of similarity. To higher value means more similarity between them. The process to labeling the relevance level and similarity of triplets are described in section \ref{data_relevance_labeling}
 
 \section{Architecture of the Learning Model}\label{models}
-The tuples described in the previous section are used in our method, and we train a model $M'$ on a classification task: determine which tweet is more similar to $T_p$ : 
-$T_{h_1}$ or $T_{h_2}$. In doing so, we will be training a sub-model $M$ that does a regression tasks: compute the $rank(T_p, T_{h_i})$ between the 
-premise and a hypothesis. $M$ will become the model that is actually used in production to rank tweets. 
-Our approach  is based on a triplet-based network architecture \cite {Wang2014} to classify if tweets are similar or not. It is based in the level of similarity relevance between tweets and their relatedness with a disease  The inputs to train the algorithm are given in \ac{CSV} file that contains tweets and the label values (see section \ref{data_labeling}). Input data passes through a process to finally get the measures of similarity between a pair of tweets. The entire process is shown in Figure \ref{figure:all_model}
+The tuples described in the previous section are used in our method, and we train a model $M'$ on the following {\em classification task}: 
+{\bf determine which tweet is more similar to $T_p$} : 
+$T_{h_1}$ or $T_{h_2}$. In doing so, we will be training a sub-model $M$ that does a {\em regression task}: compute the $rank(T_p, T_{h_i})$ between the 
+premise and a hypothesis. $M$ {\bf will become the model that is actually used in production to rank tweets}. 
+Our approach  is a novel adaptation of a triplet-based network architecture \cite {Wang2014}, modified to classify if tweets are similar or not. It is based on the level of similarity relevance between tweets and their relatedness with a disease.  
+The inputs to train the algorithm are given in \ac{CSV} file that contains tweets and the label values (see section \ref{data_labeling}) in the tuple form presented in section \ref{buildtrain}. Input data passes through a process to finally get the measures of similarity between a pair of tweets. 
 
-\begin{figure}[H]	
+%The entire process is shown in Figure \ref{figure:all_model}.
+ 
+ Figure \ref{figure:all_model} depicts the organization of the \ac{DL} model that we use.
+The  model starts with an embedding layer. Each of the tweets in a tuple passes through an embedding process to convert sentences into a matrix of multidimensional vectors, each row representing words. This embedding layer is a modified siamese network since it the same layer and weights are 
+use to compute the embedding of the premise tweet $T_p$ and hypothesis tweets $T_{h_1}$ and $T_{h_2}$.  Next, we have a combiner layer, where we use different approaches such \ac{RNN} and \ac{CNN} to extract 
+features from the data.
+We use  several combinations of hyperparameters until get better results.
+
+In the relevance layer we add a second input, called auxiliary input, that contains the information about the medical keyword of the tweet and the label indicating if the tweet is actually related with the medical condition or not. Again, we use the siamese network concept to pass this information for each tweet in the input.
+ Using the auxiliary input and the output of the combiner layers, we calculate the relevance between the premise tweet and hypothesis tweet. This value becomes the rank of the premise and hypothesis. 
+ 
+ Up to this point, the neural network has trained $M$, the model that computes the similarity ranking and the one we
+  actually want in production. But  the process
+ is not finished.
+The final network component is the classification layer that is composed of a sequence of dense layers that end with a sigmoid classifier to finally get an output with value of 1 or 0. A label of  1 means that the first hypothesis  $T_{h_1}$ is more similar to the premise $T_p$ , and 0 means that the second hypothesis
+$T_{h_2}$ is more similar to the premise $T_p$. This neural network is model $M'$ that we have referred as the ``bigger" model to be trained. Notice how 
+training $M'$ indirectly trains model $M$, since we need to have the similarity ranks in order to make the comparison between $T_p, T_{h_1}$ and $T_{h_2}$, and emit the final label of the classification task. 
+\begin{figure}[htbp]	
 	\centering
 	\includegraphics[width=140mm, scale = 1]{images/11_all_model.png}	
 	\caption{Model Architecture}	
 	\label{figure:all_model}
 \end{figure}
 
-The proposed model starts with an embedding layer. Each of the tweets in a tuple passes through an embedding process to convert sentences into a matrix of multidimensional vectors, each row representing words. Next, in a combiner layer we use different approaches such \ac{RNN} and \ac{CNN} to extract 
-features from the data.
-We use  several combinations of hyperparameters until get better results.
-In the relevance layer we add a second input, called auxiliary input, that contains the information about the medical keyword of the tweet and the label indicating if the tweet is actually related with the medical condition or not. 
- Using auxiliary input and the output of combiner layers we calculate the relevance between the premise tweet and hypothesis tweet. This value become the 
- rank of the premise and hypothesis. Up to this level, the neural network has trained $M$, the model that computes similarity ranking and the one we
-  actually want in production. But  the process
- is not finished.
-The final network component is the classification layer that is composed of a sequence of dense layers to finally get an output with values of 1 or 0, where 1 means that the first hypothesis is more similar to the premise, and 0 means that the second hypothesis is more similar to the premise. This neural network is model $M'$. Notice how 
-training $M'$ indirectly trains model $M$.
-
 
 \subsection{Input Setup}
-The data got after labeling step, it will be preparing to be compatible with neural network input. Inputs to neural network are the tweet, the disease type and disease-related labeling; by each member of triplet. Additionally, the labels for training model are the relevance between premise and the two hypotheses and the final classification of similarity to define with hypothesis tweet is more related to premise tweet. The total of triplets used like main input was 11425 triplets
+The data obtained after the labeling step is prepared to be compatible with neural network input. The inputs to the neural network are the tweet, the disease type and disease-related labeling, and these inputs are required for each member of triplet $(T_p, T_{h_1},T_{h_2})$. Additionally, we need the labels for the relevance between premise and the two hypotheses and the final classification of similarity to define with hypothesis tweet is more related to premise tweet. 
+The relevance between tweets become the secondary output of the network, whereas the classification label for the comparison is the main output. The total of triplets used like main input was 11425 triplets
 
 Both disease group label and the disease-related labels form the auxiliary input. They were binarized to change it to a categorical kind, our data have four types of diseases and the labels to represent its relatedness with a disease condition, are three. In the next tweet we illustrate how is created the representation of the auxiliary input.
 
