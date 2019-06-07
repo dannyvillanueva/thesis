@@ -371,39 +371,74 @@
 	Users of this network can find each other messages without the need of becoming ``friends'', as it happens in other networks. The analysis of these tweets can enable us to understand the current situation regarding certain topics, for example, discussions related to medical topics (e.g., ``flu'').
 	Using the tweets, users can monitor and find patterns that give information about some type of disease being discussed in the social network. In addition, it is possible to detect the position,
 	``mood'', or sentiment of the people around some topic.
+
+	In the health care domain, searching text in social medias, blogs, newspapers can provide clues about the diseases that are being talked about 
+	by citizens of a region. For example, an increase in messaging related with a disease (e.g., Measles) could indicate that people are concerned 
+	due to some outbreak and are looking for more information about symptoms and treatments. 
+		
+	For the analysis of all this available information it is {\em necessary to group or categorize the text along similarities in structure and/or meaning}. However, this is a challenging task, due to the complexity/ambiguity introduced by  spelling errors or the use of informal language (``slang'').  In the case of tweets, the small size of the message often makes it difficult to analyze without the context provided by previous messages or user interactions. Making use of the data stored in the  \ac{THS} System from the \ac{UPRM} , as one of our sources, it is possible to process all the information more easily and quickly, and use it to analyze and process the data using  \ac{ML} algorithms, a popular branch of \ac{AI} systems. In particular, deep neural network models can be trained to learn to detect 
+	whether tweets are related to  medical conditions. In addition, these models can be trained to  find similar tweets to one used as example of a tweet
+	of interest (called a ``premise").
 	
-	For the analysis of all this available information it is necessary to group or categorize the text along similarities in structure and/or meaning. However, this is a challenging task, due to the complexity/ambiguity introduced by  spelling errors or the use of informal language (``slang'').  In the case of tweets, the small size of the message often makes it difficult to analyze without the context provided by previous messages or user interactions. Making use of the data stored in the  \ac{THS} System from the \ac{UPRM} , as one of our sources, it is possible to process all the information more easily and quickly, and use it to analyze and process the data using  \ac{ML} algorithms, a popular branch of \ac{AI} systems.
 	
-	The view of the world has changed with the recent progress and ubiquity   of \ac{AI} systems in our lives. We can say that we now live in a new world surrounded by \ac{ML} (e.g. Amazon Alexa, writing correctors). Companies like Google, Amazon, Netflix and others are using \ac{AI} algorithms to obtain value and insight of large amount of data that  otherwise would be  impossible to analyze. In particular, search and mining of text data from social media, blogs, and and other sources provided valuable insight to companies about the opinions of customers. 
+	%The view of the world has changed with the recent progress and ubiquity   of \ac{AI} systems in our lives. We can say that we now live in a new world surrounded by \ac{ML} (e.g. Amazon Alexa, writing correctors). Companies like Google, Amazon, Netflix and others are using \ac{AI} algorithms to obtain value and insight of large amount of data that  otherwise would be  impossible to analyze. In particular, search and mining of text data from social media, blogs, and and other sources provided valuable insight to companies about the opinions of customers. 
 	%	 The value of the information has been ever the key for the growth of companies; therefore, text analysis is a rough task aim to extract value %information to use in business decisions, however this is challenging job due to complexity of \ac{NLP} a field of \ac{ML}  focuses on analyzing the %human language.
 	
-	In the health care domain, searching text in social medias, blogs, newspapers can provide clues about the diseases that are being talked about 
-	by citizens of a region. For example, 
+
 	
-	The detection of similarity in texts in their meaning of semantics content is a topic present in many researches because the need to obtain valuable and reliable information from the amount of available data over internet like, communication services (e.g. “Twitter”), feedback user, system log files, customer reviews to mention a few; and the data present in the same company about employees, clients and others. 
+	%The detection of similarity in texts in their meaning of semantics content is a topic present in many researches because the need to obtain valuable and reliable information from the amount of available data over internet like, communication services (e.g. “Twitter”), feedback user, system log files, customer reviews to mention a few; and the data present in the same company about employees, clients and others. 
 	
-	In this project, we investigate and implement text similarity algorithms in such a way that we can: 1) know if they are related or not with a disease, 2) group similar tweets to those that we have already captured, analyzed or stored and, 3) find similarity index between tweets using different learning algorithms. We based our work on, semantic similarity approaches and text similarity measures using \ac{DL} algorithms to deliver reliable information to the end user about health-related topics.
+	In this project, we investigate and implement text similarity neural network models in such a way that we can: 1) know if they are related or not with a disease, 2) group similar tweets to those that we have already captured, analyzed or stored, and 3) find similarity index between tweets using different learning algorithms. We based our work on, semantic similarity approaches and text similarity measures using \ac{DL} algorithms to deliver reliable information to the end user about health-related topics.
 	
 	
 	\section{Objectives}
-	REVISE in light of new work
-	\begin{itemize}[nolistsep]
-		\item \textbf{Collect and filter the data file: } We select necessary tweets and filter all them which are related to health disease thereby, we use a clean data as input to train the algorithms to be implemented. Tweets were collected using \ac{THS} System at \ac{UPRM}. In this way, it is convenient to describe the steps through the process of data selection until deliver of final cleaned up inputs. Part of inputs is labeled data by hand; thus, it is necessary a group of people to classify a measure of similarity between tweets that will be used in training sample.
-		\item \textbf{Investigate and implements \ac{DL} algorithms for text similarity measures} It is necessary investigate the state-of-the-art methods and techniques related to text analysis, and then build a robust architecture using \ac{DL} algorithms like, \ac{CNN} and \ac{RNN} on \ac{NLP} approaches,  focusing in text similarity measures. The output of our trained models will be one of two of next options a) there is an acceptable similarity measure between the pair of tweets and, b) no exist enough similarity between the pair of tweets.
-		\item \textbf{Test algorithms in a Big Data environment: } The algorithms will be tested to measure the performance and accuracy of results in \ac{THS} cluster located in the Electrical and Computer Department at \ac{UPRM}. Because \ac{DL} algorithms consume a lot of resources, we also use virtual environments as Chameleon Cloud Platforms to test algorithms with better Graphic Processing Unit (GPU) resources than physical machines.
-	\end{itemize}
+	
+	Our work is rooted in our \ac{THS} project at UPRM, whose goal is to monitor tweets related with medical conditions, and detect instances where
+a diseases is actively being discussed in a given region.
+The main problem that we want to tackle in this project is the development of  \ac{DL} models that can evaluate the similarity between
+tweets. Specifically, given an example tweet $T_p$ (``premise tweet"), and  collection of tweets $T_1, T_2, ..., T_n$, we want to rank the collection of tweets
+from the most similar to the least one to $T_p$. In order to do, {\bf we need to develop a method to measure the similarity between pairs of 
+	tweets}. Our goal is to use \ac{DL} to achieve this. 
+By using a \ac{DL} model trained to rank tweets based on similarity, users could: 
+\begin{itemize}
+	\item pick a tweet - the example tweet- that they consider useful for detecting conversations about a given disease 
+	\item setup a process to watch the Twitter stream and collect tweets similar  to the example one and visualize these tweets  sorted by 
+	relevance of their similarity. The model can be used to compute a similarity score between the example tweets and each tweet read from the stream. Then, sorting can be used to provide a ranked list based on the similarity.
+\end{itemize} 
+
+To accomplish this t is necessary investigate the state-of-the-art methods and techniques related to text analysis, and then build a robust architecture using \ac{DL} algorithms like, \ac{CNN} and \ac{RNN} on \ac{NLP} approaches,  focusing on text similarity measures.
+
+%As we described in section \ref{sem_sim},   text similarity measures are very difficult to calculate  because it is hard to find the meaning and context match of the two pieces of text. To manage those issues, we use relevant information to find context similarity and syntactical similarity, like the type of disease mentioned in each tweet,  or if the tweet is related to a disease or not. This contextual information can be used as pre-processing step before feeding 
+%the tweets to the \ac{DL} model.
+%
+%
+%	REVISE in light of new work
+%	\begin{itemize}[nolistsep]
+%		\item \textbf{Collect and filter the data file: } We select necessary tweets and filter all them which are related to health disease thereby, we use a clean data as input to train the algorithms to be implemented. Tweets were collected using \ac{THS} System at \ac{UPRM}. In this way, it is convenient to describe the steps through the process of data selection until deliver of final cleaned up inputs. Part of inputs is labeled data by hand; thus, it is necessary a group of people to classify a measure of similarity between tweets that will be used in training sample.
+%		\item \textbf{Investigate and implements \ac{DL} algorithms for text similarity measures} It is necessary investigate the state-of-the-art methods and techniques related to text analysis, and then build a robust architecture using \ac{DL} algorithms like, \ac{CNN} and \ac{RNN} on \ac{NLP} approaches,  focusing in text similarity measures. The output of our trained models will be one of two of next options a) there is an acceptable similarity measure between the pair of tweets and, b) no exist enough similarity between the pair of tweets.
+%		\item \textbf{Test algorithms in a Big Data environment: } The algorithms will be tested to measure the performance and accuracy of results in \ac{THS} cluster located in the Electrical and Computer Department at \ac{UPRM}. Because \ac{DL} algorithms consume a lot of resources, we also use virtual environments as Chameleon Cloud Platforms to test algorithms with better Graphic Processing Unit (GPU) resources than physical machines.
+%	\end{itemize}
 	
 	\section{Contributions}
 	\begin{itemize}[nolistsep]
-		\item \textbf{Use social networks to get valuable information about health topics:} All data present on internet through social networks, entertainment apps and others, can be used in health-related research. In our case twitter is a source of amount of data of different topics that can be transform in important information relevant for medical issues. Here is showed how we can use data of medical conditions to build models able to compute the similarity in tweets therefore these could be used in future to support on medical applications. 
-		\item \textbf{Present \ac{DL} models for text similarity analysis:} \ac{DL} models are very powerful for analysis of data like images, sound, and text. In this project, we try to use these excellent tools of \ac{ML} to figure out a better text similarity model.
-		\item \textbf{Employ Supervised Learning in text similarity tasks:} Many studies about sentence representation (``encoding models'') is based in unsupervised learning because there is not enough labeled data about a specific topic to train a model like in our case, with data diseases related. We show the trained models with labeled data in sentence similarity has enough performance to be widely adopted in others \ac{NLP} tasks.
-		\item \textbf{Use different measure of similarity:} In this project we used three methods to calculate similarity text. Most known is cosine similarity, also Frobenius Distance and our own distance measure called Triangular UL Distance based in part of linear algebra, in a special kind of square matrix called triangular matrix.
-		\item \textbf{Describe the evaluation of similarity models: } We built models with \ac{CNN}, \ac{RNN} and merged approaches to get better results. They were tested with different setting to find the best model possible, we used the next metrics F1-Score, Precision and Recall.
+		\item \textbf{Use-case on social networks application to get valuable information about health topics:}  Data available on the Internet through social networks, entertainment apps and others, can be used in health-related research. In our case,  Twitter is a source of vast amounts of data on different topics that can be transformed into insights about  medical issues. We illustrate  how we can use tweet data about medical conditions to build models that are able to compute the similarity in tweets.These collection of similar tweets  t could be used in future to support on medical applications that try to find trending patterns, 
+		anomaly detection, or hidden, repetitive events. 
+		%\item \textbf{Present \ac{DL} models for text similarity analysis:} \ac{DL} models are very powerful for analysis of data like images, sound, and text. In this project, we try to use these excellent tools of \ac{ML} to figure out a better text similarity model.
+		\item \textbf{Employ Supervised Learning in text similarity tasks:} Most studies about sentence representation (``encoding models'') and text similarity are based on unsupervised learning (usually clustering) because there is not enough labeled data about a specific task to train a model. This happens in our 
+		in target problem where we want to find similar tweets related with medical conditions. We show the trained models with labeled data in sentence similarity have good performance to be widely adopted for tweet similarity and in others \ac{NLP} tasks.
+		%\item \textbf{Use different measure of similarity:} In this project we used three methods to calculate similarity text. Most known is cosine similarity, also Frobenius Distance and our own distance measure called Triangular UL Distance based in part of linear algebra, in a special kind of square matrix called triangular matrix.
+		\item \textbf{Present a novel strategy to build similarity models: } We build models with deep \ac{CNN} and \ac{RNN} to obtain good results. 
+		In order to obtain a model $M$ that can compute the similarity rank between two tweets, we borrow from the strategy in \cite{Wang2014}, and first train a bigger model $M'$
+that is capable of classifying relative similarity in triplets of tweets. This is a common strategy in \ac{DL}: {\em train a bigger model that does a task in which the model you really want is  
+	a sub-task (sub-model)}. This is done because the bigger model might be easier to train on its intended task, or because there is data already available to train the bigger model.  Once the bigger model is trained, the sub-model is taken out and used in standalone fashion. In our specific case, the task that performs model $M$, computing the similarity between two tweets, becomes a sub-task in a bigger
+model $M'$ that classifies which of two tweets is more similar to a premise tweet.
+		\item \textbf{Present a performance study on the DL similarity models}: We have created a data sets consisting of 11,425 examples, and we use that data set to train our models. Our results show that we can achieve 90\% accuracy on the task of classifying which of two tweets is more similar to a premise tweet.
+		For this task, we need to train a sub-model that computes the similarity rank between two tweets as  a value in the range [0,4]. 
+		This is a regression tasks and our model have a 1.4 units of Mean Squared Error on a decreasing loss.
 	\end{itemize}
 	
 	\section{Outline}
-	The outline of this thesis is as follows. Chapter 2 contains the literature review about concept of \ac{ML} and \ac{DL} to contextualize the presented solution. In this chapter also in describe topics of \ac{NLP} and text similarity methods. The problem description and the methodology followed to get the similarity models is described in Chapter 3. In Chapter 4, explains the \ac{ML} architecture and describe the different \ac{DL} models built using \ac{CNN} and \ac{RNN} approaches. Chapter 5 shows the result of performance and accuracy of all models described on above chapter. Finally, Chapter 6 shows the conclusions and future work to follow.
+	The outline of this thesis is as follows. Chapter 2 contains the literature review on concepts of \ac{ML} and \ac{DL} to contextualize our work. In this chapter we also describe topics of \ac{NLP} and text similarity methods. The problem description and the methodology followed to build the similarity models are described in Chapter 3. In Chapter 4, we explain the \ac{ML} architecture, implementation, and  the different \ac{DL} models built using \ac{CNN} and \ac{RNN}. Chapter 5 shows the results on performance and accuracy of all models built in this work. Finally, Chapter 6 shows the conclusions and future work.
 	
 	\onehalfspacing
 	
@@ -966,7 +1001,7 @@ The data processing pipeline is shown in the Figure \ref{figure:ths_system} and 
 In order to obtain a model $M$ that can compute the similarity rank between two tweets, we follow the strategy in \cite{Wang2014}, and first train a bigger model $M'$
 that is capable of classifying relative similarity in triplets of tweets. This is a common strategy in \ac{DL}: {\em train a bigger model that does a task in which the model you really want is  
 	a sub-task (sub-model)}. This is done because the bigger model might be easier to train on its intended task, or because there is data already available to train the bigger model.  Once the bigger model is trained, the sub-model is taken out and used in standalone fashion. In our specific case, the task that performs model $M$, computing the similarity between two tweets, becomes a sub-task in a bigger
-model $M'$. In this case, $M'$ receives a triplet $(T_p, T_{h_1}, T_{h_2})$ and emits aclassification value as follows: 
+model $M'$. In this case, $M'$ receives a triplet $(T_p, T_{h_1}, T_{h_2})$ and emits a classification value as follows: 
 
 \begin{itemize}
 	\item 0 - tweet $T_{h_1}$ is more similar to $T_p$ than is tweet $T_{h_2}$.
@@ -1071,17 +1106,25 @@ training $M'$ indirectly trains model $M$, since we need to have the similarity 
 \end{figure}
 
 
-\subsection{Input Setup}
-The data obtained after the labeling step is prepared to be compatible with neural network input. The inputs to the neural network are the tweet, the disease type and disease-related labeling, and these inputs are required for each member of triplet $(T_p, T_{h_1},T_{h_2})$. Additionally, we need the labels for the relevance between premise and the two hypotheses and the final classification of similarity to define with hypothesis tweet is more related to premise tweet. 
-The relevance between tweets become the secondary output of the network, whereas the classification label for the comparison is the main output. The total of triplets used like main input was 11425 triplets
+\subsection{Data Setup}
+The data obtained after the labeling step is prepared to be compatible with the neural network inputs and output labels. The inputs to the neural network are the tweet, the disease type and disease-related labeling, and these inputs are required for each member of triplet $(T_p, T_{h_1},T_{h_2})$. 
+Additionally, we need the labels for the relevance between premise and the two hypotheses. These are the rankings that the labelers completed,  and become the secondary output of the network. The main output of the network is the  final binary classification of similarity which  indicates which hypothesis tweet is more similar to the premise tweet. 
+ The total of data examples available was 11,425.
 
-Both disease group label and the disease-related labels form the auxiliary input. They were binarized to change it to a categorical kind, our data have four types of diseases and the labels to represent its relatedness with a disease condition, are three. In the next tweet we illustrate how is created the representation of the auxiliary input.
+Each tweet in an example is converted into a matrix, where are a row is a vector in an n-dimensional embedding space that represents a word. The tweets form the 
+main input to the network.
+The disease group label and the disease-relatedness labels form the auxiliary input. Both of these features were binarized to change from a  categorical feature.
+ In the next tweet,  we illustrate how we created the representation of the auxiliary input.
 
 \begin{definition}
 	``It is march with streets are fully covered in snow I am drinking hot milk with cocoa butter and recovering from a flu I just turned my Christmas tree lights on yes, it is still here''
 \end{definition}
 
-In the example above, the tweet mentions ``flu'' and its meaning is related to the flu condition. Categorical representation is shown in figure \ref{figure:categorical}
+In the example above, the tweet mentions ``flu'', which has index 0. Suppose we only have four conditions: 0 - Flu, 1- Measles, 2- Diarrhea, and  3 - Ebola.  
+We  need a bit vector with 4 entries for this. Flu is then represented 
+as [1, 0, 0, 0].  This in shown on the upper left part of  Figure \ref{figure:categorical}. We have three labels for the relatedness to medical condition: 0 - not related, 1 - related, and 2- ambiguous. Here, we need a bit vector with 3 entries. Since the tweet is related with a medical condition, which is label 2, its representation 
+would be [0, 1, 0]. This in shown on the upper right part of  Figure \ref{figure:categorical}. Then, for this tweet, its auxiliary representation would be the concatenation of these two bit vectors: [1, 0, 0, 0, 0, 1, 0]. This process is done
+for each of the three tweets $(T_p, T_{h_1},T_{h_2})$.
 
 \begin{figure}[H]	
 	\centering
@@ -1090,18 +1133,22 @@ In the example above, the tweet mentions ``flu'' and its meaning is related to t
 	\label{figure:categorical}
 \end{figure}
 
-\noindent Where the array with four elements is the type of disease and the array with three elements is the disease-related label. The values are binaries, it means they just can be zero or one. These two representations are combined and form the auxiliary input.
+%\noindent Where the array with four elements is the type of disease and the array with three elements is the disease-related label. The values are binaries, it means they just can be zero or one. These two representations are combined and form the auxiliary input.
 
-The main input is composed by the tweet which pass through a process of embedding. Our embedding layer use GloVe embedding \cite{Pennington2014}, an unsupervised algorithm to get a vector representation for each word in tweets. We used a pretrained vector that was trained with 2 billion of tweets. It is formed by a vocabulary of 1.2 million of terms with vectors of 25, 50, 100 and 200 dimensions. In the model were used 50 and 200 dimensions.
+The main input of the neural network are the three tweets converted into their embedding matrices. For this purpose, our embedding layer use GloVe embedding \cite{Pennington2014}, an unsupervised algorithm to get a vector representation for each word in tweets. We used a pre-trained embedding that was trained with 2 billion of tweets. It is formed by a vocabulary of 1.2 million  terms with vectors of 25, 50, 100 and 200 dimensions. For our  models, we used the versions 
+with 50 and 200 dimensions. Before feeding them to the neural network, the tweets were passed by a preprocessing step to remove stop words and lemmatized each word to the root lemma.
 
-The main input was given in two ways. The first data with all text after labeling step. Second group of data go through an additional preprocessing step to remove stop words and lemmatized each word to the root lemma.
+
+%The main input was given in two ways. The first data with all text after labeling step. Second group of data go through an additional preprocessing step to remove stop words and lemmatized each word to the root lemma.
 
 \subsection{Combiner Layer}
+The purpose of the combiner layer is to enable the neural network to build useful features to help it figure out how to find the similarity between tweets. 
+In the early days of neural networks, features had to be engineered by hand and passed as input to the neural network. In contrast, modern DL approaches
+rely on adding enough layer to the network so it can create the features itself. The input to the combiner network are the embedding of the tweets.
+In our approach,  we implement three different combinations of algorithms that include RNN and CNN.  Each method was implemented with variation in the hyperparameters depending of each algorithm.
+Finding the best hyperparameter combinations is not a trivial task. We based our experiments on the result of related researchers \cite{8622504}, and then we create our own combination that is shown in Table \ref{Hyperparameters}.
 
-In this layer we implement three different combination of algorithms that include RNN and CNN approaches.  Each method was implemented with variation in the hyperparameters depending of each algorithm.
-Find the best parameters combinations is not a trivial task, in first place we based our experiments in result of related researchers and then we create our own combination that is showed in Table \ref{Hyperparameters}
-
-The hyperparameters variation was in epochs, learning rate, batch size and optimizer in training step. The parameters mentioned above are not learned by the network, those ones have predefined values set before training process.
+The hyperparameters variation was in epochs, learning rate, batch size and optimizer. The hyperparameters mentioned above are not learned by the network, those ones have predefined values set before training process.
 
 \begin{table}[htb]
 	\centering
@@ -1116,7 +1163,9 @@ The hyperparameters variation was in epochs, learning rate, batch size and optim
 \end{table}
 
 \subsubsection{\ac{RNN} Combiner}
-Using recurrent networks, we have two different combinations. The first implementation was a combination of two LSTM networks, they are networks with loops in them, allowing information to persist. The first LSTM network is conforming by 128 units and return all sequences by each module. The next LSTM network joined also has 128 units but only return the final sequence (accumulated output). The structure of this network is showed in Figure \ref{figure:lstm_only}
+Using recurrent networks, we have two different combinations. The first implementation was a combination of two LSTM networks, they are networks with loops in them, allowing information to persist. The first LSTM network contains 128 neuron units, and returns all sequences by each time step. The next LSTM network  also has 128 units but only return the final sequence (accumulated output). The structure of this network is shown in Figure \ref{figure:lstm_only}. The same 
+stack of LSTM networks is used to precess the three embeddings of the tweets. $E_1$ is the embedding of $T_p$, $E_2$ is the embedding of 
+$T_{h_1}$, and $E_3$ is the embedding of $T_{h_2}$.
 
 \begin{figure}[H]	
 	\centering
@@ -1127,9 +1176,12 @@ Using recurrent networks, we have two different combinations. The first implemen
 
 Figure \ref{figure:lstm_only} shows a double \ac{LSTM} network, where embedded tweets are the inputs and the output is a tensor with the accumulate sequence. This process is the same for each embedding vector.
 
-In other hand, the second network implementation is a variant of \ac{LSTM} networks. In this implementation we use twice sequential bidirectional LSTM networks, that consist in put two independent \ac{LSTM} networks, one in a normal time order, and the second in reverse time order. They are used to make predictions with both past and future context. The inputs for this layer in both networks are the embedded vectors, there are 3 vectors, one by each tweet in the triplet. The output of both two architectures are three tensors (a tensor is a data structure used how a representation of multidimensional vectors \cite{Tensor2019}), one by each tweet.
+Our second network implementation is a variant of \ac{LSTM} networks. In this implementation we use two sequential bidirectional LSTM networks, that consist of
+ two independent \ac{LSTM} networks. The architecture is showed in Figure \ref{figure:bilstm}. In our bidirectional LSTM,  one LSTM is used to process the tweets in regular word order,  and the second one in reverse word order. Bidirectional LSTM are used to make predictions with both past and future context. 
+ 
+ %The inputs for this layer in both networks are the embedded vectors, there are 3 vectors, one by each tweet in the triplet. The output of both two architectures are three tensors (a tensor is a data structure used how a representation of multidimensional vectors \cite{Tensor2019}), one by each tweet.
 
-In the bidirectional network, inputs are the same that first implementation of \ac{LSTM} network. The outputs are concatenated at each time step. concatenated output of first network is delivered to next bidirectional network. The final output only returns a tensor with the accumulated sequences. The process is repeated by each embedding. The architecture is showed in Figure \ref{figure:bilstm}
+%In the bidirectional network, inputs are the same that first implementation of \ac{LSTM} network. The outputs are concatenated at each time step. concatenated output of first network is delivered to next bidirectional network. The final output only returns a tensor with the accumulated sequences. The process is repeated by each embedding. The architecture is showed in Figure \ref{figure:bilstm}
 
 
 \begin{figure}[H]	
@@ -1149,7 +1201,22 @@ Figure xx
 
 \subsection{Relevance Layer}
 
-The input for this layer is the three outputs of combiner layer. Here the network tries to learn the relevance between tweets, the representation of first tweet with the second and with third respectively. To extract relationship between tweets, matching methods are applied to these two combinations, the method is a concatenation of premise representation, the hypothesis representation, the element-wise product and absolute element-wise difference of premise and hypothesis \cite{Conneau2017}. The resulting vector is merged with the auxiliary inputs of premise and hypothesis. Finally the output vector after concatenation is joined to a dense layer of 128 units with {ReLU} activation and end into a dense layer of one unit where the result represent the relevance between both tweets premise and hypothesis. Full structure of relevance component is showed in Figure \ref{figure:relevance}
+The input for this layer are the three outputs of the combiner layer: $C_1, C_2$ and $C_3$. These tensors represent 
+the output of the combiner layer for $E_1, E_2$ and $E_3$, respectively.  In the relevance layer the network tries to learn the relevance rank between tweets: 
+$rank(T_p, T_{h_1})$ and $rank(T_p, T_{h_2})$.  The full structure of the relevance component is shown in Figure \ref{figure:relevance}.
+To extract relationships between tweets, various methods concatenations are applied : 
+
+\begin{itemize}
+	\item $D_1 = concat(C_1*C_2, |C_1 - C_2|, C_1, C_2)$  - combines features from $T_p$ and $T_{h_1}$
+	\item $D_2 = concat(C_1*C_3, |C_1 - C_3|, C_1, C_3)$  - combines features from $T_p$ and $T_{h_2}$
+\end{itemize}
+$concat()$ is a concatenation operation. 
+$D_1$ is  a feature tensor build by concatenating: a) element-wise product of $C_1$ and $C_2$, b) absolute difference of $C_1$ and $C_2$, c) $C_1$ itself, 
+and d) $C_2$ itself. This idea is adapted from the work in \cite{Conneau2017}. 
+The same process is done with $D_2$. 
+%, the method is a concatenation of premise representation, the hypothesis representation, the element-wise product and absolute element-wise difference of premise and hypothesis \cite{Conneau2017}. 
+Each  tensor $D_i$ is then concatenated with the auxiliary inputs the pair of tweets used to form $D_i$ . This resulting tensor is passed through  a dense layer of 128 units with {\em ReLU} activation and then goes into a dense layer of one unit with no activation. The result represents the similarity  $r_i$ between the premise  tweets  and the hypothesis tweet $T_{h_i}$.  The value $r_1$ gives the similarity between  $T_p$ and $T_{h_1}$, while $r_2$ gives the similarity between  $T_p$ and $T_{h_2}$.
+These two values are secondary outputs to the model, and also are used in the final classification layer. 
 
 \begin{figure}[H]	
 	\centering
@@ -1160,7 +1227,8 @@ The input for this layer is the three outputs of combiner layer. Here the networ
 
 \subsection{Classification Layer}
 
-Classification layer take as input the relevance layer outputs and concatenate them. Next it is following by a sequence of three dense layers of 16, 8 and 1 units respectively. Dense layer with 16 and 8 units have a \ac{ReLU} activation to convert results into positive data. In final dense layer we use a sigmoid activation to obtain a binary output. The final output can take two values, 1 means the first hypothesis is more similar to the premise and 0 when second hypothesis is more similar to premise. Figure \ref{figure:classification} show the architecture of this component.
+The classification layer takes as input the relevance layer outputs and concatenates them. Next, this tensor fed into  a sequence of three dense layers of 16, 8 and 1 units respectively. The dense layers with 16 and 8 units have a \ac{ReLU} activations. In final dense layer we use a sigmoid activation to obtain a binary output. The final output can take two values: a) 1 means the first hypothesis $T_{h_1}$ is more similar to the premise $T_p$, and b) 0 when second hypothesis 
+$T_{h_2}$ is more similar to premise $T_p$. Figure \ref{figure:classification} shows the architecture of this component.
 
 \begin{figure}[H]	
 	\centering
@@ -1170,17 +1238,27 @@ Classification layer take as input the relevance layer outputs and concatenate t
 \end{figure}
 
 \section{Metrics}
-\subsection{Accuracy}
-Here text
-\subsection{Mean Square Error}
-Here text
-\subsection{Loss}
-here Text
+Our model has one main output and two secondary outputs: 
+\begin{itemize}
+	\item {\bf Main output}  - classification label to indicate which hypothesis tweet is more similar to the premise. 
+	\item {\bf Secondary output \#1} - similarity between $T_p$ and  $T_{h_1}$: $rank(T_p, T_{h_1})$.
+	\item {\bf Secondary output \#2} - similarity between $T_p$ and  $T_{h_2}$: $rank(T_p, T_{h_2})$.
+\end{itemize} 
+We use {\em accuracy} to measure the quality of  our models on the main output  since this is a classification task. Likewise, 
+we use  {\em Mean Squared Error} to measure the quality of  our models on the secondary outputs since these are regression tasks. 
+
+%\subsection{Accuracy}
+%Here text
+%\subsection{Mean Square Error}
+%Here text
+%\subsection{Loss}
+%here Text
 
 \chapter{Performance Evaluation} \label{chapter 5}
+In this chapter we evaluate the quality of our \ac{DL} models by measuring their accuracy and mean squared errors on our data sets. 
 \section{Hardware} 
 
-In this research we use two different environments to run our experiments. The cluster distribution presented in figure \ref{figure:ths_cluster} shows the components of the \ac{THS} project that was configured like we described it in section \ref{ths_system}. The master-node and edge-node were set with Ubuntu 16.04 LTS \ac{OS} and data-nodes with Ubuntu 14.04 LTS \ac{OS}, these nodes are installed on bare metal. All operations are executed in the edge-node that connect the users with Big Data environment.
+In this research we use two different environments to run our experiments. The cluster distribution presented in figure \ref{figure:ths_cluster} shows the components of the \ac{THS} project that was configured as we described it in section \ref{ths_system}. The master-node and edge-node were set with Ubuntu 16.04 LTS \ac{OS} and data-nodes with Ubuntu 14.04 LTS \ac{OS}. These nodes are installed and run on bare metal. All operations are executed in the edge-node that connect the users with Big Data environment.
 
 \begin{figure}[H]	
 	\centering
@@ -1189,7 +1267,8 @@ In this research we use two different environments to run our experiments. The c
 	\label{figure:ths_cluster}
 \end{figure}
 
-The hardware specification by each node is showed following in table \ref{node_cluster}. The total cluster storage is 2.9 TB and 80 GB of memory to processing data, it does not include master-node and edge-node.
+The hardware specification by each node is shown  in table \ref{node_cluster}. The total cluster storage is 2.9 TB and 80 GB of memory to processing data
+(excluding master-node and edge-node). This environment was used for tweet capture, filtering, and storage.
 
 \begin{table}[htb]
 	\centering
