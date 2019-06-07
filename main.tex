@@ -259,7 +259,7 @@
 			Member, Graduate Committee\\
 			\vspace{.3cm}\\
 			\rule{2.5in}{.1pt} & & & &  &\rule{2in}{.1pt}\\
-			Bienvenido J Velez Rivera, Ph.D. & & & &  &Date\\
+			Pedro I. Rivera Vega, Ph.D. & & & &  &Date\\
 			Member, Graduate Committee\\
 			\vspace{.45cm}\\
 			\rule{2.5in}{.1pt} & & & &  &\rule{2in}{.1pt}\\
@@ -284,9 +284,9 @@
 		\large\textbf {Find Similar Tweets Within Health Related Topics}
 	\end{center}
 	\doublespacing
-	here abstract of thesis.\\
-	Here abstract of thesis.\\	
-	Here abstract of thesis.\\
+Social networks have become a very important means to share ideas, discuss news, and opinions on many topics.  They also provide real-time information on sales, marketing, politics, natural disasters, and crisis situations, among others. These networks include Facebook, Twitter, WhatsApp, and Instagram, to name a few. In this work, we shall focus our efforts on the Twitter social network. This network provides a mechanism for people to express their views using short messages (i.e., 280 characters)
+	called {\em tweets}. In this project, we investigate and implement text similarity neural network models in such a way that we can: 1) know if they are related or not with a disease, 2) group similar tweets to those that we have already captured, analyzed or stored, and 3) find similarity index between tweets using different learning algorithms. We based our work on, semantic similarity approaches and text similarity measures using \ac{DL} algorithms to deliver reliable information to the end user about health-related topics.
+
 	\par
 	\clearpage
 	
@@ -300,9 +300,9 @@
 		\large\textbf {Encontrar tweets similares en temas relacionados con la salud}
 	\end{center}
 	\doublespacing
-	Aqu\'i resumen de tesis.\\
-	Aqu\'i resumen de tesis.\\
-	Aqu\'i resumen de tesis.\\
+Las redes sociales se han convertido en un medio muy importante para compartir ideas, discutir noticias y opiniones sobre muchos temas. Tambi\'en proporcionan informaci\'on en tiempo real sobre ventas, mercadotecnia, pol\'itica, desastres naturales y situaciones de crisis, entre otros. Estas redes incluyen Facebook, Twitter, WhatsApp e Instagram, por nombrar algunas. En este trabajo, centraremos nuestros esfuerzos en la red social de Twitter. Esta red proporciona un mecanismo para que las personas expresen sus puntos de vista mediante mensajes cortos (no m\'as de 280 caracteres)
+llamados {\em tweets}. En este proyecto, investigamos e implementamos modelos de redes neuronales de similitud de texto de manera que podamos: 1) saber si est\'an relacionados o no con una enfermedad, 2) agrupar tweets similares a los que ya hemos capturado, analizado o almacenado y 3) encontrar el \'indice de similitud entre los tweets que utilizan diferentes algoritmos de aprendizaje. Basamos nuestro trabajo en los enfoques de similitud sem\'antica y las medidas de similitud de texto utilizando algoritmos de ``Deep Learning" para proporcionar informaci\'on confiable al usuario final sobre temas relacionados con la salud.
+
 	\par
 	\clearpage
 	
@@ -335,9 +335,9 @@
 	\begin{center}
 		\Large \textbf{Acknowledgments}
 	\end{center}
-	to thank family\\
-	\\
-	to thank advisor\\
+	First of all thank God for giving me health, strength and the desire to persevere forever. I also want to thank my mother Carin and my sister Emily for the love, affection and unconditional support they have always given me, without which it would have been more difficult to achieve this goal.
+	
+	I would like to express my sincere gratitude to my adviser Manuel Rodriguez, for the opportunity to work with him, for his patience, motivation, teaching during the whole process of the research and his support during my master's studies. His guidance and advice was very helpful in all aspects of the research and thesis presentation.
 	
 	This research is supported by the \ac{US} National Library of Medicine of the \ac{NIH} under award number R15LM012275. The content is solely the responsibility of the authors and does not necessarily represent the official views of the \ac{NIH}. Some results presented in this thesis were obtained using the Chameleon Cloud supported by the \ac{NSF}.
 	\vfill
@@ -434,7 +434,7 @@ that is capable of classifying relative similarity in triplets of tweets. This i
 model $M'$ that classifies which of two tweets is more similar to a premise tweet.
 		\item \textbf{Present a performance study on the DL similarity models}: We have created a data sets consisting of 11,425 examples, and we use that data set to train our models. Our results show that we can achieve 90\% accuracy on the task of classifying which of two tweets is more similar to a premise tweet.
 		For this task, we need to train a sub-model that computes the similarity rank between two tweets as  a value in the range [0,4]. 
-		This is a regression tasks and our model have a 1.4 units of Mean Squared Error on a decreasing loss.
+		This is a regression tasks and our model have a 0.34 units of Mean Squared Error on a decreasing loss.
 	\end{itemize}
 	
 	\section{Outline}
@@ -1106,7 +1106,7 @@ training $M'$ indirectly trains model $M$, since we need to have the similarity 
 \end{figure}
 
 
-\subsection{Data Setup}
+\subsection{Data Setup \label{input_setup}}
 The data obtained after the labeling step is prepared to be compatible with the neural network inputs and output labels. The inputs to the neural network are the tweet, the disease type and disease-related labeling, and these inputs are required for each member of triplet $(T_p, T_{h_1},T_{h_2})$. 
 Additionally, we need the labels for the relevance between premise and the two hypotheses. These are the rankings that the labelers completed,  and become the secondary output of the network. The main output of the network is the  final binary classification of similarity which  indicates which hypothesis tweet is more similar to the premise tweet. 
  The total of data examples available was 11,425.
@@ -1141,7 +1141,7 @@ with 50 and 200 dimensions. Before feeding them to the neural network, the tweet
 
 %The main input was given in two ways. The first data with all text after labeling step. Second group of data go through an additional preprocessing step to remove stop words and lemmatized each word to the root lemma.
 
-\subsection{Combiner Layer}
+\subsection{Combiner Layer \label{combiner_layer}}
 The purpose of the combiner layer is to enable the neural network to build useful features to help it figure out how to find the similarity between tweets. 
 In the early days of neural networks, features had to be engineered by hand and passed as input to the neural network. In contrast, modern DL approaches
 rely on adding enough layer to the network so it can create the features itself. The input to the combiner network are the embedding of the tweets.
@@ -1196,8 +1196,12 @@ Our second network implementation is a variant of \ac{LSTM} networks. In this im
 
 In this method we use the concept of inception networks. The figure of our inception network is showed next.
 
-Figure xx
-
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=150mm, scale = 1]{images/16_cnn_model.png}	
+	\caption{Inception \ac{CNN}}	
+	\label{figure:cnn_combiner}
+\end{figure}
 
 \subsection{Relevance Layer}
 
@@ -1268,7 +1272,7 @@ In this research we use two different environments to run our experiments. The c
 \end{figure}
 
 The hardware specification by each node is shown  in table \ref{node_cluster}. The total cluster storage is 2.9 TB and 80 GB of memory to processing data
-(excluding master-node and edge-node). This environment was used for tweet capture, filtering, and storage.
+(excluding master-node and edge-node). {\bf This environment was used for tweet capture, filtering, and storage}
 
 \begin{table}[htb]
 	\centering
@@ -1283,7 +1287,7 @@ The hardware specification by each node is shown  in table \ref{node_cluster}. T
 	\caption{\ac{THS} cluster node}\label{node_cluster}
 \end{table}
 
-The other environment with important resources to run our experiments was Chameleon Cloud, an online large-scale platform to research, with a variety of resources in Hardware and Software. To this project we use nodes with \ac{GPU} resources, these node ran in Ubuntu 16.04 LTS on bare metal. The image used for the project is a custom image created by \ac{THS} project. The hardware specification is described next in table \ref{node_chameleon}.
+The other environment with important resources to run our experiments was Chameleon Cloud, an online large-scale platform to research, with a variety of resources in Hardware and Software. To this project we {\bf used Chameleon nodes with \ac{GPU} resources to train our \ac{DL} models}. These nodes ran in Ubuntu 16.04 LTS on bare metal. The OS image used for the project is a custom image created by \ac{THS} project. The hardware specification is described next in table \ref{node_chameleon}.
 
 \begin{table}[htb]
 	\centering
@@ -1299,32 +1303,33 @@ The other environment with important resources to run our experiments was Chamel
 \end{table}
 
 \section{Software}
-The resources used for this research are the following: 
+The software resources used for this research are the following: 
 \begin{itemize}[nolistsep]
-	\item \textbf{Python:} A programming language very used in research fields, for its easily and powerful. It is compatible with tools used in this research like Tensor Flow and Keras. All code in this project is written in Python language.
+	\item \textbf{Python:} A programming language  used in research fields, for its simplicity and power. It is compatible with tools used in this research: TensorFlow and Keras. All the code in this project is written in Python language.
 	
-	\item \textbf{Twitter \ac{API}:} A tool that allow us get Twitter streaming data in real time for our research. 
+	\item \textbf{Twitter \ac{API}:} A tool that to  get Twitter streaming data in real time for our research. 
 	
-	\item \textbf{\ac{HDFS}:} A software that allows  distribute processing a  massive amount of data, running in commodity hardware \cite{Hadoop2019}.
+	\item \textbf{\ac{HDFS}:} A software that implements  distribute processing of  massive amounts of data, running in commodity hardware \cite{Hadoop2019}.
 	
-	\item \textbf{HIVE:} A data warehouse software for large datasets in a distributed storage. For querying use \ac{SQL} syntax \cite{Hive2019}.
+	\item \textbf{HIVE:} A data warehouse software for large datasets in a distributed storage. For querying, it use use \ac{SQL} syntax \cite{Hive2019}.
 	
-	\item \textbf{KAFKA:} It is a streaming platform to storage stream of records and allows to process it as they occur. It can be implemented in standalone mode or cluster mode. Each stream store is called ``topics'' \cite{Kafka2019}.
+	\item \textbf{KAFKA:} It is a streaming platform to store streams of records and enables their process it as they asynchronously. It can be implemented in standalone mode or cluster mode. Each stream store is called a ``topic'' \cite{Kafka2019}.
 	
 	\item \textbf{SPARK:} Apache Spark is a fast, a general purpose and a unified analytic engine for large-scale data processing. It is compatible with JAVA, Scala, Python and R. Spark support structured data processing, \ac{ML}, graph processing and stream processing of live data \cite{Spark2019}.
 	
-	\item \textbf{Tensorflow:} Open source \ac{ML} library for building and training complex neural network models \cite{Tensor2019}.
+	\item \textbf{Tensorflow:} Google's Open source \ac{ML} library for building and training complex neural network models \cite{Tensor2019}.
 	
-	\item \textbf{Keras:} An neural network \ac{API}, that allows easy and fast experimentation, support \ac{CNN} and \ac{RNN}. This tool work with python and can be used on \ac{CPU} and \ac{GPU} \cite{Keras2019}.
+	\item \textbf{Keras:} An neural network \ac{API}, that allows easy and fast experimentation, support \ac{CNN} and \ac{RNN}. This tool work with python and can be used on \ac{CPU} and \ac{GPU} \cite{Keras2019}. {\bf All the \ac{ML} code in this project was implemented with Keras}.
 	
-	\item \textbf{\ac{CUDA}:} A programming model developed by NVIDIA, it is a parallel computing programming on \ac{GPU}, the sequential computes on thousands of cores in parallel mode, optimizing the performance of tasks \cite{Cuda2019}.
+	\item \textbf{\ac{CUDA}:} A programming model developed by NVIDIA, it is a parallel computing programming on \ac{GPU}, the sequential computes on thousands of cores in parallel mode, optimizing the performance of tasks \cite{Cuda2019}. TensorFlow uses CUDA to implement its neural networks. 
 	
-	\item \textbf{Torch: } A framework to support \ac{ML} algorithms using \ac{GPU} in a efficient way. This tool seeks to facilitate and speed up the implementation of neural network libraries and optimization packages \cite{Torch2019}.\\
+	\item \textbf{Torch: } A framework to support \ac{ML} algorithms using \ac{GPU} in a efficient way. This tool seeks to facilitate and speed up the implementation of neural network libraries and optimization packages.% \cite{torch2019}.\\
 	
 \end{itemize}
 
 
-Tools used are Open Source. Hadoop, Yarn, Spark, Kafka for \ac{THS} cluster only and Keras, TensorFlow, Tensor Board, Scikit-learn, \ac{NLTK}, SciPy and torch for both {THS} edge-node and Chameleon Cloud custom node. Versions of Big Data tools implemented in \ac{THS} project are showed in table \ref{software_cluster}. 
+%Tools used are Open Source. Hadoop, Yarn, Spark, Kafka for \ac{THS} cluster only and Keras, TensorFlow, Tensor Board, Scikit-learn, \ac{NLTK}, SciPy and torch for both {THS} edge-node and Chameleon Cloud custom node. 
+The versions of the  tools implemented in \ac{THS} project are showed in table \ref{software_cluster}. 
 
 \begin{table}[htb]
 	\centering
@@ -1358,34 +1363,35 @@ Versions of software packages installed in both environments are presented in ta
 	\caption{Version of software in nodes \label{software_packages}} 
 \end{table}
 
-\section{Data Collection}
+\section{Data Collection for Training Models}
 
-The process to collect data and prepare it until it been transformed in the input of our model is shown in Figure \ref{figure:data_collection} and it is described following.
+The process to collect data and prepare for processing as  input to our models is shown in Figure \ref{figure:data_collection} and it is described following lines.
 
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=150mm, scale = 1]{images/8_data_collection.png}	
-	\caption{Data Collection Process}	
+	\caption{Data Collection Process }	
 	\label{figure:data_collection}
 \end{figure}
 
 \begin{steps}
 	
-	\item To get data from twitter we use a Twitter Streaming \ac{API} and we collect data and it is process through \ac{THS} system where raw tweets are stored in a Hive Database.
+	\item  To get data from Twitter we use a Twitter Streaming \ac{API}, and we collect data and  process it through \ac{THS} system where the tweets are stored in a Hive Database.
 	
-	\item Running a python script we get data from ``raw$\_$tweet'' table of \ac{THS} system. Here we filter data by specific diseases and by date of stored using Spark tools to be following save it in a \ac{JSON} file because originally tweets have a \ac{JSON} format. It facilitates the next step of processing.
+	\item Running a python script we get data from  the ``raw$\_$tweet'' table of \ac{THS} system. Here we filter data by specific diseases and by date, 
+	using Spark tools. The tweets are saved  in a \ac{JSON} file because originally tweets have a \ac{JSON} format. This facilitates the next step of processing.
 	
-	\item Using the created \ac{JSON} file in previous step, we filter data and only take the tweet text (sentence itself) because our project only needs to work with the text written by the user. Also, we throw away repeated tweets. This filtered data is saved in a \ac{CSV} file to next processing step.
+	\item Using the  \ac{JSON}  file created in the previous step, we filter data and only take the tweet text (sentence itself) because our project only needs to work with the text written by the user. Also, we throw away repeated tweets. This filtered data is saved in a \ac{CSV} file to next processing step.
 	
-	\item In this step the data pass for the pre-processing step to clean and filter data before deliver data to labelling step. This process is described in section \ref{data_preprocessing} 
+	\item In this step the data passed to the pre-processing step to clean and filter data before deliver data to labelling step. This process is described in section \ref{data_preprocessing} 
 	
-	\item Data collected is ready to be used like input of our model.
+	\item Data collected is ready to be for labeling, and then for input to our model.
 	
 \end{steps}
 
 \section{Data Pre-processing} \label{data_preprocessing}
 
-Data collected from social networks contains misspelling, slang or no textual information, that makes it less structured and informal. This is a reason to clean data like a previous step to build our model. This stage is composed by three demarcated steps: Pre-processing before labeling, labeling task and final pre-processing. These steps are showing in Figure \ref{figure:data_preprocessing}. 
+Data collected from social networks contains misspelling, slang or no textual information, that makes it less structured and informal. This is the reason to clean data as a previous step to build our model. This stage is composed by three demarcated steps: Pre-processing before labeling, labeling task, and final pre-processing. These steps are showing in Figure \ref{figure:data_preprocessing}. 
 
 \begin{figure}[H]	
 	\centering
@@ -1394,16 +1400,16 @@ Data collected from social networks contains misspelling, slang or no textual in
 	\label{figure:data_preprocessing}
 \end{figure}
 
-In this section we will describe the first and last step of processing. The labeling step will be described in section \ref{data_labeling}. Before use tweets directly to labeling, it is necessary to filter and clean data \cite{Dai2017} \cite{Ahuja2017} \cite{Halibas2018}. The operations to prepare data is described following.
+In this section we will describe the first and last step of processing. The labeling step will be described in section \ref{data_labeling}. Before using tweets directly or labeling, it is necessary to filter and clean data \cite{Dai2017} \cite{Ahuja2017} \cite{Halibas2018}. The operations to prepare data are described now.
 
 \begin{itemize}[nolistsep]
 	\item \textbf{Remove line breaks:} It is necessary clean it because it can be generating more than one row from same tweet and we can lose context and meaning.
 	
 	\item \textbf{Remove links, hashtags and mentions:} Social media are informal and contains no textual information that is why we clean no-relevant data like links, hashtags and mentions \cite{Dai2017}.
 	
-	\item \textbf{Character unespace:} We replace source code based on hexadecimal code with the character that it represents to be understandable and compatible with human language.
+	\item \textbf{Character unescape:} We replace source code based on hexadecimal code with the character that it represents to be understandable and compatible with human language.
 	
-	\item \textbf{Reduce lengthening:} Many typo errors are presented in text like repetition of an char many times to express emphasis or simply because exist a typographic mistake. For example, the word ``fluuu'' represent the next word ``flu''. In cases like this one is needed fix it and replace it to the right word.
+	\item \textbf{Reduce lengthening:} Many typo errors are presented in text like repetition of a character, many times to express emphasis or simply because there exists a typographic mistake. For example, the word ``fluuu'' represent the next word ``flu''. In cases like this one,  it needs to be fix, and replace it to the right word.
 	
 	\item \textbf{Expand contractions:} To ensure a correct representation of each word we expanded all contraction to their original form.
 	
@@ -1413,82 +1419,96 @@ In this section we will describe the first and last step of processing. The labe
 	
 \end{itemize}
 
-Cleaned data got from previous process is ready to deliver to labeling users, where main and auxiliary label inputs are built. This step is described in section \ref{data_labeling}.
+Cleaned data obtained  from previous process is ready to deliver to labeler users, from which main and auxiliary label inputs are built. This step is described in section \ref{data_labeling}.
 
-The final \ac{NLP} step is showed following.
+The final \ac{NLP} step are: 
 
 \begin{itemize}[nolistsep]
-	\item \textbf{Lemmatization:} It is a process to find a lemma for each word in a tweet. That refers to convert all inflected forms in its base form, for example the words: “taking”, “took” refers to base form “to take”. Lemmatization considers the context and meaning to convert a word in its base form, for example in the next word “caring” a simple stemming process will cutoff termination “ing” and return “car”. In other hand with lemmatization it returns “care”. The more known tools are \ac{NLTK}, textBlob, spaCy, pattern, Stanford CoreNLP and others. 
+	\item \textbf{Lemmatization:} It is a process to find a lemma for each word in a tweet. That refers to convert all inflected forms in its base form, for example the words: “taking”, “took” refers to base form “to take”. Lemmatization considers the context and meaning to convert a word in its base form, for example in the next word “caring” a simple stemming process will cutoff termination “ing” and return “car”. %In other hand with lemmatization it returns “care”. 
+	The better known tools are \ac{NLTK}, textBlob, spaCy, pattern, and Stanford CoreNLP. 
 
 	\item \textbf{Remove stop-words:} The final operation of processing step is removing the stop-words and just keep words with high meaning.
 \end{itemize}
 
 \section{Data Labeling} \label{data_labeling}
 
-Due our model follows a supervised approach; it is necessary use labeled data. In this project we have two different kinds of labeling. First one is focused in classify tweets if they are related or no to a disease. The other type refers to set a measure of similarity between tweets. How they were built are described following.
+Sin our model follows a supervised approach, it is necessary use labeled data. In this project we have two different kinds of labeling. The first one is focused in classify tweets if they are related or no to a disease. The other type refers to set a measure of similarity between tweets. We now describe how they were built.
+% are described following.
 
 \subsection{Disease-related labeling}
 
-This training set is composed of 11,937 tweets and it was labeled by five members of \ac{THS} team. Labels depends of the classification in term of similar meaning and their relatedness with specific topics about health diseases. There are three possible label values by each tweet. 
+This training set is composed of 11,937 tweets and it was labeled by five members of \ac{THS} team. Labels depends of the classification in term of similar meaning and their relatedness with specific topics about health diseases. There are three possible label values for each tweet. 
 
 \begin{itemize} [nolistsep]
 	\item \textbf{0:} This label represents a tweet that is not related with a disease. 
-	\item \textbf{1:} It is a tweet which the meaning has related with a disease.
+	\item \textbf{1:} It is a tweet with meaning  related with a disease.
 	\item \textbf{2:} Tweets have an ambiguous meaning, difficult to classify.
 \end{itemize}
 
-\subsection{Labeling for level of relevance} \label{data_relevance_labeling}
+\subsection{Labeling for level of relevance (rank)} \label{data_relevance_labeling}
 
-To label relevance of similarity on tweets we built triplets that are a collection of three sets. The set that was manually labeled is composes by three tweets with a common meaning, it belongs to the same disease class and their label value is 1 (``the tweet meaning is related to a disease''). The second group is form by two similar tweets and one tweet out of class, that means that last tweet is in a different class that others two; consequently, the first and second are similar, in other hand the first and the third are not similar. Finally, the last group of triplets is composed by tweets with the same class of disease, but the third tweet has a label value of 0 or 2, indicating that the tweet does not has a semantic or context relationship with the others tweets in the triplet.
+To label for relevance of similarity on tweets we built triplets that are a collection of three sets. 
+First  dataset consisted of  4,225 triplets $(T_p, T_{h_1}, T_{h_2})$. All the tweets in these triplets were known to 
+be related with a medical conditions, and had one of the five target keywords: Ebola, Zika, Flu, Measles, or Diarrhea.
+Labelers were asked to rank the similarity between $T_p$ and $T_{h_1}$ and between $T_p$ and $T_{h_2})$
+There were 54 labelers, which were students from UPRM. Triplets were equality divided between 54 collaborators.  
 
-All triplets were built using the training set of 11,937 samples after labeling if it is related with a disease or no. The triplets that were labeled manually are which belongs to the first group, only tweets in the same class with label with value of 1, to know the level of relevance between similar tweets. The total of triplets labeled were 4,225; it was 1,075 triplets by each disease mentioned next ``Flu'', ``Measles'', ``Ebola'' and ``Diarrhea''. ``Zika'' was not taken in because, we do not have enough samples to build triplets. Each tweet was labeled by 3 different subjects doing a total of 12,675 samples. Triplets were equality divided between 54 collaborators.  The measure of relevance is in a range of 1 to 4, where the level of final relevance is given by the average of those three measures. While the measure is higher, it represents more similarity between the pair of tweets analyzed. 
+%The first  set that was manually labeled consists of three tweets with a common meaning, it belongs to the same disease class and their label value is 1 (``the tweet meaning is related to a disease''). The second group is form by two similar tweets and one tweet out of class, that means that last tweet is in a different class that others two; consequently, the first and second are similar, in other hand the first and the third are not similar. Finally, the last group of triplets is composed by tweets with the same class of disease, but the third tweet has a label value of 0 or 2, indicating that the tweet does not has a semantic or context relationship with the others tweets in the triplet.
 
-A metric of similarity is obtained from relevance measures. Given three tweets $t_0$, $t_1$ and $t_2$, the measure of similarity takes a value of 1 or 0; where this is 1 when $t_0$ is more similar to $t_1$ than $t_2$, and it is 0 when $t_0$ is more similar to $t_2$ than $t_1$.
+%All triplets were built using the training set of 11,937 samples after labeling if it is related with a disease or no. The triplets that were labeled manually are which belongs to the first group, only tweets in the same class with label with value of 1, to know the level of relevance between similar tweets. The total of triplets labeled were 4,225; it was 1,075 triplets by each disease mentioned next ``Flu'', ``Measles'', ``Ebola'' and ``Diarrhea''. ``Zika'' was not taken in because, we do not have enough samples to build triplets. Each tweet was labeled by 3 different subjects doing a total of 12,675 samples. Triplets were equality divided between 54 collaborators.  The measure of relevance is in a range of 1 to 4, where the level of final relevance is given by the average of those three measures. While the measure is higher, it represents more similarity between the pair of tweets analyzed. 
 
-The rules that was considered to manual labeling of relevance between tweets are the following:
+%A metric of similarity is obtained from relevance measures. Given three tweets $t_0$, $t_1$ and $t_2$, the measure of similarity takes a value of 1 or 0; where this is 1 when $t_0$ is more similar to $t_1$ than $t_2$, and it is 0 when $t_0$ is more similar to $t_2$ than $t_1$.
 
-
+Labelers were instructed to give a score between 1 and 4. The rules that was considered to manual labeling of relevance between tweets are the following:
 
 \begin{enumerate}
-	\item \text{When tweets talk about the same disease:}
+	\item Score 4 - \text{When tweets talk about the same disease:}
 	\begin{itemize}
 		\item \textbf{Tweet 1:} \textit{There is a measles outbreak in japan.}
 		\item \textbf{Tweet 2:} \textit{Japanese fear measles outbreak in progress.}
 	\end{itemize}
 
-	\item \text{Tweets talk about the same disease, but the events are not related:}
+	\item Score 3 - \text{Tweets talk about the same disease, but the events are not related:}
 	\begin{itemize}
 		\item \textbf{Tweet 1:} \textit{Government intensifies educational campaign against Ebola.}
 		\item \textbf{Tweet 2:} \textit{Many countries launch initiatives to raise awareness about Ebola.}
 	\end{itemize}
 
-	\item \text{Tweets talk about of the same disease at the same location:}
+	\item Score 2 - \text{Tweets talk about of the same disease at the same location:}
 	\begin{itemize}
 		\item \textbf{Tweet 1:} \textit{Outbreak report of Zika at Ponce.}
 		\item \textbf{Tweet 2:} \textit{Government of Ponce warns about outbreak of Zika.}
 	\end{itemize}
 
 
-	\item \text{Describe different symptoms of a same disease:}
+	\item Score  1 - \text{Describe different symptoms of a same disease:}
 	\begin{itemize}
 		\item \textbf{Tweet 1:} \textit{Big headache and fever due do you the flu.}
 		\item \textbf{Tweet 2:} \textit{I have been two days in bed feeling ill, due the flu.}
 	\end{itemize}
 
 
-	\item \text{Do a similar action in topics related to diseases:}
+	\item Score 1 - \text{Do a similar action in topics related to diseases:}
 	\begin{itemize}
 		\item \textbf{Tweet 1:} \textit{Government recommends getting the flu vaccine.}
 		\item \textbf{Tweet 2:} \textit{Today I went to the pharmacy to get the flu vaccine.}
 	\end{itemize}
 \end{enumerate}
 
+We  augmented the data  by adding two additional group of triplets.  In the first group, one of the 
+hypothesis tweet, $T_{h_i}$ has the same disease keyword as $T_p$ but is not related with a medical condition (class 0). In this case, the 
+ranking of this tweet with respect to $T_p$ is set to 0. In the second group, one of the 
+hypothesis tweet, $T_{h_i}$ has a different disease keyword as that $T_p$.  In this case, the 
+ranking of this tweet with respect to $T_p$ is also set to 0. In total, we grew the training data set to 11,425 tweets. 
+Based on the ranking of the tweets we provide a final label $L$ . This label is a classification label for relative comparison between tweets: 1 - if $rank(T_p, T_{h_1}) >= rank(T_p, T_{h_2})$, 0 - if  $rank(T_p, T_{h_1}) < rank(T_p, T_{h_2})$.
+
+
 \section{Experiment Setup}
-Experiments was set in two environments with different resources. Chameleon Cloud and \ac{THS} cluster. All code was developed in Python, the script permits us to collect the data from twitter using \ac{THS} system and it was pre-processing using \ac{NLP} techniques before and after labeling of data. The process of labeling has two steps, the first step is grouping the tweets by disease and label it by their semantic relation with a disease or no. The second type of labeling is related with the compute of a measure of similarity, using triplets to compare de similarity between them and get a metric of relevance that tell us what of two tweets is more like the first one.
-
-These two-input feed our created model. The pair of tweets referred like premise and hypothesis pass by a series of transformation to extract relations between them and finally get a measure of relevance. Along the process we use \ac{DL} approaches using \ac{LSTM} and \ac{CNN} with different variations explained in section \ref{models}, to finally build a model able to determine given two tweets how similar they are between themselves.
-
-A perspective overview of the setup structure of whole project is showed in Figure \ref{figure:model_setup}
+Experiments was set in two environments with different resources: Chameleon Cloud and \ac{THS} cluster. Data acquisition and pre-processing is done
+the \ac{THS} cluster. Model training is done in Chameleon. 
+%All code was developed in Python, the script permits us to collect the data from twitter using \ac{THS} system and it was pre-processing using \ac{NLP} techniques before and after labeling of data. The process of labeling has two steps, the first step is grouping the tweets by disease and label it by their semantic relation with a disease or no. The second type of labeling is related with the compute of a measure of similarity, using triplets to compare de similarity between them and get a metric of relevance that tell us what of two tweets is more like the first one.
+%These two-input feed our created model. The pair of tweets referred like premise and hypothesis pass by a series of transformation to extract relations between them and finally get a measure of relevance. Along the process we use \ac{DL} approaches using \ac{LSTM} and \ac{CNN} with different variations explained in section \ref{models}, to finally build a model able to determine given two tweets how similar they are between themselves.
+Figure \ref{figure:model_setup} shows an overview of the setup structure of whole project.
 
 \begin{figure}[H]	
 	\centering
@@ -1499,14 +1519,15 @@ A perspective overview of the setup structure of whole project is showed in Figu
 
 \subsection{Experimental Methods} \label{experimental_methods}
 
-To train our algorithm, we mix the rows randomly to prevent order dependencies between runs and are assigned to next two sub-set:
+To train our algorithm, we mix the rows randomly to prevent order dependencies between runs and assigns each example to one of these
+sub-sets:
 
 \begin{itemize}[nolistsep]
-	\item \textbf{Training set}: This group comprehend 80\% of initial data, that is 9,140 triplets. This data is used to train all combinations of algorithms presented.
-	\item \textbf{Validation set}:  The remaining data is the 20\% that comprehend 2,285 samples. This data is used to validate the model, fitting the weights of parameters to find the best performance.
+	\item \textbf{Training set}: This group comprehends 80\% of initial data, that is 9,140 triplets. This data is used to train all combinations of algorithms presented.
+	\item \textbf{Validation set}:  The remaining data is the 20\% that comprehends 2,285 samples. This data is used to validate the model, fitting the weights of parameters to find the best performance.
 \end{itemize}
 
-Usually models of \ac{ML} assume that input data has a uniform distribution between classes and do not consider the presence of imbalance data. In our case we need to adjust our model to work with imbalanced data, because the model could be predicting in favor of the majority class. The approach taken to avoid this issue was to use a built-in functionality in sklearn. This tool returns us the weights penalties for misclassifying. This approach provides a natural and straightforward method to set weight penalization.
+Usually models of \ac{ML} assume that input data has a uniform distribution between classes and do not consider the presence of imbalance data. In our case, our data is imbalanced because there are more examples classified with label 0. In our case we need to adjust our model to work with imbalanced data, because the model could be predicting in favor of the majority class. The approach taken to avoid this issue was to use a built-in functionality in Skitlearn library. This tool returns us the weights penalties for misclassifying in imbalanced clases. This approach provides a natural and straightforward method to set weight penalization.
 
 \begin{table}[H]
 	\centering
@@ -1521,12 +1542,12 @@ Usually models of \ac{ML} assume that input data has a uniform distribution betw
 
 Table \ref{class_penalties} show the penalties by each class. A higher value is given for the minority class and low value to the majority class.
 
-\subsection{RNN results}
-We divide \ac{RNN} results in two parts. First related with \ac{LSTM} approach and the second with bidirectional \ac{RNN} approach. 
-For RNN implementation we used an embedding vector of 50 and 200 dimensions. We use a larger embedding matrix as 200 dimensions to find out relation between tweets given to model more features. These embedding as we mention in section \ref{input_setup} are a pretrained vectors of GloVe embedding.
+\subsection{Results for Models using RNN at the Combiner Layer}
+We divide \ac{RNN} results in two parts. First, we show those  related with \ac{LSTM} combiner and the second with bidirectional \ac{RNN} combiner. 
+For RNN implementation we used an embedding vector of 50 and 200 dimensions. We use a larger embedding matrix of 200 dimensions to find out relations between tweets given to model more features. These embeddings were mentioned in section \ref{input_setup} are a pre-trained vectors of GloVe embedding.
 
-\subsubsection{LSTM only}
-In Table \ref{acuracy_lstm} we show the accuracy results for \ac{LSTM} implementation. The data is presented in two ways, an embedding vector taken all text with a preliminary preprocessing and vectors built after remove stop words and lemmatization process.
+\subsubsection{Regular LSTM}
+In Table \ref{acuracy_lstm} we show the accuracy results for the \ac{LSTM}  combiner implementation. The tweet data is presented in two ways, an embedding vector taken without a preliminary preprocessing, and vectors built after remove stop words and lemmatization process.
 
 \begin{table}[H]
 	\centering
@@ -1544,14 +1565,15 @@ In Table \ref{acuracy_lstm} we show the accuracy results for \ac{LSTM} implement
 	\caption{Accuracy LSTM}\label{acuracy_lstm}
 \end{table}
 
-\noindent The results for accuracy metric are similar. The accuracy in training step is in range of 89\% and 97\%. The accuracy in validation step is in range of 85\% and 90\%. The better two accuracy metrics have the next configuration:
+\noindent The results for accuracy metric are similar. The accuracy in the training step is in range of 89\% and 97\%. The accuracy in the validation step is in range of 85\% and 90\%. The next configuration have the better  accuracy metrics:
 
 \begin{itemize}[nolistsep]
 	\item 50 dimension, 10 epochs and after lemmatization step, rmsprop optimizer with an accuracy of 89\% and 90\% in training and validation respectively.
 	\item 200 dimension, 20 epochs and after lemmatization process, rmsprop optimizer with 97\% and 86\% of accuracy for training and validation.
 \end{itemize}
+The case of 50 dimension, 10 epochs and after lemmatization step, rmsprop optimizer provide best accuracy on validation and it the winning model. 
 
-In table \ref{loss_lstm} we show measures for loss functions. We used Mean Squared Error (MSE) loss function in relevance parameters and cross-entropy loss function for final classification of triplets. 
+In table \ref{loss_lstm} we show measures for the loss functions. We used Mean Squared Error (MSE) loss function in  the ranking outputs and cross-entropy loss function for final classification of triplets. 
 
 \begin{table}[H]
 	\centering
@@ -1593,8 +1615,9 @@ In table \ref{accuracy_birnn} is presented the accuracy outputs for Bidirectiona
 \begin{itemize}[nolistsep]
 	\item 200 dimension, 20 epochs and after lemmatization step, rmsprop optimizer with an accuracy of 99\% and 87\% in training and validation respectively.
 \end{itemize}
+Notice that the models with bidirectional LSTM in the combiner tend to overfit the input. 
 
-In table \ref{loss_birnn} we show measures for loss functions. We used Mean Squared Error (MSE) loss function in relevance parameters and cross-entropy loss function for final classification of triplets. 
+In table \ref{loss_birnn} we show measures for loss functions. We used Mean Squared Error (MSE) loss function in the relevance rank outputs and cross-entropy loss function for final classification of triplets. 
 
 \begin{table}[H]
 	\centering
@@ -1612,9 +1635,9 @@ In table \ref{loss_birnn} we show measures for loss functions. We used Mean Squa
 	\caption{Loss Bidirectional network}\label{loss_birnn}
 \end{table}
 
-\subsection{CNN Results}
+\subsection{Results for Models using CNN at the Combiner Layer}
 
-For \ac{CNN} implementation we used an embedding vector of 50 and 200 dimensions too. We  used the Inception network approach, an complex and heavily engineered network. It used a lot of tricks to push performance, in terms of speed and accuracy. The network essentially would get wider rather than deeper, that is to tackle the issue of overfitting. The network structure is described in section \ref{combiner_layer}.
+For the \ac{CNN} implementation we used an embedding vector of 50 and 200 dimensions too. We  used the Inception network approach, a complex and heavily engineered \ac{CNN} network. It used a lot of tricks to push performance, in terms of speed and accuracy. The network essentially would get wider rather than deeper, in order  to tackle the issue of overfitting. The network structure is described in section \ref{combiner_layer}.
 
 In table \ref{accuracy_cnn} is presented the accuracy outputs for Inception CNN implementation.
 
@@ -1660,35 +1683,56 @@ In table \ref{loss_cc} we show measures for loss functions. We used Mean Squared
 \end{table}
 
 
-\subsection{Inference Model}
-
-In our project we development two model simultaneasly, a trainig model and a production model, while we were training our model, also we were training a production model, with the goal to use for prediction a metric of relevance. Given a premise tweet the model can be look in stream of tweets and order them by similarity.
-As and example we show an experiment with following premise tweet:
-
-\begin{definition}
-	``Here tweet''
-\end{definition}
-
-The result for five closer tweets to premise are the showed following. They ordered in a descendant way
-
- \begin{itemize}[nolistsep]
- 	\item tweet 1
- 	\item t2
- 	\item t3
- 	\item t4
- 	\item t5
- \end{itemize}
+%\subsection{Inference Model}
+%
+%In our project we development two model simultaneasly, a trainig model and a production model, while we were training our model, also we were training a production model, with the goal to use for prediction a metric of relevance. Given a premise tweet the model can be look in stream of tweets and order them by similarity.
+%As and example we show an experiment with following premise tweet:
+%
+%\begin{definition}
+%	``Here tweet''
+%\end{definition}
+%
+%The result for five closer tweets to premise are the showed following. They ordered in a descendant way
+%
+% \begin{itemize}[nolistsep]
+% 	\item tweet 1
+% 	\item t2
+% 	\item t3
+% 	\item t4
+% 	\item t5
+% \end{itemize}
 
 \subsection{Discussion of Results}
 
-In the result of the \ac{RNN} models we concluded that best performing in accuracy precision is configured for an embedding model with 50 dimensions, with text processed after lemmatization, 10 epochs,batch size of 32 and rmsprop optimizer. the result show a training accuracy of 89\% in training and 90\% in validation step. The loss metrics were 0.37 and 0.34 for {MSE} in training and validation. The cross-entropy loss function in this configuration had 0.23 for training step and 0.22 in validation.
+In the results for models  the \ac{RNN} combiner we concluded that the best performing in accuracy  is a model regular LSTM combiner with an embedding using 50 dimensions, with text processed after lemmatization, 10 epochs, batch size of 32 and rmsprop optimizer. The results show a training accuracy of 89\% in training and 90\% in validation step. The loss metrics were 0.37 and 0.34 for {MSE} in training and validation. The cross-entropy loss function in this configuration had 0.23 for training step and 0.22 in validation.
 
-In case of {CNN} approach the best model are close among them and not distant of \ac{RNN} results, both having a high accuracy for training. The configuration of hyperparameters for the best model was the next, 200 dimension, text before lemmatization and without remove stop words, batch size of 32 and adam optimizer. The measures of accuracy in training was 99\% and 87\% for validation. {MSE} in training had a value of 1.33 and 1.3. In the other hand Cross-entropy loss had 0.02 in training and 0.66 in validation. Notice that highest result of bidirectional \ac{RNN} approach have the same measures for accuracy that the higher metric with \ac{CNN}. The Intern hyperparamters (e.g. number of units, size of inception kernel) for {RNN} networks and CNN were described in section \ref{combiner_layer}.
-the running time of models depend of number of epoch and batch size. In general terms the order of execution time of the three models presented is the next, inception {CNN} like the fastest, after classic {LSTM} in second place and finally with worst time execution is Bidirectional {LSTM} networks.
+In the case of {CNN} approach the best model are close among them and not distant from the \ac{RNN} results, both having a high accuracy for training. The configuration of hyperparameters for the best model had an embedding with  200 dimension, text before lemmatization and without remove stop words, batch size of 32 and adam optimizer. The measured of accuracy in training was 99\% and 87\% for validation. {MSE} in training had a value of 1.33 and 1.3. On the other hand Cross-entropy loss had 0.02 in training and 0.66 in validation. 
 
-Comparing {RNN} and {CNN} results, we can see that {RNN} with two {LSTM} network joined sequentially have more consistency in training and validation accuracy, because the metric for accuracy are 89\% and 90\% in training and validation respectively. Nonetheless, the {CNN} model is better in training accuracy and execution time.
+%Notice that the best result of the bidirectional \ac{RNN} approach have the same measures for accuracy as the best models with \ac{CNN}. 
+
+%The Intern hyperparamters (e.g. number of units, size of inception kernel) for {RNN} networks and CNN were described in section \ref{combiner_layer}.
+%the running time of models depend of number of epoch and batch size. In general terms the order of execution time of the three models presented is the next, inception {CNN} like the fastest, after classic {LSTM} in second place and finally with worst time execution is Bidirectional {LSTM} networks.
+
+Comparing \ac{RNN} and \ac{CNN} results, we can see that {RNN} with two {LSTM} network joined sequentially have more consistency in training and validation accuracy, because the metric for accuracy are 89\% and 90\% in training and validation respectively. 
+Notice that the best result of the bidirectional \ac{RNN} approach have the same measures for accuracy as the best models with \ac{CNN}.  The tradeoff is 
+that \ac{CNN} required less time to train. In general terms the order of training time of the three approaches presented is the next, inception {CNN} is the fastest, next is the regular \ac{LSTM} in second place, and finally with worst time execution is Bidirectional {LSTM} networks.
+
+
+%Nonetheless, the {CNN} model is better in training accuracy and execution time.
+
 \chapter{Conclusion and Future Work} \label{chapter 6}
-Summary, text here
+In this project we used social networks as an application to get valuable information about health topics . In our case we used Twitter and its  vast amounts of data on different topics. We illustrated how to use tweet data about medical conditions to build models that are able to compute the similarity in tweets. We use the {THS} system to store data and then use it as our input data.
+
+We used neural network employing supervised learning approach in text similarity. We showed that trained models with labeled data in sentence similarity have good performance to be widely adopted for tweet similarity and in others \ac{NLP} tasks. We build models with deep \ac{CNN} and \ac{RNN}  obtaining good results.
+
+We trained a model to compute the similarity rank between two tweets, by first training a bigger model $M'$ capable of classifying relative similarity in triplets of tweets. We train a bigger model that classifies which of two tweets is more similar to a premise tweet, but we use a sub-task (sub-model) $M$ to predict a relevance metric between  two tweets. This model $M$ can then be used to produce similarity scores and order a list of tweets by similarity respect to a premise tweet.
+
+In order to validate our model we presented a performance study on the DL similarity models with a data sets consisting of 11,425 examples, and we use that data set to train our models. Our results showed that we can achieve 90\% accuracy on the task of classifying which of two tweets is more similar to a premise tweet. The sub-model $M$ trained have a 0.34 units of Mean Squared Error on a decreasing loss.
+
+\section{Future Work}
+Future work will be focused in training models with more data to avoid problems of overfitting, which enable us compare with the previous models. Also, we will explore new architecture models in {RNN} and {CNN} approaches to using in combiner layer and determine if they improve in accuracy performance. 
+Furthermore we will apply metrics of distance like Frobenius distance or cosine similarity in the relevance layer to have to different ways to measure the similarity.
+
 
 %\chapter*{References} 
 %\addcontentsline{toc}{chapter}{Bibliography}
